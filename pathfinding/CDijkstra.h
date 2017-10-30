@@ -11,9 +11,9 @@ class CDijkstra
 public:
 	CDijkstra()
 	{
-		m_MapManager.InitMapFromFile();
-		InitGraph();
-		SearchPathTest();
+		//m_MapManager.InitMapFromFile();
+		//InitGraph();
+		//SearchPathTest();
 	}
 
 	~CDijkstra()
@@ -22,26 +22,27 @@ public:
 
 	void DrawMap()
 	{
-		m_MapManager.DrawMap();
-		m_MapManager.DrawShortestPath(m_shortestPath);
+		m_MapManagerPtr->DrawMap();
+		m_MapManagerPtr->DrawShortestPath(m_shortestPath);
 	}
 
-	void InitGraph();
 	void FindShortestPath(int iStartNode,int iGoalNode);
 	void SearchPathTest();
+	void SetMapManagerPtr(CMapManager *mapManager)
+	{
+		m_MapManagerPtr = mapManager;
+	}
 
 protected:
-	//typedef NeighbourContainer NC;
-	CMapManager m_MapManager;
-	std::vector< CPriorityQueueEdges > m_Graph;
+
+	CMapManager						*m_MapManagerPtr;
 
 	std::vector<int>				 m_previous;
 	std::vector<double>				 m_distSoFar;
 	std::vector<bool>				 m_closedList;
 
-	std::vector<int>				 m_shortestPath;
+	std::vector<int>				 m_shortestPath; //TODO to bedzie zwracane
 
-	//std::vector< NeighbourContainer<T> > m_Graph;
 private:
 	void AddNeighbourEdgesToGraph(int iHeight,int iWidth);
 	int GenerateRandomAccessibleNodeId();

@@ -38,6 +38,9 @@
     <ClInclude Include="CPriorityQueueEdges.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
+    <ClInclude Include="CExperimentsHandler.h">
+      <Filter>Pliki nagłówkowe</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -59,6 +62,9 @@
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="CPriorityQueueEdges.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="CExperimentsHandler.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
   </ItemGroup>

@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDijkstra.h" />
+    <ClInclude Include="CExperimentsHandler.h" />
     <ClInclude Include="CGridTile.h" />
     <ClInclude Include="CMapManager.h" />
     <ClInclude Include="Config.h" />
@@ -158,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CDijkstra.cpp" />
+    <ClCompile Include="CExperimentsHandler.cpp" />
     <ClCompile Include="CGridTile.cpp" />
     <ClCompile Include="CMapManager.cpp" />
     <ClCompile Include="CPriorityQueueEdges.cpp" />

@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "CPriorityQueueNode.h"
+#include "CGridTile.h"
 
 class CPriorityQueueEdges
 {
@@ -13,22 +14,17 @@ public:
 	}
 
 	auto& GetNeighbours() { return m_Neighbours; }
-	void AddNeighbour(CPriorityQueueNode &node) { m_Neighbours.push_back(node); }
-	//TODO uwazac na to xD
-	auto GetNextNeighbour() 
-	{
-		return m_nextNeighbourIter == m_Neighbours.end() ? ( m_nextNeighbourIter = m_Neighbours.begin() ) : ++m_nextNeighbourIter;
-	}
-
+	void AddNeighbour(CPriorityQueueNode node) { m_Neighbours.push_back(node); }
+	
 	auto GetIterEnd() { return m_Neighbours.end(); }
-	void SetNeighbourIterInit()
-	{
-		m_nextNeighbourIter = m_Neighbours.end();
-	}
+
+	void SetGridTileInfo(CGridTile gridTile) { m_GridTileInfo = gridTile; }
+	CGridTile& GetGridTileInfo() { return m_GridTileInfo; }
 
 private:
 	std::vector<CPriorityQueueNode> m_Neighbours;
 	std::vector<CPriorityQueueNode>::iterator m_nextNeighbourIter;
 
+	CGridTile m_GridTileInfo;
 };
 

@@ -12,93 +12,6 @@ void CDijkstra::AddNeighbourEdgesToGraph(int iHeight, int iWidth)
 
 }
 
-void CDijkstra::InitGraph()
-{
-	m_Graph.resize(m_MapManager.GetMapHeight() * m_MapManager.GetMapWidth());
-	auto gridMap = m_MapManager.GetGridMap();
-
-	//TODO zliczanie i rezerwowanie potrzebnej ilosci miejsca wczesniej, aby nie bylo zadnych realokacji
-	for (int iHeight = 0, iNodeId = 0; iHeight < m_MapManager.GetMapHeight(); ++iHeight)
-	{
-		for (int iWidth = 0; iWidth < m_MapManager.GetMapWidth(); ++iWidth, ++iNodeId)
-		{
-			//1. ADD UPPER NEIGHBOUR
-			if (iHeight > 0 && gridMap[iHeight - 1][iWidth].GetGridTypeEnum() == GridTypePassable)
-			{
-				CPriorityQueueNode node(gridMap[iHeight - 1][iWidth].GetGridId(), STRAIGHT_WEIGHT);
-				m_Graph[iNodeId].AddNeighbour(node);
-			}
-
-			//2. ADD BOTTOM NEIGHBOUR
-			if (iHeight + 1 < m_MapManager.GetMapHeight() && gridMap[iHeight + 1][iWidth].GetGridTypeEnum() == GridTypePassable)
-			{
-				CPriorityQueueNode node(gridMap[iHeight + 1][iWidth].GetGridId(), STRAIGHT_WEIGHT);
-				m_Graph[iNodeId].AddNeighbour(node);
-			}
-			//3. ADD LEFT NEIGHBOUR
-			if (iWidth > 0 && gridMap[iHeight][iWidth - 1].GetGridTypeEnum() == GridTypePassable)
-			{
-				CPriorityQueueNode node(gridMap[iHeight][iWidth - 1].GetGridId(), STRAIGHT_WEIGHT);
-				m_Graph[iNodeId].AddNeighbour(node);
-			}
-
-			//4. ADD RIGHT NEIGHBOUR
-			if (iWidth + 1 < m_MapManager.GetMapWidth() && gridMap[iHeight][iWidth + 1].GetGridTypeEnum() == GridTypePassable)
-			{
-				CPriorityQueueNode node(gridMap[iHeight][iWidth + 1].GetGridId(), STRAIGHT_WEIGHT);
-				m_Graph[iNodeId].AddNeighbour(node);
-			}
-
-			//5. ADD UP-LEFT DIAGONAL
-			if (iHeight > 0 && iWidth > 0
-				&& gridMap[iHeight - 1][iWidth].GetGridTypeEnum() == GridTypePassable
-				&& gridMap[iHeight][iWidth - 1].GetGridTypeEnum() == GridTypePassable)
-			{
-				CPriorityQueueNode node(gridMap[iHeight - 1][iWidth - 1].GetGridId(), DIAGONAL_WEIGHT);
-				m_Graph[iNodeId].AddNeighbour(node);
-			}
-
-			//6. ADD UP-RIGHT DIAGONAL
-			if (iHeight > 0
-				&& iWidth + 1 < m_MapManager.GetMapWidth()
-				&& gridMap[iHeight - 1][iWidth].GetGridTypeEnum() == GridTypePassable
-				&& gridMap[iHeight][iWidth + 1].GetGridTypeEnum() == GridTypePassable)
-			{
-				CPriorityQueueNode node(gridMap[iHeight - 1][iWidth + 1].GetGridId(), DIAGONAL_WEIGHT);
-				m_Graph[iNodeId].AddNeighbour(node);
-			}
-
-			//7. ADD DOWN-LEFT DIAGONAL
-			if (iHeight + 1 < m_MapManager.GetMapHeight()
-				&& iWidth > 0
-				&& gridMap[iHeight][iWidth - 1].GetGridTypeEnum() == GridTypePassable
-				&& gridMap[iHeight + 1][iWidth].GetGridTypeEnum() == GridTypePassable)
-			{
-				CPriorityQueueNode node(gridMap[iHeight + 1][iWidth - 1].GetGridId(), DIAGONAL_WEIGHT);
-				m_Graph[iNodeId].AddNeighbour(node);
-			}
-
-			//8. ADD DOWN-RIGHT DIAGONAL
-			if (iHeight + 1 < m_MapManager.GetMapHeight()
-				&& iWidth + 1 < m_MapManager.GetMapWidth()
-				&& gridMap[iHeight][iWidth + 1].GetGridTypeEnum() == GridTypePassable
-				&& gridMap[iHeight + 1][iWidth].GetGridTypeEnum() == GridTypePassable)
-			{
-				CPriorityQueueNode node(gridMap[iHeight + 1][iWidth + 1].GetGridId(), DIAGONAL_WEIGHT);
-				m_Graph[iNodeId].AddNeighbour(node);
-			}
-
-			m_Graph[iNodeId].SetNeighbourIterInit();
-		}
-	}
-}
-
-//
-//bool operator <(const CPriorityQueueNode &lhs, const CPriorityQueueNode &rhs)
-//{
-//	return (lhs.GetF() < rhs.GetF());
-//}
-
 struct ComparePriorityQueueNode
 {
 	bool operator()(const CPriorityQueueNode &lhs, const CPriorityQueueNode &rhs)
@@ -111,7 +24,7 @@ struct ComparePriorityQueueNode
 void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
 {
 	//TODO wywalic to gdzies indziej
-	int iNodesCount = m_MapManager.GetMapNodesCount();
+	int iNodesCount = m_MapManagerPtr->GetMapNodesCount();
 	m_previous.resize(iNodesCount);
 	m_distSoFar.resize(iNodesCount);
 	double maxDistance = (std::numeric_limits<double>::max)();
@@ -119,10 +32,10 @@ void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
 	m_closedList.assign(iNodesCount, false);
 
 	std::priority_queue<CPriorityQueueNode, std::vector<CPriorityQueueNode>, ComparePriorityQueueNode> dijQueueNode;
+	auto graph = m_MapManagerPtr->GetGraph();
 
 	m_previous[iStartNode] = -1;
 	m_distSoFar[iStartNode] = 0.0f;
-	//m_closedList[iStartNode] = true;
 	CPriorityQueueNode firstNode(iStartNode, 0.0);
 
 	dijQueueNode.push(firstNode);
@@ -141,10 +54,10 @@ void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
 		
 		if (current == iGoalNode) break;
 
-		auto nextNeighbour = m_Graph[current].GetNextNeighbour();
-		while (nextNeighbour != m_Graph[current].GetIterEnd())
+		auto nextNeighbour = graph[current].GetNeighbours().begin();
+		while (nextNeighbour != graph[current].GetIterEnd())
 		{
-			double new_cost = m_distSoFar[current] + nextNeighbour->GetWeight(); //m_distSoFar chyba niepotrzebne skoro przechowuje to w node'ach
+			double new_cost = m_distSoFar[current] + nextNeighbour->GetWeight();
 			if (m_closedList[nextNeighbour->GetNodeId()] != true
 				&& m_distSoFar[nextNeighbour->GetNodeId()] > new_cost)
 			{
@@ -154,7 +67,7 @@ void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
 
 				dijQueueNode.push(*nextNeighbour);
 			}
-			nextNeighbour = m_Graph[current].GetNextNeighbour();
+			nextNeighbour++;
 		}
 	}
 
@@ -162,7 +75,6 @@ void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
 	int iNodeId = iGoalNode;
 	while (m_previous[iNodeId] != -1)
 	{
-		//std::cout << iNodeId << "  " << std::endl;
 		m_shortestPath.push_back(iNodeId);
 		iNodeId = m_previous[iNodeId];
 	}
@@ -170,20 +82,13 @@ void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
 
 int CDijkstra::GenerateRandomAccessibleNodeId()
 {
-	int iNodesCount = m_MapManager.GetMapNodesCount();
-	int iHeight = m_MapManager.GetMapHeight(), iWidth = m_MapManager.GetMapWidth();
+	int iNodesCount = m_MapManagerPtr->GetMapNodesCount();
 
-	int iRow = rand() % iHeight;
-	int iCol = rand() % iWidth;
-	auto gridMap = m_MapManager.GetGridMap();
+	int iRand = rand() % iNodesCount;
+	while (m_MapManagerPtr->GetGraph()[iRand].GetGridTileInfo().GetGridTypeEnum() != GridTypePassable)
+		iRand = rand() % iNodesCount;
 
-	while (gridMap[iRow][iCol].GetGridTypeEnum() != GridTypePassable)
-	{
-		iRow = rand() % iHeight;
-		iCol = rand() % iWidth;
-	}
-	
-	return gridMap[iRow][iCol].GetGridId();
+	return iRand;
 }
 
 void CDijkstra::SearchPathTest()

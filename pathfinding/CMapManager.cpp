@@ -4,6 +4,8 @@
 #include <fstream>
 #include <string>
 #include <gl\freeglut.h>
+#include "CPriorityQueueNode.h"
+
 
 CMapManager::CMapManager(): m_iMapHeight(-1), m_iMapWidth(-1)
 {
@@ -15,6 +17,9 @@ CMapManager::CMapManager(): m_iMapHeight(-1), m_iMapWidth(-1)
 	m_TerrainMapInfo['O'] = std::make_pair(CellTypeOutOfBounds, GridTypeImpassable);
 	m_TerrainMapInfo['T'] = std::make_pair(CellTypeTrees, GridTypeImpassable);
 	m_TerrainMapInfo['W'] = std::make_pair(CellTypeWater, GridTypeImpassable);
+
+	InitMapFromFile();
+	InitGraph();
 }
 
 CMapManager::~CMapManager()
@@ -30,46 +35,27 @@ GridTypeEnum CMapManager::GetGridTypeByChar(char chCell)
 void CMapManager::DrawMap()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	//double offset[3];
-	//offset[0] = 0.1; offset[1] = 0.3; offset[2] = 0.5;
-	//glutSolidSierpinskiSponge(5, offset, 0.5);
-	//glutSolidTeapot(.6);
-
 	int quadCount = max(m_iMapHeight, m_iMapWidth);
 	float quadSize = 2.0f / static_cast<float>(1.1f * quadCount);
 
 	glBegin(GL_QUADS);
-	//glColor3f(0.5f, 0.2f, 0.8f);
-
-	for (int x = 0; x < m_iMapHeight; ++x)
+	for(int i=0; i<m_Graph.size(); ++i)
 	{
-		float yPos = 0.9f - x * quadSize;
+		if(m_Graph[i].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable)
+			glColor3f(0.5f, 0.2f, 0.8f); //PURPLE
+		else
+			glColor3f(1.0f, 0.0f, 0.0f); //RED
 
-		for (int y = 0; y < m_iMapWidth; ++y)
-		{
-			float xPos = -0.9f + y * quadSize;
-			if(m_GridMap[x][y].GetGridTypeEnum() == GridTypePassable)
-				glColor3f(0.5f, 0.2f, 0.8f); //PURPLE
-			else
-				glColor3f(1.0f, 0.0f, 0.0f); //RED
+		CCoords &coords = m_Graph[i].GetGridTileInfo().GetCoords();
 
-			/*glVertex2f(xPos, yPos);
-			glVertex2f(xPos + quadSize, yPos);
-			glVertex2f(xPos + quadSize, yPos + quadSize);
-			glVertex2f(xPos, yPos + quadSize);*/
-
-			CCoords &coords = m_GridMap[x][y].GetCoords();
-
-			glVertex2f(coords.x, coords.y);
-			glVertex2f(coords.x + quadSize, coords.y);
-			glVertex2f(coords.x + quadSize, coords.y + quadSize);
-			glVertex2f(coords.x, coords.y + quadSize);
-		}
+		glVertex2f(coords.x, coords.y);
+		glVertex2f(coords.x + quadSize, coords.y);
+		glVertex2f(coords.x + quadSize, coords.y + quadSize);
+		glVertex2f(coords.x, coords.y + quadSize);
 	}
 
-
 	glEnd();
-	//glFlush();
+	glFlush();//
 }
 
 void CMapManager::DrawShortestPath(std::vector<int> &vec)
@@ -78,10 +64,11 @@ void CMapManager::DrawShortestPath(std::vector<int> &vec)
 	int quadCount = max(m_iMapHeight, m_iMapWidth);
 	float quadSize = 2.0f / static_cast<float>(1.1f * quadCount);
 	
+	
 	for (int i = 0; i < vec.size(); ++i)
 	{
 		if(i==0 || i == vec.size() - 1)
-			glColor3f(1.0f, 1.0f, 1.0f); //BLACK
+			glColor3f(1.0f, 1.0f, 1.0f); //WHITE
 		else
 			glColor3f(0.0f, 1.0f, 0.0f); //GREEN
 
@@ -89,7 +76,7 @@ void CMapManager::DrawShortestPath(std::vector<int> &vec)
 		iRow = floor(vec[i] / m_iMapWidth);
 		iCol = vec[i] - iRow * m_iMapWidth;
 
-		CCoords &coords = m_GridMap[iRow][iCol].GetCoords();
+		CCoords &coords = m_Graph[vec[i]].GetGridTileInfo().GetCoords();
 
 		glVertex2f(coords.x, coords.y);
 		glVertex2f(coords.x + quadSize, coords.y);
@@ -113,7 +100,6 @@ void CMapManager::InitMapFromFile()
 	if (mapFile.is_open())
 	{
 		std::string strMapType, strTemp;
-		//int iMapHeight, iMapWidth;
 
 		mapFile >> strTemp >> strMapType; // type octile
 		mapFile >> strTemp >> m_iMapHeight;
@@ -122,11 +108,7 @@ void CMapManager::InitMapFromFile()
 		ATLASSERT(strMapType == "octile");
 		
 		m_iMapNodesCount = m_iMapHeight * m_iMapWidth;
-		m_GridMap.resize(m_iMapHeight);
-		for (int i = 0; i < m_iMapHeight; ++i)
-		{
-			m_GridMap[i].reserve(m_iMapWidth);
-		}
+		m_Graph.resize(m_iMapNodesCount);
 
 		//TODO w jednym miejscu quadSize obliczac, moze zapisac jako zmienna statyczna
 		int quadCount = max(m_iMapHeight, m_iMapWidth);
@@ -150,7 +132,94 @@ void CMapManager::InitMapFromFile()
 				ATLASSERT(gridType != GridTypeNone);
 				gridTile.SetGridTypeEnum(gridType);
 
-				m_GridMap[i].push_back(gridTile);
+				m_Graph[id].SetGridTileInfo(gridTile);
+			}
+		}
+	}
+}
+
+void CMapManager::InitGraph()
+{
+	//TODO moze zrobic zliczanie i rezerwowanie potrzebnej ilosci miejsca wczesniej, aby nie bylo zadnych realokacji
+	for (int iHeight = 0, iNodeId = 0; iHeight < m_iMapHeight; ++iHeight)
+	{
+		for (int iWidth = 0; iWidth < m_iMapWidth; ++iWidth, ++iNodeId)
+		{
+			// jezeli pole jest nieosiagalne to nie tworzymy dla niego listy sasiadow
+			if (m_Graph[iNodeId].GetGridTileInfo().GetGridTypeEnum() == GridTypeImpassable)
+				continue;
+			//1. ADD UPPER NEIGHBOUR
+			int iNeighbourId = iNodeId - m_iMapWidth;
+			if (iHeight > 0 && m_Graph[iNeighbourId].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable)
+			{
+				CPriorityQueueNode node(iNeighbourId, STRAIGHT_WEIGHT);
+				m_Graph[iNodeId].AddNeighbour(node);
+			}
+
+			//2. ADD BOTTOM NEIGHBOUR
+			iNeighbourId = iNodeId + m_iMapWidth;
+			if (iHeight + 1 <  m_iMapHeight && m_Graph[iNeighbourId].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable)
+			{
+				CPriorityQueueNode node(iNeighbourId, STRAIGHT_WEIGHT);
+				m_Graph[iNodeId].AddNeighbour(node);
+			}
+			//3. ADD LEFT NEIGHBOUR
+			iNeighbourId = iNodeId - 1;
+			if (iWidth > 0 && m_Graph[iNeighbourId].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable)
+			{
+				CPriorityQueueNode node(iNeighbourId, STRAIGHT_WEIGHT);
+				m_Graph[iNodeId].AddNeighbour(node);
+			}
+
+			//4. ADD RIGHT NEIGHBOUR
+			iNeighbourId = iNodeId + 1;
+			if (iWidth + 1 < m_iMapWidth && m_Graph[iNeighbourId].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable)
+			{
+				CPriorityQueueNode node(iNeighbourId, STRAIGHT_WEIGHT);
+				m_Graph[iNodeId].AddNeighbour(node);
+			}
+
+			//5. ADD UP-LEFT DIAGONAL
+			iNeighbourId = iNodeId - m_iMapWidth - 1;
+			if (iHeight > 0 && iWidth > 0
+				&& m_Graph[iNodeId - 1].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable
+				&& m_Graph[iNodeId - m_iMapWidth].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable)
+			{
+				CPriorityQueueNode node(iNeighbourId, DIAGONAL_WEIGHT);
+				m_Graph[iNodeId].AddNeighbour(node);
+			}
+
+			//6. ADD UP-RIGHT DIAGONAL
+			iNeighbourId = iNodeId - m_iMapWidth + 1;
+			if (iHeight > 0
+				&& iWidth + 1 <  m_iMapWidth
+				&& m_Graph[iNodeId - m_iMapWidth].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable
+				&& m_Graph[iNodeId + 1].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable)
+			{
+				CPriorityQueueNode node(iNeighbourId, DIAGONAL_WEIGHT);
+				m_Graph[iNodeId].AddNeighbour(node);
+			}
+
+			//7. ADD DOWN-LEFT DIAGONAL
+			iNeighbourId = iNodeId + m_iMapWidth - 1;
+			if (iHeight + 1 <  m_iMapHeight
+				&& iWidth > 0
+				&& m_Graph[iNodeId - 1].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable
+				&& m_Graph[iNodeId + m_iMapWidth].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable)
+			{
+				CPriorityQueueNode node(iNeighbourId, DIAGONAL_WEIGHT);
+				m_Graph[iNodeId].AddNeighbour(node);
+			}
+
+			//8. ADD DOWN-RIGHT DIAGONAL
+			iNeighbourId = iNodeId + m_iMapWidth + 1;
+			if (iHeight + 1 <  m_iMapHeight
+				&& iWidth + 1 <  m_iMapWidth
+				&& m_Graph[iNodeId + 1].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable
+				&& m_Graph[iNodeId + m_iMapWidth].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable)
+			{
+				CPriorityQueueNode node(iNeighbourId, DIAGONAL_WEIGHT);
+				m_Graph[iNodeId].AddNeighbour(node);
 			}
 		}
 	}
