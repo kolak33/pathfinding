@@ -2,6 +2,7 @@
 #include "CMapManager.h"
 #include "CPriorityQueueNode.h"
 #include "CPriorityQueueEdges.h"
+#include "CStatistics.h"
 #include <list>
 #include <queue>
 
@@ -32,6 +33,7 @@ public:
 	{
 		m_MapManagerPtr = mapManager;
 	}
+	CStatistics GetStatistics() { return m_Statistics; }
 
 protected:
 
@@ -43,8 +45,8 @@ protected:
 
 	std::vector<int>				 m_shortestPath; //TODO to bedzie zwracane
 
+	CStatistics						 m_Statistics;
 private:
-	void AddNeighbourEdgesToGraph(int iHeight,int iWidth);
 	int GenerateRandomAccessibleNodeId();
 
 };
