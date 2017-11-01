@@ -1,11 +1,15 @@
 #include "stdafx.h"
-#include "CDijkstra.h"
+#include "CAstar.h"
 
-//#include <iostream>
-//#include <stdlib.h>
-//#include <time.h> 
-//#include <limits>
-//#include <chrono>
+
+CAstar::CAstar()
+{
+}
+
+
+CAstar::~CAstar()
+{
+}
 
 struct ComparePriorityQueueNode
 {
@@ -15,9 +19,8 @@ struct ComparePriorityQueueNode
 	}
 };
 
-void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
+void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 {
-	//TODO preinicjalizacja pamieci i ponowne jej uzywanie gdzies indziej
 	int iNodesCount = m_MapManagerPtr->GetMapNodesCount();
 	m_previous.resize(iNodesCount);
 	m_distSoFar.resize(iNodesCount);
@@ -30,6 +33,8 @@ void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
 	std::chrono::high_resolution_clock::time_point beginHighRes = std::chrono::high_resolution_clock::now();
 
 	auto graph = m_MapManagerPtr->GetGraph();
+	auto goalGridTile = graph[iGoalNode].GetGridTileInfo();
+
 	m_previous[iStartNode] = -1;
 	m_distSoFar[iStartNode] = 0.0f;
 
@@ -59,7 +64,7 @@ void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
 
 		m_closedList[current] = true;
 		++lExpandedNodes;
-		
+
 		if (current == iGoalNode) break;
 
 		auto nextNeighbour = graph[current].GetNeighbours().begin();
@@ -72,7 +77,17 @@ void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
 				++lVisitedNodes;
 				m_distSoFar[nextNeighbour->GetNodeId()] = new_cost;
 				m_previous[nextNeighbour->GetNodeId()] = current;
-				nextNeighbour->SetF(new_cost);
+
+				auto currGridTile = graph[nextNeighbour->GetNodeId()].GetGridTileInfo();
+
+				double deltaX = std::abs(currGridTile.m_iXPos - goalGridTile.m_iXPos);
+				double deltaY = std::abs(currGridTile.m_iYPos - goalGridTile.m_iYPos);
+				
+				double newFValue =  max(deltaX, deltaY) + DIAG_HEUR_VAL * min(deltaX, deltaY);
+				//D * (dx + dy) + (D2 - 2 * D) * min(dx, dy) TODO sprobowac to
+				//double newFValue = 
+
+				nextNeighbour->SetF(new_cost + newFValue);
 
 				dijQueueNode.push(*nextNeighbour);
 			}
@@ -104,25 +119,4 @@ void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
 	m_Statistics.SetNodesExpanded(lExpandedNodes);
 	m_Statistics.SetNodesVisited(lVisitedNodes);
 	m_Statistics.SetOpenSetMaxSize(lOpenSetMaxSize);
-}
-
-int CDijkstra::GenerateRandomAccessibleNodeId()
-{
-	int iNodesCount = m_MapManagerPtr->GetMapNodesCount();
-
-	int iRand = rand() % iNodesCount;
-	while (m_MapManagerPtr->GetGraph()[iRand].GetGridTileInfo().GetGridTypeEnum() != GridTypePassable)
-		iRand = rand() % iNodesCount;
-
-	return iRand;
-}
-
-void CDijkstra::SearchPathTest()
-{
-	srand(time(NULL));
-
-	int iStartNode = GenerateRandomAccessibleNodeId();
-	int iGoalNode  = GenerateRandomAccessibleNodeId();
-	
-	FindShortestPath(iStartNode, iGoalNode);
 }

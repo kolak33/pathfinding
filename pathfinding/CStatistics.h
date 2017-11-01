@@ -29,6 +29,8 @@ public:
 	double GetSearchTimeChrono() { return m_dSearchTimeChrono; }
 	double GetPathLength() { return m_dPathLength; }
 	long   GetNodesExpanded() { return m_lNodesExpanded; }
+	long   GetNodesVisited() { return m_lNodesVisited; }
+	long   GetOpenSetMaxSize() { return m_lOpenSetMaxSize; }
 
 private:
 	double m_dSearchTimeChrono; //TODO CPU time not elapsed time, need to think about it

@@ -147,6 +147,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CAstar.h" />
     <ClInclude Include="CDijkstra.h" />
     <ClInclude Include="CExperimentsHandler.h" />
     <ClInclude Include="CGridTile.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CAstar.cpp" />
     <ClCompile Include="CDijkstra.cpp" />
     <ClCompile Include="CExperimentsHandler.cpp" />
     <ClCompile Include="CGridTile.cpp" />

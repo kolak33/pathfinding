@@ -6,6 +6,12 @@
 #include <list>
 #include <queue>
 
+#include <iostream>
+#include <stdlib.h>
+#include <time.h>
+#include <limits>
+#include <chrono>
+
 //template< template <typename T, typename = std::allocator<CGridTile*> > class NeighbourContainer >
 class CDijkstra
 {
@@ -33,8 +39,9 @@ public:
 	{
 		m_MapManagerPtr = mapManager;
 	}
-	CStatistics GetStatistics() { return m_Statistics; }
+	int GenerateRandomAccessibleNodeId();
 
+	CStatistics GetStatistics() { return m_Statistics; }
 protected:
 
 	CMapManager						*m_MapManagerPtr;
@@ -46,8 +53,5 @@ protected:
 	std::vector<int>				 m_shortestPath; //TODO to bedzie zwracane
 
 	CStatistics						 m_Statistics;
-private:
-	int GenerateRandomAccessibleNodeId();
-
 };
 

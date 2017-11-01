@@ -20,5 +20,6 @@ typedef enum MapCellType {
 
  const CString strLoadingFilePrefix = "..\\mapki";
 
+ const float DIAG_HEUR_VAL	 = 0.4142f;
  const float DIAGONAL_WEIGHT = 1.4142f;
  const float STRAIGHT_WEIGHT = 1.0f;

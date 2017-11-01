@@ -10,7 +10,8 @@ CExperimentsHandler *expHandlerGlobalPtr;
 void DrawMap()
 {
 	// musi byc ustawione wszystko odpowiednio w dijkstrze wczesniej
-	expHandlerGlobalPtr->GetDijkstra().DrawMap();
+	//expHandlerGlobalPtr->GetDijkstra().DrawMap();
+	expHandlerGlobalPtr->GetAStar().DrawMap();
 }
 
 int main(int argc, char** argv)
@@ -24,7 +25,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_RGB);
 
 	glutInitWindowSize(650, 650);
-	glutInitWindowPosition(100, 100);
+	glutInitWindowPosition(300, 100);
 	glutCreateWindow("HelloTeapot");
 
 	glutDisplayFunc(DrawMap);

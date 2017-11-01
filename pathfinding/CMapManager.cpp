@@ -125,7 +125,8 @@ void CMapManager::InitMapFromFile()
 				gridTile.SetGridId(id);
 				CCoords coords(xPos, yPos);
 				gridTile.SetCoords(coords);
-
+				gridTile.m_iXPos = j;//ze wzgl na troche inne wspolrzedne mapy do zwyklej osi
+				gridTile.m_iYPos = i;
 	
 				mapFile >> chCell;
 				GridTypeEnum gridType = GetGridTypeByChar(chCell);
