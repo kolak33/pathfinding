@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <memory>
 #include <vector>
 #include <map>
@@ -16,6 +17,7 @@ public:
 
 	void InitMapFromFile();
 	void InitGraph();
+	void CreateTestSuiteForMap(std::string strMapName); //without reference, dont want to rename it inside
 	void DrawMap();
 	void DrawShortestPath(std::vector<int> &vec);
 
@@ -24,6 +26,7 @@ public:
 	int GetMapNodesCount() { return m_iMapNodesCount; }
 	//auto& GetGridMap() { return m_GridMap; }
 	auto& GetGraph() { return m_Graph; }
+	int GenerateRandomAccessibleNodeId();
 
 protected:
 	std::map<char, std::pair<MapCellType,GridTypeEnum> > m_TerrainMapInfo;

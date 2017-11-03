@@ -3,6 +3,7 @@
 #include "CDijkstra.h"
 #include "CAstar.h"
 #include "CStatistics.h"
+#include "CStatisticsSummary.h"
 
 class CExperimentsHandler
 {
@@ -12,8 +13,9 @@ public:
 		m_Dijkstra.SetMapManagerPtr(&m_MapManager);
 		m_AStar.SetMapManagerPtr(&m_MapManager);
 		//m_Dijkstra.SearchPathTest();
-		int iNumExperiments = 100;
-		DoDijkstraExperiments(iNumExperiments);
+		//int iNumExperiments = 100;
+		//DoDijkstraExperiments(iNumExperiments);
+		DoTestSuiteExperiments();
 	}
 	~CExperimentsHandler()
 	{
@@ -27,12 +29,13 @@ private:
 	CMapManager m_MapManager;
 	CDijkstra	m_Dijkstra;
 	CAstar		m_AStar;
-	std::vector<CStatistics> m_StatisticCollectionDijkstra;
-	std::vector<CStatistics> m_StatisticCollectionAStar;
+	//std::vector<CStatistics> m_StatisticCollectionDijkstra;
+	//std::vector<CStatistics> m_StatisticCollectionAStar;
+	CStatisticsSummary m_StatsDijkstra;
+	CStatisticsSummary m_StatsAStar;
 
-
-private:
 	void DoDijkstraExperiments(int iNumExperiments);
-	void CalcAvgStats();
+	void DoTestSuiteExperiments();
+	void PrintStats();
 };
 

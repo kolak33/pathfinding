@@ -5,6 +5,7 @@
 #include <string>
 #include <gl\freeglut.h>
 #include "CPriorityQueueNode.h"
+#include <regex>
 
 
 CMapManager::CMapManager(): m_iMapHeight(-1), m_iMapWidth(-1)
@@ -90,11 +91,9 @@ void CMapManager::DrawShortestPath(std::vector<int> &vec)
 
 void CMapManager::InitMapFromFile()
 {
-	//to do assert octile type
-	CString strMapName = "\\dao\\den001d.map";
-	CString strMapLocationPath = strLoadingFilePrefix + strMapName;
+	std::string strMapLocationPath = strMapLocationPrefix + strMapName;
 	std::ifstream mapFile;
-	mapFile.open(strMapLocationPath);
+	mapFile.open(strMapLocationPath.c_str());
 
 	ATLASSERT(mapFile.is_open() == true);
 	if (mapFile.is_open())
@@ -136,6 +135,9 @@ void CMapManager::InitMapFromFile()
 				m_Graph[id].SetGridTileInfo(gridTile);
 			}
 		}
+		mapFile.close();
+
+		CreateTestSuiteForMap(strMapName);
 	}
 }
 
@@ -224,4 +226,39 @@ void CMapManager::InitGraph()
 			}
 		}
 	}
+}
+
+void CMapManager::CreateTestSuiteForMap(std::string strMapName)
+{
+	//test if file already exists
+	strMapName = std::regex_replace(strMapName, std::regex(".map"), ".txt");
+	std::string strTestSuiteLocationPath = strTestsLocationPrefix + strMapName;
+	std::ifstream testFile(strTestSuiteLocationPath.c_str());
+	if (!testFile.good())
+	{
+		std::cout << "CREATING TEST SUITE FOR MAP: " << strMapName << std::endl;
+		std::ofstream testFileSuite(strTestSuiteLocationPath.c_str());
+		ATLASSERT(testFileSuite.is_open());
+		if (testFileSuite.is_open())
+		{
+			srand(time(NULL));
+			testFileSuite << "testsCount: " << iGenerateTestCount << "\n";
+			for (int i = 0; i < iGenerateTestCount; ++i)
+			{
+				testFileSuite << GenerateRandomAccessibleNodeId() << " " << GenerateRandomAccessibleNodeId() << "\n";
+			}
+			testFileSuite << fflush;
+
+			testFileSuite.close();
+		}
+	}
+}
+
+int CMapManager::GenerateRandomAccessibleNodeId()
+{
+	int iRand = rand() % m_iMapNodesCount;
+	while (m_Graph[iRand].GetGridTileInfo().GetGridTypeEnum() != GridTypePassable)
+		iRand = rand() % m_iMapNodesCount;
+
+	return iRand;
 }

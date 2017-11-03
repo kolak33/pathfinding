@@ -30,7 +30,7 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 
 	clock_t startClockTime = clock();
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now(); //TODO check high resolution clock vs standard one
-	std::chrono::high_resolution_clock::time_point beginHighRes = std::chrono::high_resolution_clock::now();
+	//std::chrono::high_resolution_clock::time_point beginHighRes = std::chrono::high_resolution_clock::now();
 
 	auto graph = m_MapManagerPtr->GetGraph();
 	auto goalGridTile = graph[iGoalNode].GetGridTileInfo();
@@ -39,7 +39,15 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 	m_distSoFar[iStartNode] = 0.0f;
 
 	std::priority_queue<CPriorityQueueNode, std::vector<CPriorityQueueNode>, ComparePriorityQueueNode> dijQueueNode;
+
+	/*auto currGridTile = graph[iStartNode].GetGridTileInfo();
+
+	int deltaX = std::abs(currGridTile.m_iXPos - goalGridTile.m_iXPos);
+	int deltaY = std::abs(currGridTile.m_iYPos - goalGridTile.m_iYPos);
+	double newFValue = max(deltaX, deltaY) + DIAG_HEUR_VAL * min(deltaX, deltaY);*/
+
 	CPriorityQueueNode firstNode(iStartNode, 0.0);
+	//firstNode.SetF(newFValue);
 	dijQueueNode.push(firstNode);
 
 	long lVisitedNodes = 0;
@@ -47,14 +55,35 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 	long lOpenSetMaxSize = 0;
 	long lAlreadyProcessed = 0;
 
+	/*bool bDirectNextNodeAccess = false;
+	bool bFoundBetterNeighbour = false;
+	std::vector<CPriorityQueueNode>::iterator directNextNodePtr;
+	double dDirectMinPathLength = (std::numeric_limits<double>::max)();
+	std::vector<CPriorityQueueNode> directAccessVec;
+	directAccessVec.reserve(GRID_BRANCHING_FACTOR);
+
+	CPriorityQueueNode currentNode;
+	int current;
+	int currentFVal;*/
+
 	while (!dijQueueNode.empty())
 	{
 		if (dijQueueNode.size() > lOpenSetMaxSize)
 			lOpenSetMaxSize = dijQueueNode.size();
 
-		auto currentNode = dijQueueNode.top();
-		auto current = currentNode.GetNodeId();
-		dijQueueNode.pop();
+		//if (!bDirectNextNodeAccess)
+		//{
+			auto currentNode = dijQueueNode.top();
+			auto current = currentNode.GetNodeId();
+			//currentFVal = currentNode.GetF();
+			dijQueueNode.pop();
+			//++lExpandedNodes; //todo usunac stad
+	/*	}
+		else
+		{
+			current = directNextNodePtr->GetNodeId();
+			currentFVal = directNextNodePtr->GetF();
+		}*/
 
 		if (m_closedList[current] == true) // juz rozpatrzylismy ten wierzcholek
 		{
@@ -63,12 +92,14 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 		}
 
 		m_closedList[current] = true;
-		++lExpandedNodes;
+		++lExpandedNodes; // todo pomyslec czy to w tym miejscu
 
 		if (current == iGoalNode) break;
 
+		/*bDirectNextNodeAccess = false;
+		bFoundBetterNeighbour = false;*/
 		auto nextNeighbour = graph[current].GetNeighbours().begin();
-		while (nextNeighbour != graph[current].GetIterEnd())
+		while (nextNeighbour != graph[current].GetIterEnd() /*&& nextNeighbour->GetNodeId() != current*/) // do not put parent node we came from
 		{
 			double new_cost = m_distSoFar[current] + nextNeighbour->GetWeight();
 			if (m_closedList[nextNeighbour->GetNodeId()] != true
@@ -80,19 +111,35 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 
 				auto currGridTile = graph[nextNeighbour->GetNodeId()].GetGridTileInfo();
 
-				double deltaX = std::abs(currGridTile.m_iXPos - goalGridTile.m_iXPos);
-				double deltaY = std::abs(currGridTile.m_iYPos - goalGridTile.m_iYPos);
-				
+				int deltaX = std::abs(currGridTile.m_iXPos - goalGridTile.m_iXPos);
+				int deltaY = std::abs(currGridTile.m_iYPos - goalGridTile.m_iYPos);
 				double newFValue =  max(deltaX, deltaY) + DIAG_HEUR_VAL * min(deltaX, deltaY);
-				//D * (dx + dy) + (D2 - 2 * D) * min(dx, dy) TODO sprobowac to
-				//double newFValue = 
 
 				nextNeighbour->SetF(new_cost + newFValue);
 
+				/*if (dijQueueNode.size() == 0 || dijQueueNode.top().GetF() > nextNeighbour->GetF())
+				{	
+					if (bFoundBetterNeighbour)
+					{
+						directAccessVec.push_back(*directNextNodePtr);
+					}
+					directNextNodePtr = nextNeighbour;
+					bFoundBetterNeighbour = true;
+				}
+				else
+				{
+					directAccessVec.push_back(*nextNeighbour);
+				}*/
 				dijQueueNode.push(*nextNeighbour);
+				//dijQueueNode.emplace(*nextNeighbour);
 			}
 			nextNeighbour++;
 		}
+
+		//for (size_t i=0; i<directAccessVec.size(); ++i) // push from directAccess
+		//	dijQueueNode.push(directAccessVec[i]);
+		//directAccessVec.clear(); // capacity == 8?
+		//bDirectNextNodeAccess = bFoundBetterNeighbour;
 	}
 
 	int iNodeId = iGoalNode;
@@ -108,8 +155,8 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 
 	double timeElapsedClock = (endClockTime - startClockTime) * 1000 / CLOCKS_PER_SEC;
 	double timeElapsedMS = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
-	double timeElapsedNS = std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count();
-	double timeElapsedHighResMS = std::chrono::duration_cast<std::chrono::microseconds>(endHighRes - beginHighRes).count();
+	//double timeElapsedNS = std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count();
+	//double timeElapsedHighResMS = std::chrono::duration_cast<std::chrono::microseconds>(endHighRes - beginHighRes).count();
 
 	//TODO only in experiments
 	std::vector<int>().swap(m_shortestPath); //deallocate memory for shortestpath

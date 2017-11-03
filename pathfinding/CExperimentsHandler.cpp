@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "CExperimentsHandler.h"
+#include <regex>
+#include <fstream>
 
 
 //CExperimentsHandler::CExperimentsHandler()
@@ -24,22 +26,67 @@ void CExperimentsHandler::DoDijkstraExperiments(int iNumExperiments)
 		//iGoalNode = m_MapManager.GetMapHeight() / 2 * m_MapManager.GetMapWidth() + 4 * m_MapManager.GetMapWidth() / 5;
 
 		m_Dijkstra.FindShortestPath(iStartNode, iGoalNode);
-		m_StatisticCollectionDijkstra.push_back(m_Dijkstra.GetStatistics());
+		m_StatsDijkstra.AddStats(m_Dijkstra.GetStatistics());
+		//m_StatisticCollectionDijkstra.push_back(m_Dijkstra.GetStatistics());
 
 		m_AStar.FindShortestPath(iStartNode, iGoalNode);
+		m_StatsAStar.AddStats(m_AStar.GetStatistics());
 		//m_AStar.DrawMap();
-		m_StatisticCollectionAStar.push_back(m_AStar.GetStatistics());
+		//m_StatisticCollectionAStar.push_back(m_AStar.GetStatistics());
 
 		if(i%10 == 0)
 			std::cout << i << " : DONE" << std::endl;
 	}
 
-	CalcAvgStats();
+	PrintStats();
 }
 
-void CExperimentsHandler::CalcAvgStats()
+void CExperimentsHandler::DoTestSuiteExperiments()
 {
-	long long lAvgNodesExpAStar = 0, lAvgNodesExpDijk = 0;
+	std::string strTestMapSuite = strTestsLocationPrefix + strMapName;
+	strTestMapSuite = std::regex_replace(strTestMapSuite, std::regex(".map"), ".txt");
+	
+	std::ifstream testFileSuite(strTestMapSuite.c_str());
+	ATLASSERT(testFileSuite.is_open() == true);
+	if (testFileSuite.is_open())
+	{
+		srand(time(NULL));
+		std::string strTemp;
+		int iTestCount = 0, iStartNode = 0, iGoalNode = 0;
+		testFileSuite >> strTemp; //"testCount:"
+		testFileSuite >> iTestCount;
+		iTestCount = 100; //TODO
+		for (int i = 0; i < iTestCount; ++i)
+		{
+			testFileSuite >> iStartNode;
+			testFileSuite >> iGoalNode;
+
+			//m_Dijkstra.FindShortestPath(iStartNode, iGoalNode);
+			//m_StatsDijkstra.AddStats(m_Dijkstra.GetStatistics());
+
+			m_AStar.FindShortestPath(iStartNode, iGoalNode);
+			m_StatsAStar.AddStats(m_AStar.GetStatistics());
+
+			if (i % 10 == 0)
+				std::cout << i << " : DONE" << std::endl;
+		}
+
+		testFileSuite.close();
+		PrintStats();	
+	}
+}
+
+void CExperimentsHandler::PrintStats()
+{
+	std::cout << "DIJKSTRA:\n";
+	//m_StatsDijkstra.PrintAllStats();
+	m_StatsDijkstra.PrintAvgStats();
+	std::cout << "\n\nASTAR:\n";
+	//m_StatsAStar.PrintAllStats();
+	m_StatsAStar.PrintAvgStats();
+
+
+	/*long long lAvgNodesExpAStar = 0, lAvgNodesExpDijk = 0;
 	long long lAvgNodesVisAStar = 0, lAvgNodesVisDijk = 0;
 	long long lAvgOpenSetAStar = 0, lAvgOpenSetDijk = 0;
 	double lAvgTimeAStar = 0.0, lAvgTimeDijk = 0.0;
@@ -69,5 +116,5 @@ void CExperimentsHandler::CalcAvgStats()
 	std::cout << "nodesExpanded: " << lAvgNodesExpAStar / m_StatisticCollectionAStar.size() << std::endl;
 	std::cout << "nodesVisited : " << lAvgNodesVisAStar / m_StatisticCollectionAStar.size() << std::endl;
 	std::cout << "openSetMax   : " << lAvgOpenSetAStar / m_StatisticCollectionAStar.size() << std::endl;
-	std::cout << "avgTime      : " << lAvgTimeAStar / m_StatisticCollectionAStar.size() << std::endl;
+	std::cout << "avgTime      : " << lAvgTimeAStar / m_StatisticCollectionAStar.size() << std::endl;*/
 }
