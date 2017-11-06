@@ -19,17 +19,38 @@ struct ComparePriorityQueueNode
 	}
 };
 
+template <class T, class A, class B>
+class CMyPriorityQueue : public std::priority_queue<T, A, B>
+{
+public:
+	
+	auto& impl() { return c; }
+	template<class T>
+	void insertNewVector(T &newVec) 
+	{
+		c = newVec;
+	}
+
+	void CleanTrash()
+	{
+	
+	}
+};
+
 void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 {
+	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+	clock_t startClockTime = clock();
+
 	int iNodesCount = m_MapManagerPtr->GetMapNodesCount();
 	m_previous.resize(iNodesCount);
 	m_distSoFar.resize(iNodesCount);
 	double maxDistance = (std::numeric_limits<double>::max)();
 	m_distSoFar.assign(iNodesCount, maxDistance);
 	m_closedList.assign(iNodesCount, false);
-
-	clock_t startClockTime = clock();
-	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now(); //TODO check high resolution clock vs standard one
+	
+	
+	 //TODO check high resolution clock vs standard one
 	//std::chrono::high_resolution_clock::time_point beginHighRes = std::chrono::high_resolution_clock::now();
 
 	auto graph = m_MapManagerPtr->GetGraph();
@@ -38,7 +59,8 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 	m_previous[iStartNode] = -1;
 	m_distSoFar[iStartNode] = 0.0f;
 
-	std::priority_queue<CPriorityQueueNode, std::vector<CPriorityQueueNode>, ComparePriorityQueueNode> dijQueueNode;
+	//std::priority_queue<CPriorityQueueNode, std::vector<CPriorityQueueNode>, ComparePriorityQueueNode> dijQueueNode;
+	CMyPriorityQueue<CPriorityQueueNode, std::vector<CPriorityQueueNode>, ComparePriorityQueueNode> dijQueueNode;
 
 	/*auto currGridTile = graph[iStartNode].GetGridTileInfo();
 
@@ -55,35 +77,56 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 	long lOpenSetMaxSize = 0;
 	long lAlreadyProcessed = 0;
 
-	/*bool bDirectNextNodeAccess = false;
+	//bool bDirectNextNodeAccess = false;
 	bool bFoundBetterNeighbour = false;
 	std::vector<CPriorityQueueNode>::iterator directNextNodePtr;
-	double dDirectMinPathLength = (std::numeric_limits<double>::max)();
-	std::vector<CPriorityQueueNode> directAccessVec;
-	directAccessVec.reserve(GRID_BRANCHING_FACTOR);
+	//double dDirectMinPathLength = (std::numeric_limits<double>::max)();
+	//std::vector<CPriorityQueueNode> directAccessVec;
+	//directAccessVec.reserve(GRID_BRANCHING_FACTOR);
 
 	CPriorityQueueNode currentNode;
 	int current;
-	int currentFVal;*/
-
+	int currentFVal;
+	int cleanCount = 0;
 	while (!dijQueueNode.empty())
 	{
 		if (dijQueueNode.size() > lOpenSetMaxSize)
 			lOpenSetMaxSize = dijQueueNode.size();
 
-		//if (!bDirectNextNodeAccess)
+		//if (dijQueueNode.size() >= 350)
 		//{
+		//	if (dijQueueNode.size() >= 350 + cleanCount * 100) //TODO pomyslec nad tym, zrobic dokladniejsze testy
+		//	{
+		//		++cleanCount;
+		//		//THROWING OUT THE TRASH
+		//		//auto it = dijQueueNode.b
+		//		auto &vec = dijQueueNode.impl();
+		//		std::vector<CPriorityQueueNode> newQueue;
+		//		auto it = vec.begin();
+		//		while (it != vec.end())
+		//		{
+		//			if (!m_closedList[it->GetNodeId()])
+		//				newQueue.push_back(*it);
+		//			++it;
+		//		}
+		//		std::make_heap(newQueue.begin(), newQueue.end(), ComparePriorityQueueNode());
+		//		vec = newQueue;
+		//	}
+		//	//dijQueueNode.insertNewVector(newQueue);
+		//}
+		if (!bFoundBetterNeighbour)
+		{
 			auto currentNode = dijQueueNode.top();
-			auto current = currentNode.GetNodeId();
-			//currentFVal = currentNode.GetF();
+			current = currentNode.GetNodeId();
+			currentFVal = currentNode.GetF();
 			dijQueueNode.pop();
 			//++lExpandedNodes; //todo usunac stad
-	/*	}
+		}
 		else
 		{
 			current = directNextNodePtr->GetNodeId();
 			currentFVal = directNextNodePtr->GetF();
-		}*/
+		}
 
 		if (m_closedList[current] == true) // juz rozpatrzylismy ten wierzcholek
 		{
@@ -96,8 +139,8 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 
 		if (current == iGoalNode) break;
 
-		/*bDirectNextNodeAccess = false;
-		bFoundBetterNeighbour = false;*/
+		//bDirectNextNodeAccess = false;
+		bFoundBetterNeighbour = false;
 		auto nextNeighbour = graph[current].GetNeighbours().begin();
 		while (nextNeighbour != graph[current].GetIterEnd() /*&& nextNeighbour->GetNodeId() != current*/) // do not put parent node we came from
 		{
@@ -109,7 +152,7 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 				m_distSoFar[nextNeighbour->GetNodeId()] = new_cost;
 				m_previous[nextNeighbour->GetNodeId()] = current;
 
-				auto currGridTile = graph[nextNeighbour->GetNodeId()].GetGridTileInfo();
+				auto &currGridTile = graph[nextNeighbour->GetNodeId()].GetGridTileInfo();
 
 				int deltaX = std::abs(currGridTile.m_iXPos - goalGridTile.m_iXPos);
 				int deltaY = std::abs(currGridTile.m_iYPos - goalGridTile.m_iYPos);
@@ -117,20 +160,22 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 
 				nextNeighbour->SetF(new_cost + newFValue);
 
-				/*if (dijQueueNode.size() == 0 || dijQueueNode.top().GetF() > nextNeighbour->GetF())
+				if (dijQueueNode.size() == 0 || dijQueueNode.top().GetF() >= nextNeighbour->GetF())
 				{	
 					if (bFoundBetterNeighbour)
 					{
-						directAccessVec.push_back(*directNextNodePtr);
+						//directAccessVec.push_back(*directNextNodePtr);
+						dijQueueNode.push(*directNextNodePtr);
 					}
 					directNextNodePtr = nextNeighbour;
 					bFoundBetterNeighbour = true;
 				}
 				else
 				{
-					directAccessVec.push_back(*nextNeighbour);
-				}*/
-				dijQueueNode.push(*nextNeighbour);
+					dijQueueNode.push(*nextNeighbour);
+					//directAccessVec.push_back(*nextNeighbour);
+				}
+				//dijQueueNode.push(*nextNeighbour);
 				//dijQueueNode.emplace(*nextNeighbour);
 			}
 			nextNeighbour++;
@@ -166,4 +211,5 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 	m_Statistics.SetNodesExpanded(lExpandedNodes);
 	m_Statistics.SetNodesVisited(lVisitedNodes);
 	m_Statistics.SetOpenSetMaxSize(lOpenSetMaxSize);
+	//std::cout << "clean count: " << cleanCount << std::endl;
 }

@@ -86,9 +86,10 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,9 +149,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CAstar.h" />
+    <ClInclude Include="CCluster.h" />
     <ClInclude Include="CDijkstra.h" />
     <ClInclude Include="CExperimentsHandler.h" />
     <ClInclude Include="CGridTile.h" />
+    <ClInclude Include="CHierarchicalEdge.h" />
+    <ClInclude Include="CHierarchicalNode.h" />
+    <ClInclude Include="CHPAAbstrLevel.h" />
+    <ClInclude Include="CHPAStar.h" />
     <ClInclude Include="CMapManager.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="CPriorityQueueEdges.h" />
@@ -162,9 +168,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CAstar.cpp" />
+    <ClCompile Include="CCluster.cpp" />
     <ClCompile Include="CDijkstra.cpp" />
     <ClCompile Include="CExperimentsHandler.cpp" />
     <ClCompile Include="CGridTile.cpp" />
+    <ClCompile Include="CHierarchicalEdge.cpp" />
+    <ClCompile Include="CHierarchicalNode.cpp" />
+    <ClCompile Include="CHPAAbstrLevel.cpp" />
+    <ClCompile Include="CHPAStar.cpp" />
     <ClCompile Include="CMapManager.cpp" />
     <ClCompile Include="CPriorityQueueEdges.cpp" />
     <ClCompile Include="CPriorityQueueNode.cpp" />

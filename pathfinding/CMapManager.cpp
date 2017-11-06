@@ -43,9 +43,11 @@ void CMapManager::DrawMap()
 	for(int i=0; i<m_Graph.size(); ++i)
 	{
 		if(m_Graph[i].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable)
-			glColor3f(0.5f, 0.2f, 0.8f); //PURPLE
+			glColor3f(0.94f, 0.94f, 0.94f); //WHITE-GREY
+			//glColor3f(0.5f, 0.2f, 0.8f); //PURPLE
 		else
-			glColor3f(1.0f, 0.0f, 0.0f); //RED
+			glColor3f(0.07f, 0.45f, 0.05f); //GREENISH
+			//glColor3f(1.0f, 0.0f, 0.0f); //RED
 
 		CCoords &coords = m_Graph[i].GetGridTileInfo().GetCoords();
 
@@ -69,9 +71,9 @@ void CMapManager::DrawShortestPath(std::vector<int> &vec)
 	for (int i = 0; i < vec.size(); ++i)
 	{
 		if(i==0 || i == vec.size() - 1)
-			glColor3f(1.0f, 1.0f, 1.0f); //WHITE
+			glColor3f(0.0f, 0.0f, 1.0f); //BLUE
 		else
-			glColor3f(0.0f, 1.0f, 0.0f); //GREEN
+			glColor3f(0.0f, 0.0f, 0.0f); //BLACK
 
 		int iRow, iCol;
 		iRow = floor(vec[i] / m_iMapWidth);

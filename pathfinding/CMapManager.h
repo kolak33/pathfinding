@@ -26,6 +26,10 @@ public:
 	int GetMapNodesCount() { return m_iMapNodesCount; }
 	//auto& GetGridMap() { return m_GridMap; }
 	auto& GetGraph() { return m_Graph; }
+	auto& GetGraphNodeByPosition(int iXPos, int iYPos)
+	{
+		return m_Graph[iYPos * iXPos + iXPos];
+	}
 	int GenerateRandomAccessibleNodeId();
 
 protected:
