@@ -33,11 +33,47 @@ GridTypeEnum CMapManager::GetGridTypeByChar(char chCell)
 	return (it == m_TerrainMapInfo.end() ? GridTypeNone : (it->second.second));
 }
 
+void CMapManager::ColorGridTile(int iTileId, CColor &color)
+{
+	glBegin(GL_QUADS);
+	glColor3f(color.R, color.G, color.B);
+
+	if (m_Graph[iTileId].GetUsed() == true) 
+		glColor3f(0.5f, 0.5f, 0.5f);
+	m_Graph[iTileId].SetUsed(true);
+
+	CCoords &coords = m_Graph[iTileId].GetGridTileInfo().GetCoords();
+	glVertex2f(coords.x, coords.y);
+	glVertex2f(coords.x + m_fQuadSize, coords.y);
+	glVertex2f(coords.x + m_fQuadSize, coords.y + m_fQuadSize);
+	glVertex2f(coords.x, coords.y + m_fQuadSize);
+
+	glEnd();
+	glFlush();
+}
+
+void CMapManager::DrawClusterBorder(CCluster &cluster, CColor &color)
+{
+	glBegin(GL_QUADS);
+	glColor3f(color.R, color.G, color.B);
+
+	auto& leftUp    = GetGraphNodeByPosition(cluster.GetXPos(), cluster.GetYPos()).GetGridTileInfo().GetCoords();
+	auto& leftDown  = GetGraphNodeByPosition(cluster.GetXPos(), cluster.GetYPos() + cluster.GetClusterHeight() - 1).GetGridTileInfo().GetCoords();
+	auto& rightUp   = GetGraphNodeByPosition(cluster.GetXPos() + cluster.GetClusterWidth() - 1, cluster.GetYPos()).GetGridTileInfo().GetCoords();
+	auto& rightDown = GetGraphNodeByPosition(cluster.GetXPos() + cluster.GetClusterWidth() - 1, cluster.GetYPos() + cluster.GetClusterHeight() - 1).GetGridTileInfo().GetCoords();
+
+	glVertex2f(leftUp.x, leftUp.y);
+	glVertex2f(rightUp.x, rightUp.y);
+	glVertex2f(rightDown.x, rightDown.y);
+	glVertex2f(leftDown.x, leftDown.y);	
+
+	glEnd();
+	glFlush();
+}
+
 void CMapManager::DrawMap()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	int quadCount = max(m_iMapHeight, m_iMapWidth);
-	float quadSize = 2.0f / static_cast<float>(1.1f * quadCount);
 
 	glBegin(GL_QUADS);
 	for(int i=0; i<m_Graph.size(); ++i)
@@ -52,9 +88,9 @@ void CMapManager::DrawMap()
 		CCoords &coords = m_Graph[i].GetGridTileInfo().GetCoords();
 
 		glVertex2f(coords.x, coords.y);
-		glVertex2f(coords.x + quadSize, coords.y);
-		glVertex2f(coords.x + quadSize, coords.y + quadSize);
-		glVertex2f(coords.x, coords.y + quadSize);
+		glVertex2f(coords.x + m_fQuadSize, coords.y);
+		glVertex2f(coords.x + m_fQuadSize, coords.y + m_fQuadSize);
+		glVertex2f(coords.x, coords.y + m_fQuadSize);
 	}
 
 	glEnd();
@@ -64,9 +100,6 @@ void CMapManager::DrawMap()
 void CMapManager::DrawShortestPath(std::vector<int> &vec)
 {
 	glBegin(GL_QUADS);
-	int quadCount = max(m_iMapHeight, m_iMapWidth);
-	float quadSize = 2.0f / static_cast<float>(1.1f * quadCount);
-	
 	
 	for (int i = 0; i < vec.size(); ++i)
 	{
@@ -82,9 +115,9 @@ void CMapManager::DrawShortestPath(std::vector<int> &vec)
 		CCoords &coords = m_Graph[vec[i]].GetGridTileInfo().GetCoords();
 
 		glVertex2f(coords.x, coords.y);
-		glVertex2f(coords.x + quadSize, coords.y);
-		glVertex2f(coords.x + quadSize, coords.y + quadSize);
-		glVertex2f(coords.x, coords.y + quadSize);
+		glVertex2f(coords.x + m_fQuadSize, coords.y);
+		glVertex2f(coords.x + m_fQuadSize, coords.y + m_fQuadSize);
+		glVertex2f(coords.x, coords.y + m_fQuadSize);
 	}
 
 	glEnd();
@@ -114,6 +147,7 @@ void CMapManager::InitMapFromFile()
 		//TODO w jednym miejscu quadSize obliczac, moze zapisac jako zmienna statyczna
 		int quadCount = max(m_iMapHeight, m_iMapWidth);
 		float quadSize = 2.0f / static_cast<float>(1.1f * quadCount);
+		m_fQuadSize = quadSize;
 
 		for (int i = 0, id = 0; i < m_iMapHeight; ++i)
 		{

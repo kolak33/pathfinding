@@ -55,7 +55,7 @@ void CExperimentsHandler::DoTestSuiteExperiments()
 		int iTestCount = 0, iStartNode = 0, iGoalNode = 0;
 		testFileSuite >> strTemp; //"testCount:"
 		testFileSuite >> iTestCount;
-		iTestCount = 100; //TODO
+		iTestCount = 1; //TODO
 		for (int i = 0; i < iTestCount; ++i)
 		{
 			testFileSuite >> iStartNode;
@@ -64,8 +64,10 @@ void CExperimentsHandler::DoTestSuiteExperiments()
 			//m_Dijkstra.FindShortestPath(iStartNode, iGoalNode);
 			//m_StatsDijkstra.AddStats(m_Dijkstra.GetStatistics());
 
-			m_AStar.FindShortestPath(iStartNode, iGoalNode);
-			m_StatsAStar.AddStats(m_AStar.GetStatistics());
+			//m_AStar.FindShortestPath(iStartNode, iGoalNode);
+			//m_StatsAStar.AddStats(m_AStar.GetStatistics());
+
+			m_HPAStar.Preprocessing();
 
 			if (i % 10 == 0)
 				std::cout << i << " : DONE" << std::endl;

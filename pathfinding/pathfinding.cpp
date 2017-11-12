@@ -11,7 +11,8 @@ void DrawMap()
 {
 	// musi byc ustawione wszystko odpowiednio w dijkstrze wczesniej
 	//expHandlerGlobalPtr->GetDijkstra().DrawMap();
-	expHandlerGlobalPtr->GetAStar().DrawMap();
+	//expHandlerGlobalPtr->GetAStar().DrawMap();
+	expHandlerGlobalPtr->GetHPAStar().DrawMap();
 }
 
 int main(int argc, char** argv)

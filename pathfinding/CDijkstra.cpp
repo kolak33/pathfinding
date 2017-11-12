@@ -15,15 +15,32 @@ struct ComparePriorityQueueNode
 	}
 };
 
+void CDijkstra::PreAllocateResources()
+{
+	int iNodesCount = m_MapManagerPtr->GetMapNodesCount();
+	m_previous.resize(iNodesCount);
+	m_distSoFar.resize(iNodesCount);
+
+	m_bPreallocatedResources = true;
+}
+
 void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
 {
 	//TODO preinicjalizacja pamieci i ponowne jej uzywanie gdzies indziej
 	int iNodesCount = m_MapManagerPtr->GetMapNodesCount();
-	m_previous.resize(iNodesCount);
-	m_distSoFar.resize(iNodesCount);
 	double maxDistance = (std::numeric_limits<double>::max)();
-	m_distSoFar.assign(iNodesCount, maxDistance);
-	m_closedList.assign(iNodesCount, false);
+	if (!m_bPreallocatedResources)
+	{
+		m_previous.resize(iNodesCount);
+		m_distSoFar.resize(iNodesCount);
+		m_distSoFar.assign(iNodesCount, maxDistance);
+		m_closedList.assign(iNodesCount, false);
+	}
+	else 
+	{
+		m_distSoFar.assign(iNodesCount, maxDistance);
+		m_closedList.assign(iNodesCount, false);
+	}
 
 	clock_t startClockTime = clock();
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now(); //TODO check high resolution clock vs standard one
@@ -41,6 +58,7 @@ void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
 	long lExpandedNodes = 0;
 	long lOpenSetMaxSize = 0;
 	long lAlreadyProcessed = 0;
+	m_bPathFound = false;
 
 	while (!dijQueueNode.empty())
 	{
@@ -60,7 +78,11 @@ void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
 		m_closedList[current] = true;
 		++lExpandedNodes;
 		
-		if (current == iGoalNode) break;
+		if (current == iGoalNode)
+		{
+			m_bPathFound = true;
+			break;
+		}
 
 		auto nextNeighbour = graph[current].GetNeighbours().begin();
 		while (nextNeighbour != graph[current].GetIterEnd())
@@ -79,7 +101,7 @@ void CDijkstra::FindShortestPath(int iStartNode, int iGoalNode)
 			nextNeighbour++;
 		}
 	}
-
+	m_shortestPathLength = m_distSoFar[iGoalNode];
 	int iNodeId = iGoalNode;
 	while (m_previous[iNodeId] != -1)
 	{

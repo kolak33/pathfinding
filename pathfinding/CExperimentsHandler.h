@@ -26,6 +26,7 @@ public:
 	auto& GetMapManager() { return m_MapManager; }
 	auto& GetDijkstra() { return m_Dijkstra; }
 	auto& GetAStar() { return m_AStar; }
+	auto& GetHPAStar() { return m_HPAStar; }
 
 private:
 	//TODO kiedys dziedziczenie po abstr klasie z funkcja searchPath

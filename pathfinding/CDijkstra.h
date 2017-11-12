@@ -17,6 +17,7 @@ class CDijkstra
 {
 public:
 	CDijkstra()
+		: m_bPreallocatedResources(false)
 	{
 		//m_MapManager.InitMapFromFile();
 		//InitGraph();
@@ -33,6 +34,7 @@ public:
 		m_MapManagerPtr->DrawShortestPath(m_shortestPath);
 	}
 
+	void PreAllocateResources();
 	void FindShortestPath(int iStartNode,int iGoalNode);
 	void SearchPathTest();
 	void SetMapManagerPtr(CMapManager *mapManager)
@@ -42,6 +44,8 @@ public:
 	int GenerateRandomAccessibleNodeId();
 
 	CStatistics GetStatistics() { return m_Statistics; }
+	float GetShortestPathLength() { return m_shortestPathLength; }
+	bool GetPathFound() { return m_bPathFound; }
 protected:
 
 	CMapManager						*m_MapManagerPtr;
@@ -51,6 +55,10 @@ protected:
 	std::vector<bool>				 m_closedList;
 
 	std::vector<int>				 m_shortestPath; //TODO to bedzie zwracane
+	float							 m_shortestPathLength;
+	bool							 m_bPathFound;
+
+	bool							m_bPreallocatedResources;
 
 	CStatistics						 m_Statistics;
 };
