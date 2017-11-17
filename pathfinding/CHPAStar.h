@@ -10,8 +10,9 @@ public:
 		: m_iFirstLvlClusterHeight(10)
 		, m_iFirstLvlClusterWidth(10)
 		, m_iMaxSingleEntranceLen(6)
-		, m_iMaxLevel(3)
+		, m_iMaxLevel(1)
 		, m_iClustersInGroup(2)
+		, m_iMaxLvlStartGoalNodes(0)
 	{
 
 	}
@@ -22,20 +23,30 @@ public:
 	void SetLowLevelGraphPtr(CMapManager *mapManager) //set MapManagerPtr
 	{
 		m_GraphLowLevelPtr = mapManager;
+		m_AStar.SetMapManagerPtr(m_GraphLowLevelPtr);
 	}
 
 	void DrawMap()
 	{
 		m_GraphLowLevelPtr->DrawMap();
-		//m_AllAbstrLevels[0].DrawEntrances();
-		//m_AllAbstrLevels[1].DrawClusterBorders();
-		//m_AllAbstrLevels[1].DrawEntrances();
-		m_AllAbstrLevels[2].DrawEntrances();
+
+		m_AllAbstrLevels[0].DrawEntrances();
+		//m_AllAbstrLevels[3].DrawGraphConnections();	
+		//m_AllAbstrLevels[3].DrawStartGoalNodes(m_iStart, m_iGoal);
+
+		m_GraphLowLevelPtr->DrawShortestPath(m_shortestPath);
 	}
 
 	void Preprocessing();
+	void FindShortestPath(int iStartId, int iGoalId);
+	CStatistics GetStatistics() { return m_Statistics; }
+
+protected:
 	void BuildFirstLevel();
 	void AddNextLevels();
+	void AddStartAndGoalNodesToGraph(int iStartId, int iGoalId);
+	void RemoveStartAndGoalNodesFromGraph(int iStartId, int iGoalId);
+	void RefinePath(CAstar &AStar, std::vector<int> &path, int iLvl, std::vector<int> &resultPath);
 
 private:
 	std::vector<CHPAAbstrLevel> m_AllAbstrLevels; //Higher abstraction levels with clusters
@@ -46,5 +57,13 @@ private:
 	int m_iFirstLvlClusterWidth;
 	int m_iFirstLvlClusterHeight;
 	int m_iMaxSingleEntranceLen;
+	int m_iMaxLvlStartGoalNodes;
+
+	std::vector<int> m_shortestPath;
+	CStatistics	m_Statistics;
+	CAstar m_AStar;
+
+	//TEMP
+	int m_iStart, m_iGoal;
 };
 

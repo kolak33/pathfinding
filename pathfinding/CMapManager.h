@@ -33,6 +33,7 @@ public:
 	void DrawShortestPath(std::vector<int> &vec);
 	void ColorGridTile(int iTileId, CColor &color);
 	void DrawClusterBorder(CCluster &cluster, CColor &color);
+	void DrawLine(int iFirstNode, int iSecNode, CColor &color);
 
 	int GetMapHeight() { return m_iMapHeight; }
 	int GetMapWidth() { return m_iMapWidth; }

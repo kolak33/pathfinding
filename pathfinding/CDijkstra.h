@@ -46,6 +46,7 @@ public:
 	CStatistics GetStatistics() { return m_Statistics; }
 	float GetShortestPathLength() { return m_shortestPathLength; }
 	bool GetPathFound() { return m_bPathFound; }
+	auto& GetShortestPath() { return m_shortestPath; }
 protected:
 
 	CMapManager						*m_MapManagerPtr;
@@ -54,7 +55,7 @@ protected:
 	std::vector<double>				 m_distSoFar;
 	std::vector<bool>				 m_closedList;
 
-	std::vector<int>				 m_shortestPath; //TODO to bedzie zwracane
+	std::vector<int>				 m_shortestPath;
 	float							 m_shortestPathLength;
 	bool							 m_bPathFound;
 

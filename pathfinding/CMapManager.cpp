@@ -71,6 +71,22 @@ void CMapManager::DrawClusterBorder(CCluster &cluster, CColor &color)
 	glFlush();
 }
 
+void CMapManager::DrawLine(int iFirstNode, int iSecNode, CColor &color)
+{
+	glLineWidth(1);
+	glBegin(GL_LINES);
+	glColor3f(color.R, color.G, color.B);
+
+	auto &firstNode = m_Graph[iFirstNode].GetGridTileInfo().GetCoords();
+	auto &secNode = m_Graph[iSecNode].GetGridTileInfo().GetCoords();
+
+	glVertex2f(firstNode.x, firstNode.y);
+	glVertex2f(secNode.x, secNode.y);
+
+	glEnd();
+	glFlush();
+}
+
 void CMapManager::DrawMap()
 {
 	glClear(GL_COLOR_BUFFER_BIT);

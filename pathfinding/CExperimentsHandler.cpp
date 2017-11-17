@@ -55,7 +55,10 @@ void CExperimentsHandler::DoTestSuiteExperiments()
 		int iTestCount = 0, iStartNode = 0, iGoalNode = 0;
 		testFileSuite >> strTemp; //"testCount:"
 		testFileSuite >> iTestCount;
-		iTestCount = 1; //TODO
+		iTestCount = 10; //TODO
+
+		m_HPAStar.Preprocessing();
+
 		for (int i = 0; i < iTestCount; ++i)
 		{
 			testFileSuite >> iStartNode;
@@ -64,12 +67,13 @@ void CExperimentsHandler::DoTestSuiteExperiments()
 			//m_Dijkstra.FindShortestPath(iStartNode, iGoalNode);
 			//m_StatsDijkstra.AddStats(m_Dijkstra.GetStatistics());
 
-			//m_AStar.FindShortestPath(iStartNode, iGoalNode);
-			//m_StatsAStar.AddStats(m_AStar.GetStatistics());
+			m_AStar.FindShortestPath(iStartNode, iGoalNode);
+			m_StatsAStar.AddStats(m_AStar.GetStatistics());
 
-			m_HPAStar.Preprocessing();
+			m_HPAStar.FindShortestPath(iStartNode, iGoalNode);
+			m_StatsHPAStar.AddStats(m_HPAStar.GetStatistics());
 
-			if (i % 10 == 0)
+			if (i % 100 == 0)
 				std::cout << i << " : DONE" << std::endl;
 		}
 
@@ -80,43 +84,14 @@ void CExperimentsHandler::DoTestSuiteExperiments()
 
 void CExperimentsHandler::PrintStats()
 {
-	std::cout << "DIJKSTRA:\n";
+	//std::cout << "DIJKSTRA:\n";
 	//m_StatsDijkstra.PrintAllStats();
-	m_StatsDijkstra.PrintAvgStats();
+	//m_StatsDijkstra.PrintAvgStats();
 	std::cout << "\n\nASTAR:\n";
 	//m_StatsAStar.PrintAllStats();
 	m_StatsAStar.PrintAvgStats();
 
-
-	/*long long lAvgNodesExpAStar = 0, lAvgNodesExpDijk = 0;
-	long long lAvgNodesVisAStar = 0, lAvgNodesVisDijk = 0;
-	long long lAvgOpenSetAStar = 0, lAvgOpenSetDijk = 0;
-	double lAvgTimeAStar = 0.0, lAvgTimeDijk = 0.0;
-
-	for (int i = 0; i < m_StatisticCollectionDijkstra.size(); ++i)
-	{
-		lAvgNodesExpAStar += m_StatisticCollectionAStar[i].GetNodesExpanded();
-		lAvgNodesVisAStar += m_StatisticCollectionAStar[i].GetNodesVisited();
-		lAvgOpenSetAStar += m_StatisticCollectionAStar[i].GetOpenSetMaxSize();
-		lAvgTimeAStar += m_StatisticCollectionAStar[i].GetSearchTimeClock();
-
-		lAvgNodesExpDijk += m_StatisticCollectionDijkstra[i].GetNodesExpanded();
-		lAvgNodesVisDijk += m_StatisticCollectionDijkstra[i].GetNodesVisited();
-		lAvgOpenSetDijk += m_StatisticCollectionDijkstra[i].GetOpenSetMaxSize();
-		lAvgTimeDijk += m_StatisticCollectionDijkstra[i].GetSearchTimeClock();
-	}
-
-	std::cout << "Dijkstra avg stats:\n";
-	std::cout << "nodesExpanded: " << lAvgNodesExpDijk / m_StatisticCollectionDijkstra.size() << std::endl;
-	std::cout << "nodesVisited : " << lAvgNodesVisDijk / m_StatisticCollectionDijkstra.size() << std::endl;
-	std::cout << "openSetMax   : " << lAvgOpenSetDijk / m_StatisticCollectionDijkstra.size() << std::endl;
-	std::cout << "avgTime      : " << lAvgTimeDijk / m_StatisticCollectionDijkstra.size() << std::endl;
-
-	std::cout << "\n\n\n";
-
-	std::cout << "AStar avg stats:\n";
-	std::cout << "nodesExpanded: " << lAvgNodesExpAStar / m_StatisticCollectionAStar.size() << std::endl;
-	std::cout << "nodesVisited : " << lAvgNodesVisAStar / m_StatisticCollectionAStar.size() << std::endl;
-	std::cout << "openSetMax   : " << lAvgOpenSetAStar / m_StatisticCollectionAStar.size() << std::endl;
-	std::cout << "avgTime      : " << lAvgTimeAStar / m_StatisticCollectionAStar.size() << std::endl;*/
+	std::cout << "\n\nHPASTAR:\n";
+	//m_StatsAStar.PrintAllStats();
+	m_StatsHPAStar.PrintAvgStats();
 }

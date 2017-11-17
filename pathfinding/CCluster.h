@@ -27,15 +27,16 @@ public:
 	auto& GetEntrances() { return m_entrancesIds; }
 
 	void SetId(int iId) { m_iId = iId; }
+	int GetId() { return m_iId; }
 private:
-	std::vector<int> m_entrancesIds; // chyba z zero lvla
+	std::vector<int> m_entrancesIds; // z zero lvla
 	int m_iWidth;
 	int m_iHeight;
 	int m_xPos; //most upright-left position in cluster
 	int m_yPos;
 	
 
-	int m_xCenter; //TODO przemyslec; do heurystyki przy A* na wyzszych poziomach abstrakcji
+	int m_xCenter; //TODO wywalic; do heurystyki przy A* na wyzszych poziomach abstrakcji
 	int m_yCenter;
 
 	int m_iId;

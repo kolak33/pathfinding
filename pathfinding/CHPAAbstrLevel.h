@@ -4,6 +4,7 @@
 #include "CHierarchicalEdge.h"
 #include "CCluster.h"
 #include "CMapManager.h"
+#include "CAstar.h"
 
 class CHPAAbstrLevel
 {
@@ -14,12 +15,14 @@ public:
 	{
 	}
 
-	CHPAAbstrLevel(int iCurrLevel, int iClustersLen, CMapManager *lowLevelGraph)
+	CHPAAbstrLevel(int iCurrLevel, int iClustersLen, CMapManager *lowLevelGraph, int iFirstLvlClusterWidth, int iFirstLvlClusterHeight)
 		: m_iCurrLevel(iCurrLevel)
 		, m_GraphLowLevelPtr(lowLevelGraph)
 		, m_iClustersRowCount(0)
 		, m_iClustersColCount(0)
 		, m_iClustersLen(iClustersLen)
+		, m_iFirstLvlClusterWidth(iFirstLvlClusterWidth)
+		, m_iFirstLvlClusterHeight(iFirstLvlClusterHeight)
 	{
 
 	}
@@ -27,15 +30,24 @@ public:
 	~CHPAAbstrLevel()
 	{
 	}
-
-	void BuildClusters(int iClusterWidth, int iClusterHeight);
+	//preprocessing
+	void BuildClusters();
 	void BuildClustersNextLevel(CHPAAbstrLevel *lowerAbstrLevelPtr);
-	void BuildHorizontalEntrancesNextLevel(CHPAAbstrLevel *lowerAbstrLevelPtr, int iFirstLvlClusterWidth, int iFirstLvlClusterHeight);
-	void BuildVerticalEntrances(int iClusterWidth, int iClusterHeight, int iMaxEntranceLength);
-	void BuildHorizontalEntrances(int iClusterWidth, int iClusterHeight, int iMaxEntranceLength);
-	void BuildIntraEdges();
+	void BuildEntrancesNextLevel(CHPAAbstrLevel *lowerAbstrLevelPtr);
+	void BuildVerticalEntrances(int iMaxEntranceLength);
+	void BuildHorizontalEntrances(int iMaxEntranceLength);
+	void BuildIntraEdges(std::vector<CHierarchicalEdge> &graphLowerLevel);
+
+	//returns false if start&goal node are in the same cluster - they weren't added to the graph
+	bool AddStartAndGoalNodesToGraph(CAstar &AStar, int iStartId, int iGoalId, std::vector<CHierarchicalEdge> &graphLowerLevel);
+	void DeleteStartAndGoalNodesFromGraph(int iStartId, int iGoalId);
+	int CalcClusterId(int iNodeId); //returns clusterId to which node belongs
+
+	//drawing
 	void DrawEntrances();
+	void DrawStartGoalNodes(int iStart, int iGoal);
 	void DrawClusterBorders();
+	void DrawGraphConnections();
 
 	auto& GetGraph() { return m_Graph; }
 	auto& GetClusters() { return m_Clusters; }
@@ -47,7 +59,15 @@ protected:
 
 private:
 	int CalcPosInGraph(CPriorityQueueEdges &firstE, int iFirstClId);
-	int CalcNewClusterId(CGridTile &tile,int iFirstLvlClusterWidth, int iFirstLvlClusterHeight);
+	int CalcNewClusterId(CGridTile &tile); //returns clusterId for a tile
+	int FindEdgePositionInGraph(std::vector<CHierarchicalEdge> &graph, int iTileId);
+	void CreateIntraEdges(CAstar &AStar, CCluster &cluster,
+		std::vector<CHierarchicalEdge> &graphLowerLevel, int iFirstNodeId, int iSecondNodeId);
+	void AddIntraEdgesToGraph(double dShortestPathLength, int iClusterId, int iFirstNodeId, int iSecondNodeId, int iLowerLvlFirstNodeId, int iLowerLvlSecondNodeId);
+	bool NeighbourAlreadyAdded(CHierarchicalEdge &edge, int neighbourId);
+	void AddNodeToGraph(CAstar &AStar, int iNodeId, std::vector<CHierarchicalEdge> &graphLowerLevel);
+	bool IsEntrance(int iNodeId);
+	void DeleteStartOrGoal(int iNodeId);
 
 	std::vector<CHierarchicalEdge> m_Graph; // graph on each level of abstraction
 	std::vector<CCluster> m_Clusters;
@@ -57,5 +77,7 @@ private:
 	int m_iClustersRowCount;
 	int m_iClustersColCount;
 	int m_iClustersLen;
+	int m_iFirstLvlClusterWidth;
+	int m_iFirstLvlClusterHeight;
 };
 
