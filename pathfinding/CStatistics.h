@@ -23,6 +23,7 @@ public:
 	void	SetOpenSetMaxSize(long lSize) { m_stats["openSetMaxSize"] = lSize; }
 
 	auto& GetStats() { return m_stats; }
+	auto& GetExpNodes() { return m_stats.find("nodesExpanded")->second; }
 	friend std::ostream& operator<<(std::ostream& os, CStatistics& stats);
 
 private:

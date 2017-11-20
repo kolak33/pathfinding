@@ -24,41 +24,36 @@ class CMyPriorityQueue : public std::priority_queue<T, A, B>
 {
 public:
 	
-	auto& impl() { return c; }
-	template<class T>
-	void insertNewVector(T &newVec) 
-	{
-		c = newVec;
-	}
+//	auto& impl() { return c; }
 
-	void CleanTrash()
-	{
-	
-	}
 };
 
-void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
+void CAstar::FindShortestPath(int iStartNode, int iGoalNode, bool bSimpleSearch)
 {
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 	//clock_t startClockTime = clock();
 
-	m_shortestPath.clear();
-	//std::vector<int>().swap(m_shortestPath);
 	double maxDistance = (std::numeric_limits<double>::max)();
 	int iNodesCount = m_MapManagerPtr->GetMapNodesCount();
-	//if (!m_bPreallocatedResources)
-	//{	
-	m_previous.resize(iNodesCount);
-	m_distSoFar.resize(iNodesCount);	
-	m_distSoFar.assign(iNodesCount, maxDistance);
-	m_closedList.assign(iNodesCount, false);
-	m_bPreallocatedResources = true;
-	//}
-	//else
-	//{
-	//	m_distSoFar.assign(iNodesCount, maxDistance);
-	//	m_closedList.assign(iNodesCount, false);
-	//}
+
+	m_shortestPath.clear(); //deallocate memory for shortestpath
+	if (!m_bPreallocatedResources)
+	{
+		int iCnt = m_MapManagerPtr->GetGraph().size();
+		m_previous.resize(iCnt);
+		//m_distSoFar.resize(iCnt);
+		m_distSoFar.assign(iCnt, maxDistance);
+		m_closedList.assign(iCnt, false);
+		m_bPreallocatedResources = true;
+	}
+	else
+	{
+		m_distSoFar.assign(iNodesCount, maxDistance);
+		m_closedList.assign(iNodesCount, false);
+	}
+	std::chrono::steady_clock::time_point endAllocationTime = std::chrono::steady_clock::now();
+	m_timeAllocation = std::chrono::duration_cast<std::chrono::milliseconds>(endAllocationTime - begin).count();
+
 
 	//TODO check high resolution clock vs standard one
    //std::chrono::high_resolution_clock::time_point beginHighRes = std::chrono::high_resolution_clock::now();
@@ -172,7 +167,7 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode)
 
 				int deltaX = std::abs(currGridTile.m_iXPos - goalGridTile.m_iXPos);
 				int deltaY = std::abs(currGridTile.m_iYPos - goalGridTile.m_iYPos);
-				double newFValue = max(deltaX, deltaY) + DIAG_HEUR_VAL * min(deltaX, deltaY);
+                double newFValue = max(deltaX, deltaY) + DIAG_HEUR_VAL * min(deltaX, deltaY);
 
 				nextNeighbour->SetF(new_cost + newFValue);
 
@@ -244,19 +239,21 @@ void CAstar::FindShortestPathInCluster(int iStartNode, int iGoalNode, CCluster &
 {
 	double maxDistance = (std::numeric_limits<double>::max)();
 	int iNodesCount = m_MapManagerPtr->GetMapNodesCount();
-	//if (!m_bPreallocatedResources)
-	//{
-		m_previous.resize(iNodesCount);
-		m_distSoFar.resize(iNodesCount);
+	m_shortestPath.clear(); //deallocate memory for shortestpath
+	if (!m_bPreallocatedResources)
+	{
+		int iCnt = m_MapManagerPtr->GetGraph().size();
+		m_previous.resize(iCnt);
+		//m_distSoFar.resize(iCnt);
+		m_distSoFar.assign(iCnt, maxDistance);
+		m_closedList.assign(iCnt, false);
+		m_bPreallocatedResources = true;
+	}
+	else
+	{
 		m_distSoFar.assign(iNodesCount, maxDistance);
 		m_closedList.assign(iNodesCount, false);
-		m_bPreallocatedResources = true;
-	//}
-	//else
-	//{
-	//	m_distSoFar.assign(iNodesCount, maxDistance);
-	//	m_closedList.assign(iNodesCount, false);
-	//}
+	}
 
 	auto graph = m_MapManagerPtr->GetGraph();
 	auto goalGridTile = graph[iGoalNode].GetGridTileInfo();
@@ -335,7 +332,7 @@ void CAstar::FindShortestPathInCluster(int iStartNode, int iGoalNode, CCluster &
 
 					int deltaX = std::abs(currGridTile.m_iXPos - goalGridTile.m_iXPos);
 					int deltaY = std::abs(currGridTile.m_iYPos - goalGridTile.m_iYPos);
-					double newFValue = max(deltaX, deltaY) + DIAG_HEUR_VAL * min(deltaX, deltaY);
+                    double newFValue = max(deltaX, deltaY) + DIAG_HEUR_VAL * min(deltaX, deltaY);
 
 					nextNeighbour->SetF(new_cost + newFValue);
 
@@ -368,37 +365,55 @@ void CAstar::FindShortestPathInCluster(int iStartNode, int iGoalNode, CCluster &
 		}
 	}	
 
-	std::vector<int>().swap(m_shortestPath); //deallocate memory for shortestpath
+	//std::vector<int>().swap(m_shortestPath); //deallocate memory for shortestpath
 }
 
 //iStartNode i iGoalNode sa Id'ami z lowLvlGrafu, trzeba je najpierw znalezc w abstrGraph
-void CAstar::FindShortestPathInClusterAbstract(int iStartNode, int iGoalNode, CCluster &cluster, std::vector<CHierarchicalEdge> &abstrGraph)
+void CAstar::FindShortestPathInClusterAbstract(int iStartNode, int iGoalNode, CCluster &cluster, std::vector<CHierarchicalEdge> &abstrGraph,
+			int iStartOwnPos, int iGoalOwnPos)
 {
 	double maxDistance = (std::numeric_limits<double>::max)();
 	int iNodesCount = abstrGraph.size();
 
-	std::vector<int>().swap(m_shortestPath); //deallocate memory for shortestpath
-	m_previous.resize(iNodesCount);
-	m_distSoFar.resize(iNodesCount);
-	m_distSoFar.assign(iNodesCount, maxDistance);
-	m_closedList.assign(iNodesCount, false);
+	//std::vector<int>().swap(m_shortestPath); //deallocate memory for shortestpath
+	//m_previous.resize(iNodesCount);
+	//m_distSoFar.resize(iNodesCount);
+	//m_distSoFar.assign(iNodesCount, maxDistance);
+	//m_closedList.assign(iNodesCount, false);
+
+	m_shortestPath.clear(); //deallocate memory for shortestpath
+	if (!m_bPreallocatedResources)
+	{
+		int iCnt = m_MapManagerPtr->GetGraph().size();
+		m_previous.resize(iCnt);
+		//m_distSoFar.resize(iCnt);
+		m_distSoFar.assign(iCnt, maxDistance);
+		m_closedList.assign(iCnt, false);
+		m_bPreallocatedResources = true;
+	}
+	else
+	{
+		m_distSoFar.assign(iNodesCount, maxDistance);
+		m_closedList.assign(iNodesCount, false);
+	}
+
 	
 	auto& lowLvlgraph = m_MapManagerPtr->GetGraph();
 	auto& goalGridTile = lowLvlgraph[iGoalNode].GetGridTileInfo();
 
-	auto startNodeAbstrPos = std::find_if(abstrGraph.begin(), abstrGraph.end(), 
+	/*auto startNodeAbstrPos = std::find_if(abstrGraph.begin(), abstrGraph.end(), 
 		[iStartNode](CHierarchicalEdge &edge) -> bool { return edge.GetId() == iStartNode; });
 	auto goalNodeAbstrPos = std::find_if(abstrGraph.begin(), abstrGraph.end(),
-		[iGoalNode](CHierarchicalEdge &edge) -> bool { return edge.GetId() == iGoalNode; });
+		[iGoalNode](CHierarchicalEdge &edge) -> bool { return edge.GetId() == iGoalNode; });*/
 
-	iGoalNode = goalNodeAbstrPos->GetOwnId();
-	iStartNode = startNodeAbstrPos->GetOwnId();
+	iGoalNode = iGoalOwnPos;//goalNodeAbstrPos->GetOwnId();
+	iStartNode = iStartOwnPos;//startNodeAbstrPos->GetOwnId();
 
-	m_previous[startNodeAbstrPos->GetOwnId()] = -1;
-	m_distSoFar[startNodeAbstrPos->GetOwnId()] = 0.0f;
+	m_previous[iStartNode] = -1;
+	m_distSoFar[iStartNode] = 0.0f;
 
 	CMyPriorityQueue<CPriorityQueueNode, std::vector<CPriorityQueueNode>, ComparePriorityQueueNode> dijQueueNode;
-	CPriorityQueueNode firstNode(startNodeAbstrPos->GetOwnId(), 0.0);
+	CPriorityQueueNode firstNode(iStartNode, 0.0);
 	dijQueueNode.push(firstNode);
 
 	long lVisitedNodes = 0;
@@ -456,7 +471,7 @@ void CAstar::FindShortestPathInClusterAbstract(int iStartNode, int iGoalNode, CC
 
 					int deltaX = std::abs(currGridTile.m_iXPos - goalGridTile.m_iXPos);
 					int deltaY = std::abs(currGridTile.m_iYPos - goalGridTile.m_iYPos);
-					double newFValue = max(deltaX, deltaY) + DIAG_HEUR_VAL * min(deltaX, deltaY);
+                    double newFValue = max(deltaX, deltaY) + DIAG_HEUR_VAL * min(deltaX, deltaY);
 
 					CPriorityQueueNode node(nextNeighbour->GetOwnId(), nextNeighbour->GetWeight());
 					node.SetF(new_cost + newFValue);
@@ -471,45 +486,54 @@ void CAstar::FindShortestPathInClusterAbstract(int iStartNode, int iGoalNode, CC
 	if (m_bPathFound)
 	{
 		m_shortestPathLength = m_distSoFar[iGoalNode];
-		int iNodeId = iGoalNode;
+		/*int iNodeId = iGoalNode;
 		while (m_previous[iNodeId] != -1)
 		{
 			m_shortestPath.push_back(iNodeId);
 			iNodeId = m_previous[iNodeId];
-		}
+		}*/
 	}
 
 	//std::vector<int>().swap(m_shortestPath); //deallocate memory for shortestpath
 }
 
 //iStartNode i iGoalNode sa Id'ami z lowLvlGrafu
-void CAstar::FindShortestPathAbstract(int iStartNode, int iGoalNode, std::vector<CHierarchicalEdge> &abstrGraph)
+void CAstar::FindShortestPathAbstract(int iStartNode, int iGoalNode, std::vector<CHierarchicalEdge> &abstrGraph, int iStartOwnPos, int iGoalOwnPos)
 {
 	double maxDistance = (std::numeric_limits<double>::max)();
 	int iNodesCount = abstrGraph.size();
-
 	m_shortestPath.clear(); //deallocate memory for shortestpath
-	m_previous.resize(iNodesCount);
-	m_distSoFar.resize(iNodesCount);
-	m_distSoFar.assign(iNodesCount, maxDistance);
-	m_closedList.assign(iNodesCount, false);
+	if (!m_bPreallocatedResources)
+	{
+		int iCnt = m_MapManagerPtr->GetGraph().size();
+		m_previous.resize(iCnt);
+		//m_distSoFar.resize(iCnt);
+		m_distSoFar.assign(iCnt, maxDistance);
+		m_closedList.assign(iCnt, false);
+		m_bPreallocatedResources = true;
+	}
+	else
+	{
+		m_distSoFar.assign(iNodesCount, maxDistance);
+		m_closedList.assign(iNodesCount, false);
+	}
 
 	auto& lowLvlgraph = m_MapManagerPtr->GetGraph();
 	auto& goalGridTile = lowLvlgraph[iGoalNode].GetGridTileInfo();
 
-	auto startNodeAbstrPos = std::find_if(abstrGraph.begin(), abstrGraph.end(),
+	/*auto startNodeAbstrPos = std::find_if(abstrGraph.begin(), abstrGraph.end(),
 		[iStartNode](CHierarchicalEdge &edge) -> bool { return edge.GetId() == iStartNode; });
 	auto goalNodeAbstrPos = std::find_if(abstrGraph.begin(), abstrGraph.end(),
-		[iGoalNode](CHierarchicalEdge &edge) -> bool { return edge.GetId() == iGoalNode; });
+		[iGoalNode](CHierarchicalEdge &edge) -> bool { return edge.GetId() == iGoalNode; });*/
 
-	iGoalNode = goalNodeAbstrPos->GetOwnId();
-	iStartNode = startNodeAbstrPos->GetOwnId();
+	iGoalNode = iGoalOwnPos; // goalNodeAbstrPos->GetOwnId();
+	iStartNode = iStartOwnPos; //startNodeAbstrPos->GetOwnId();
 
-	m_previous[startNodeAbstrPos->GetOwnId()] = -1;
-	m_distSoFar[startNodeAbstrPos->GetOwnId()] = 0.0f;
+	m_previous[iStartNode] = -1;
+	m_distSoFar[iStartNode] = 0.0f;
 
 	CMyPriorityQueue<CPriorityQueueNode, std::vector<CPriorityQueueNode>, ComparePriorityQueueNode> dijQueueNode;
-	CPriorityQueueNode firstNode(startNodeAbstrPos->GetOwnId(), 0.0);
+	CPriorityQueueNode firstNode(iStartNode, 0.0);
 	dijQueueNode.push(firstNode);
 
 	long lVisitedNodes = 0;
@@ -565,7 +589,7 @@ void CAstar::FindShortestPathAbstract(int iStartNode, int iGoalNode, std::vector
 
 				int deltaX = std::abs(currGridTile.m_iXPos - goalGridTile.m_iXPos);
 				int deltaY = std::abs(currGridTile.m_iYPos - goalGridTile.m_iYPos);
-				double newFValue = max(deltaX, deltaY) + DIAG_HEUR_VAL * min(deltaX, deltaY);
+                double newFValue = max(deltaX, deltaY) + DIAG_HEUR_VAL * min(deltaX, deltaY);
 
 				CPriorityQueueNode node(nextNeighbour->GetOwnId(), nextNeighbour->GetWeight());
 				node.SetF(new_cost + newFValue);

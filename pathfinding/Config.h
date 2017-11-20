@@ -1,6 +1,5 @@
 #pragma once
-
-#include "atlstr.h"
+#include <atldef.h>
 #include <string>
 
 typedef enum GridTypeEnum {
@@ -14,15 +13,15 @@ typedef enum MapCellType {
 	CellTypePassableTerrain = 2,
 	CellTypeOutOfBounds = 3,
 	CellTypeTrees = 4,
-	CellTypeWall = 3,
-	CellTypeWater = 4,
-	CellTypeShallowWater = 5,
+	CellTypeWall = 5,
+	CellTypeWater = 6,
+	CellTypeShallowWater = 7,
 }MapCellType;
 
  const std::string strMapLocationPrefix = "..\\mapki\\dao\\";
  const std::string strTestsLocationPrefix = "..\\TESTS\\";
 
- const std::string strMapName = "den001d.map";
+ const std::string strMapName = "den312d.map";
  const int iGenerateTestCount = 1000;
 
  const float DIAG_HEUR_VAL	 = 0.4142f;

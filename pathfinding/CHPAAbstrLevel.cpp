@@ -9,31 +9,80 @@ void CHPAAbstrLevel::BuildClusters()
 	int iCurrClusterHeight = m_iFirstLvlClusterHeight, iCurrClusterWidth = m_iFirstLvlClusterWidth;
 
 	for (int iHeight = 0; iHeight < iMapHeight; iHeight += iCurrClusterHeight, ++m_iClustersColCount)
-		iHeight + 3 / 2 * m_iFirstLvlClusterHeight >= iMapHeight ? iCurrClusterHeight = iMapHeight - iHeight : iCurrClusterHeight = m_iFirstLvlClusterHeight;
+		//iHeight + 3 * m_iFirstLvlClusterHeight / 2 >= iMapHeight ? iCurrClusterHeight = iMapHeight - iHeight : iCurrClusterHeight = m_iFirstLvlClusterHeight;
+	{
+		if (iHeight + m_iFirstLvlClusterHeight >= iMapHeight)
+		{
+			if (iMapHeight - iHeight > m_iFirstLvlClusterHeight)
+				m_bGluedHeightCluster = true;
+			iCurrClusterHeight = iMapHeight - iHeight;
+		}
+		else
+			iCurrClusterHeight = m_iFirstLvlClusterHeight;
+	}
+	//m_iClustersColCount = iMapHeight / m_iFirstLvlClusterHeight + 1;
 
 	for (int iWidth = 0; iWidth < iMapWidth; iWidth += iCurrClusterWidth, ++m_iClustersRowCount)
-		iWidth + 3 * m_iFirstLvlClusterWidth / 2 >= iMapWidth ? iCurrClusterWidth = iMapWidth - iWidth : iCurrClusterWidth = m_iFirstLvlClusterWidth;
+		//iWidth + 3 * m_iFirstLvlClusterWidth / 2 >= iMapWidth ? iCurrClusterWidth = iMapWidth - iWidth : iCurrClusterWidth = m_iFirstLvlClusterWidth;
+	{
+		if (iWidth + m_iFirstLvlClusterWidth >= iMapWidth)
+		{
+			if (iMapWidth - iWidth > m_iFirstLvlClusterWidth)
+				m_bGluedWidthCluster = true;
+			iCurrClusterWidth = iMapWidth - iWidth;
+		}
+		else
+			iCurrClusterWidth = m_iFirstLvlClusterWidth;
+	}
+	//m_iClustersRowCount = iMapWidth / m_iFirstLvlClusterWidth + 1;
 
 	int iLeftClusterId = 0;
 	for (int iHeight = 0; iHeight < iMapHeight; iHeight += iCurrClusterHeight/*, ++iLeftClusterId*/)
 	{
 		//prevent creating too small clusters, if next clusted would end up being smaller than half of wanted size, glue two clusters together
-		iHeight + 3 * m_iFirstLvlClusterHeight / 2 >= iMapHeight ? iCurrClusterHeight = iMapHeight - iHeight : iCurrClusterHeight = m_iFirstLvlClusterHeight;
+		//iHeight + m_iFirstLvlClusterHeight > iMapHeight ? iCurrClusterHeight = iMapHeight - iHeight : iCurrClusterHeight = m_iFirstLvlClusterHeight;
+		iHeight + m_iFirstLvlClusterHeight >= iMapHeight ? iCurrClusterHeight = iMapHeight - iHeight : iCurrClusterHeight = m_iFirstLvlClusterHeight;
 		for (int iWidth = 0; iWidth < iMapWidth; iWidth += iCurrClusterWidth, ++iLeftClusterId)
 		{
 			// again, prevention
-			iWidth + 3 * m_iFirstLvlClusterWidth / 2 >= iMapWidth ? iCurrClusterWidth = iMapWidth - iWidth : iCurrClusterWidth = m_iFirstLvlClusterWidth;
+			iWidth + m_iFirstLvlClusterWidth >= iMapWidth ? iCurrClusterWidth = iMapWidth - iWidth : iCurrClusterWidth = m_iFirstLvlClusterWidth;
 			 
 	//		if (iWidth + iClusterWidth >= iMapWidth) 
 	//			break; // out of range, no cluster on right side
+		
 
 			CCluster cluster(iCurrClusterWidth, iCurrClusterHeight);
 			cluster.SetXPos(iWidth); // most left-up point in cluster
 			cluster.SetYpos(iHeight);
-			cluster.SetXCenter(iWidth + iCurrClusterHeight / 2); // for A* heuristic
-			cluster.SetYCenter(iHeight + iCurrClusterWidth / 2);
+			//cluster.SetXCenter(iWidth + iCurrClusterHeight / 2); // for A* heuristic
+			//cluster.SetYCenter(iHeight + iCurrClusterWidth / 2);
 			cluster.SetId(iLeftClusterId);
 			m_Clusters.push_back(cluster);
+		}
+	}
+}
+
+void CHPAAbstrLevel::ClusterByIdPrepocessing()
+{
+	int iMapHeight = m_GraphLowLevelPtr->GetMapHeight();
+	int iMapWidth = m_GraphLowLevelPtr->GetMapWidth();
+	int iCurrClusterHeight = m_iFirstLvlClusterHeight, iCurrClusterWidth = m_iFirstLvlClusterWidth;
+	m_ClusterIdByTile.resize(m_GraphLowLevelPtr->GetMapNodesCount());
+
+	int iLeftClusterId = 0;
+	for (int iHeight = 0; iHeight < iMapHeight; iHeight += iCurrClusterHeight)
+	{
+		iHeight + iCurrClusterHeight >= iMapHeight ? iCurrClusterHeight = iMapHeight - iHeight : iCurrClusterHeight = (std::pow(m_iClustersLen, m_iCurrLevel - 1) * m_iFirstLvlClusterHeight);
+		for (int iWidth = 0; iWidth < iMapWidth; iWidth += iCurrClusterWidth, ++iLeftClusterId)
+		{
+			iWidth + iCurrClusterWidth >= iMapWidth ? iCurrClusterWidth = iMapWidth - iWidth : iCurrClusterWidth = (std::pow(m_iClustersLen, m_iCurrLevel - 1) * m_iFirstLvlClusterWidth);
+			for (int j = iHeight; j < iHeight + iCurrClusterHeight; ++j)
+			{
+				for (int i = iWidth; i < iWidth + iCurrClusterWidth; ++i)
+				{
+					m_ClusterIdByTile[m_GraphLowLevelPtr->GetGraphNodeByPosition(i, j).GetGridTileInfo().GetGridId()] = iLeftClusterId;
+				}
+			}
 		}
 	}
 }
@@ -87,10 +136,14 @@ void CHPAAbstrLevel::BuildClustersNextLevel(CHPAAbstrLevel *lowerAbstrLevelPtr)
 	}
 }
 
+//has to take into account that some clusters might be larger than others
 int CHPAAbstrLevel::CalcNewClusterId(CGridTile &tile)
 {
 	int width = tile.m_iXPos / (std::pow(m_iClustersLen, m_iCurrLevel - 1) * m_iFirstLvlClusterWidth);
 	int height = tile.m_iYPos / (std::pow(m_iClustersLen, m_iCurrLevel - 1) * m_iFirstLvlClusterHeight);
+
+	int clId = height * m_iClustersRowCount + width;
+	ATLASSERT(clId == m_ClusterIdByTile[tile.GetGridId()]);
 
 	return (height * m_iClustersRowCount + width);
 }
@@ -148,7 +201,7 @@ void CHPAAbstrLevel::BuildEntrancesNextLevel(CHPAAbstrLevel *lowerAbstrLevelPtr)
 						alreadyCreatedEdgeNode[std::distance(lowerGraph.begin(), graphNode)] = true;
 					}
 					int edge1Id = tile.GetGridId();
-					auto &edge1PosInGraphIter = std::find_if(m_Graph.begin(), m_Graph.end(),
+                    auto edge1PosInGraphIter = std::find_if(m_Graph.begin(), m_Graph.end(),
 						[edge1Id](CHierarchicalEdge &edge) -> bool { return edge.GetId() == edge1Id; });
 					int edge1PosInGraphId = std::distance(m_Graph.begin(), edge1PosInGraphIter);
 
@@ -171,7 +224,7 @@ void CHPAAbstrLevel::BuildEntrancesNextLevel(CHPAAbstrLevel *lowerAbstrLevelPtr)
 						alreadyCreatedEdgeNode[std::distance(lowerGraph.begin(), nodeLowerGraphPos)] = true;
 					}
 					int edge2Id = neighbours.GetZeroLevelNodeId();
-					auto &edge2PosInGraphIter = std::find_if(m_Graph.begin(), m_Graph.end(),
+                    auto edge2PosInGraphIter = std::find_if(m_Graph.begin(), m_Graph.end(),
 						[edge2Id](CHierarchicalEdge &edge) -> bool { return edge.GetId() == edge2Id; });
 					int edge2PosInGraphId = std::distance(m_Graph.begin(), edge2PosInGraphIter);
 					std::swap(iNodeClusterId, iEdgeClusterId);
@@ -207,19 +260,19 @@ void CHPAAbstrLevel::BuildHorizontalEntrances(int iMaxSingleEntranceLen)
 	int iCurrClusterHeight, iCurrClusterWidth;
 	int iLeftClusterXPos, iRightClusterXPos;
 	int iLeftClusterId = 0;
-	// build vertical entrances
+	
 	for (int iHeight = 0; iHeight < iMapHeight; iHeight += iCurrClusterHeight/*, ++iLeftClusterId*/)
 	{
 		//prevent creating too small clusters, if next clusted would end up being smaller than half of wanted size, glue two clusters together
-		iHeight + 3 * m_iFirstLvlClusterHeight / 2 >= iMapHeight ? iCurrClusterHeight = iMapHeight - iHeight : iCurrClusterHeight = m_iFirstLvlClusterHeight;
+		iHeight + m_iFirstLvlClusterHeight >= iMapHeight ? iCurrClusterHeight = iMapHeight - iHeight : iCurrClusterHeight = m_iFirstLvlClusterHeight;
 		for (int iWidth = 0; iWidth < iMapWidth; iWidth += iCurrClusterWidth, ++iLeftClusterId)
 		{
-			iWidth + 3 * m_iFirstLvlClusterWidth / 2 >= iMapWidth ? iCurrClusterWidth = iMapWidth - iWidth : iCurrClusterWidth = m_iFirstLvlClusterWidth;
+			iWidth + m_iFirstLvlClusterWidth >= iMapWidth ? iCurrClusterWidth = iMapWidth - iWidth : iCurrClusterWidth = m_iFirstLvlClusterWidth;
 
 			iRightClusterXPos = iWidth + m_iFirstLvlClusterWidth;
 			iLeftClusterXPos = iRightClusterXPos - 1;
-			if (iRightClusterXPos >= iMapWidth) // out of range, no cluster on right side
-				break;
+			if (iWidth + iCurrClusterWidth >= iMapWidth) // out of range, no cluster on right side
+				continue;
 
 			int iEntranceYpos = iHeight;
 			int iEntranceLen = 0;
@@ -275,16 +328,16 @@ void CHPAAbstrLevel::BuildVerticalEntrances(int iMaxSingleEntranceLen)
 	int iUpperClusterYPos, iLowerClusterYPos;
 	int iUpperClusterId = 0;
 	// build vertical entrances
-	for (int iWidth = 0; iWidth < iMapWidth; iWidth += iCurrClusterWidth, iUpperClusterId -= (m_iClustersColCount-1) * m_iClustersRowCount - 1)
+	for (int iWidth = 0; iWidth < iMapWidth; iWidth += iCurrClusterWidth, iUpperClusterId -= (m_iClustersColCount - 1) * m_iClustersRowCount - 1) //(m_iClustersColCount-1) * m_iClustersRowCount - 1
 	{
 		//prevent creating too small clusters, if next clusted would end up being smaller than half of wanted size, glue two clusters together
-		iWidth + 3 * m_iFirstLvlClusterWidth / 2 >= iMapWidth ? iCurrClusterWidth = iMapWidth - iWidth : iCurrClusterWidth = m_iFirstLvlClusterWidth;
+		iWidth + m_iFirstLvlClusterWidth >= iMapWidth ? iCurrClusterWidth = iMapWidth - iWidth : iCurrClusterWidth = m_iFirstLvlClusterWidth;
 		for (int iHeight = 0; iHeight < iMapHeight; iHeight += iCurrClusterHeight, iUpperClusterId += m_iClustersRowCount)
 		{		
-			iHeight + 3 * m_iFirstLvlClusterHeight / 2 >= iMapHeight ? iCurrClusterHeight = iMapHeight - iHeight : iCurrClusterHeight = m_iFirstLvlClusterHeight;
+			iHeight + m_iFirstLvlClusterHeight >= iMapHeight ? iCurrClusterHeight = iMapHeight - iHeight : iCurrClusterHeight = m_iFirstLvlClusterHeight;
 			iLowerClusterYPos = iHeight + m_iFirstLvlClusterHeight;
 			iUpperClusterYPos = iLowerClusterYPos - 1;
-			if (iLowerClusterYPos >= iMapHeight) // out of range, no lower cluster
+			if (iHeight + iCurrClusterHeight >= iMapHeight) // out of range, no lower cluster
 				break;
 
 			int iEntranceXpos = iWidth;
@@ -347,8 +400,8 @@ void CHPAAbstrLevel::DrawEntrances()
 	for (CCluster &cluster : m_Clusters)
 		for (int iEntranceId : cluster.GetEntrances())
 		{
-			ATLASSERT(m_GraphLowLevelPtr->GetGraph()[iEntranceId].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable);
-			m_GraphLowLevelPtr->ColorGridTile(iEntranceId, color);
+            ATLASSERT(m_GraphLowLevelPtr->GetGraph()[iEntranceId].GetGridTileInfo().GetGridTypeEnum() == GridTypePassable);
+			m_GraphLowLevelPtr->ColorGridTile(iEntranceId, color, true);
 		}
 }
 
@@ -419,9 +472,6 @@ bool CHPAAbstrLevel::AddEntranceToClusterAndGraph(CPriorityQueueEdges &entrance,
 {
 	ATLASSERT(entrance.GetGridTileInfo().GetGridTypeEnum() == GridTypePassable);
 
-	if (entrance.GetGridTileInfo().GetGridId() == 1988)
-		int a = 5;
-
 	auto en = m_Clusters[iClusterId].GetEntrances();
 	// if cluster already has entrance added before, do not add it again
 	auto it = std::find_if(m_Clusters[iClusterId].GetEntrances().begin(), m_Clusters[iClusterId].GetEntrances().end(), 
@@ -444,7 +494,6 @@ void CHPAAbstrLevel::BuildIntraEdges(std::vector<CHierarchicalEdge> &graphLowerL
 {
 	CAstar AStar;
 	AStar.SetMapManagerPtr(m_GraphLowLevelPtr);
-	//AStar.PreAllocateResources();
 
 	int lowerLevelfirstNodeId = -1;
 	int lowerLevelsecondNodeId = -1;
@@ -455,11 +504,11 @@ void CHPAAbstrLevel::BuildIntraEdges(std::vector<CHierarchicalEdge> &graphLowerL
 	int iPercent = 0;
 	for (CCluster &cluster : m_Clusters)
 	{
-		for (auto &firstNodeId = cluster.GetEntrances().begin(); firstNodeId != cluster.GetEntrances().end(); firstNodeId++)
+        for (auto firstNodeId = cluster.GetEntrances().begin(); firstNodeId != cluster.GetEntrances().end(); firstNodeId++)
 		{
-			for (auto &secondNodeId = firstNodeId + 1; secondNodeId < cluster.GetEntrances().end(); secondNodeId++)
+            for (auto secondNodeId = firstNodeId + 1; secondNodeId < cluster.GetEntrances().end(); secondNodeId++)
 			{
-				CreateIntraEdges(AStar, cluster, graphLowerLevel, *firstNodeId, *secondNodeId);
+				CreateIntraEdges(AStar, cluster, graphLowerLevel, *firstNodeId, *secondNodeId, false);
 			}
 		}
 		++iProgress;
@@ -470,13 +519,15 @@ void CHPAAbstrLevel::BuildIntraEdges(std::vector<CHierarchicalEdge> &graphLowerL
 		}
 	}
 	std::cout << "BUILD INTRA EDGES COMPLETED FOR LVL: " << m_iCurrLevel << std::endl;
+
+	m_EdgePositions.resize(m_GraphLowLevelPtr->GetGraph().size());
+	for (auto &edge : m_Graph)
+		m_EdgePositions[edge.GetId()] = edge.GetOwnId();
 }
 
 bool CHPAAbstrLevel::AddStartAndGoalNodesToGraph(CAstar &AStar, int iStartId, int iGoalId, std::vector<CHierarchicalEdge> &graphLowerLevel)
 {
 	//check if same cluster, if so, return(there is no need to add them here)
-	if (m_iCurrLevel == 4)
-		int a = 5;
 
 	if (CalcClusterId(iStartId) == CalcClusterId(iGoalId))
 		return false;
@@ -499,11 +550,13 @@ void CHPAAbstrLevel::AddNodeToGraph(CAstar &AStar, int iNodeId, std::vector<CHie
 	edge.SetOwnId(m_Graph.size());
 	edge.SetClusterId(iClusterId);
 	m_Graph.push_back(edge);
+	m_EdgePositions[iNodeId] = m_Graph.size() - 1;
+	m_AddedEdges++;
 
 	auto &cluster = m_Clusters[iClusterId];
 	for (auto &entranceId : cluster.GetEntrances())
 	{
-		CreateIntraEdges(AStar, cluster, graphLowerLevel, iNodeId, entranceId);
+		CreateIntraEdges(AStar, cluster, graphLowerLevel, iNodeId, entranceId, true);
 	}
 }
 
@@ -513,6 +566,7 @@ void CHPAAbstrLevel::DeleteStartAndGoalNodesFromGraph(int iStartId, int iGoalId)
 		DeleteStartOrGoal(iStartId);
 	if(!IsEntrance(iGoalId))
 		DeleteStartOrGoal(iGoalId);
+	ATLASSERT(m_AddedEdges == 0);
 }
 
 void CHPAAbstrLevel::DeleteStartOrGoal(int iNodeId)
@@ -529,6 +583,7 @@ void CHPAAbstrLevel::DeleteStartOrGoal(int iNodeId)
 			edgeNeigh.erase(iter);
 		}
 		m_Graph.pop_back();
+		m_AddedEdges--;
 	}
 	else if (m_Graph.size() >= 2 && m_Graph[m_Graph.size() - 2].GetId() == iNodeId)
 	{
@@ -540,6 +595,7 @@ void CHPAAbstrLevel::DeleteStartOrGoal(int iNodeId)
 			edgeNeigh.erase(iter);
 		}
 		m_Graph.erase(m_Graph.begin() + m_Graph.size() - 2);
+		m_AddedEdges--;
 	}
 }
 
@@ -558,17 +614,26 @@ int CHPAAbstrLevel::CalcClusterId(int iNodeId)
 	return CalcNewClusterId(tile);
 }
 
-int CHPAAbstrLevel::FindEdgePositionInGraph(std::vector<CHierarchicalEdge> &graph, int iTileId)
+int CHPAAbstrLevel::FindEdgePositionInGraph(std::vector<CHierarchicalEdge> &graph, int iTileId, bool bAddStart, bool bFindInCurrentGraph)
 {
-	auto lowerLvlFst = std::find_if(graph.begin(), graph.end(), [iTileId](CHierarchicalEdge &edge) -> bool { return edge.GetId() == iTileId; });
-	return std::distance(graph.begin(), lowerLvlFst);
+	if (!bAddStart)
+	{
+		auto lowerLvlFst = std::find_if(graph.begin(), graph.end(), [iTileId](CHierarchicalEdge &edge) -> bool { return edge.GetId() == iTileId; });
+		return std::distance(graph.begin(), lowerLvlFst);
+	}
+	else if (bFindInCurrentGraph)
+	{
+		return m_EdgePositions[iTileId];
+	}
+	else
+		return (*m_EdgePosLowerLvlPtr)[iTileId];
 }
 
 void CHPAAbstrLevel::AddIntraEdgesToGraph(double dShortestPathLength, int iClusterId, int iFirstNodeId, int iSecondNodeId,
-					int iLowerLvlFirstNodeId, int iLowerLvlSecondNodeId)
+					int iLowerLvlFirstNodeId, int iLowerLvlSecondNodeId, bool bAddStart)
 {
-	int firstOwnId = FindEdgePositionInGraph(m_Graph, iFirstNodeId);//std::distance(m_Graph.begin(), firstIter);
-	int secondOwnId = FindEdgePositionInGraph(m_Graph, iSecondNodeId);//std::distance(m_Graph.begin(), secIter);
+	int firstOwnId = FindEdgePositionInGraph(m_Graph, iFirstNodeId, bAddStart, true);//std::distance(m_Graph.begin(), firstIter);
+	int secondOwnId = FindEdgePositionInGraph(m_Graph, iSecondNodeId, bAddStart, true);//std::distance(m_Graph.begin(), secIter);
 
 	CHierarchicalNode firstNode(iClusterId, dShortestPathLength, iLowerLvlSecondNodeId, false, iSecondNodeId, secondOwnId); //lowerLevelsecondNodeId
 	CHierarchicalNode secondNode(iClusterId, dShortestPathLength, iLowerLvlFirstNodeId, false, iFirstNodeId, firstOwnId); //lowerLevelfirstNodeId
@@ -579,8 +644,8 @@ void CHPAAbstrLevel::AddIntraEdgesToGraph(double dShortestPathLength, int iClust
 		m_Graph[secondOwnId].AddNeighbour(secondNode);//add start neigh to goal
 }
 
-void CHPAAbstrLevel::CreateIntraEdges(CAstar &AStar, CCluster &cluster, 
-					std::vector<CHierarchicalEdge> &graphLowerLevel, int iFirstNodeId, int iSecondNodeId)
+void CHPAAbstrLevel::CreateIntraEdges(CAstar &AStar, CCluster &cluster, std::vector<CHierarchicalEdge> &graphLowerLevel,
+	 int iFirstNodeId, int iSecondNodeId, bool bAddStart)
 {
 	int lowerLevelFirstNodeId, lowerLevelSecondNodeId;
 	if (m_iCurrLevel == 1)
@@ -589,22 +654,19 @@ void CHPAAbstrLevel::CreateIntraEdges(CAstar &AStar, CCluster &cluster,
 	}
 	else
 	{
-		AStar.FindShortestPathInClusterAbstract(iFirstNodeId, iSecondNodeId, cluster, graphLowerLevel);
+		lowerLevelFirstNodeId = FindEdgePositionInGraph(graphLowerLevel, iFirstNodeId, bAddStart, false);
+		lowerLevelSecondNodeId = FindEdgePositionInGraph(graphLowerLevel, iSecondNodeId, bAddStart, false);
+		AStar.FindShortestPathInClusterAbstract(iFirstNodeId, iSecondNodeId, cluster, graphLowerLevel, lowerLevelFirstNodeId, lowerLevelSecondNodeId);
 	}
 
 	if (!AStar.GetPathFound())
 		return;
 
-	if (m_iCurrLevel > 1)
-	{
-		lowerLevelFirstNodeId = FindEdgePositionInGraph(graphLowerLevel, iFirstNodeId); //lowFstDist
-		lowerLevelSecondNodeId = FindEdgePositionInGraph(graphLowerLevel, iSecondNodeId);
-	}
-	else
+	if(m_iCurrLevel == 1)
 	{
 		lowerLevelFirstNodeId = iFirstNodeId;
 		lowerLevelSecondNodeId = iSecondNodeId;
 	}
 
-	AddIntraEdgesToGraph(AStar.GetShortestPathLength(), cluster.GetId(), iFirstNodeId, iSecondNodeId, lowerLevelFirstNodeId, lowerLevelSecondNodeId); //iClusterId bylo
+	AddIntraEdgesToGraph(AStar.GetShortestPathLength(), cluster.GetId(), iFirstNodeId, iSecondNodeId, lowerLevelFirstNodeId, lowerLevelSecondNodeId, bAddStart); //iClusterId bylo
 }

@@ -26,11 +26,13 @@ void CExperimentsHandler::DoDijkstraExperiments(int iNumExperiments)
 		//iGoalNode = m_MapManager.GetMapHeight() / 2 * m_MapManager.GetMapWidth() + 4 * m_MapManager.GetMapWidth() / 5;
 
 		m_Dijkstra.FindShortestPath(iStartNode, iGoalNode);
-		m_StatsDijkstra.AddStats(m_Dijkstra.GetStatistics());
+        auto stats = m_Dijkstra.GetStatistics();
+        m_StatsDijkstra.AddStats(stats);
 		//m_StatisticCollectionDijkstra.push_back(m_Dijkstra.GetStatistics());
 
 		m_AStar.FindShortestPath(iStartNode, iGoalNode);
-		m_StatsAStar.AddStats(m_AStar.GetStatistics());
+        stats = m_AStar.GetStatistics();
+        m_StatsAStar.AddStats(stats);
 		//m_AStar.DrawMap();
 		//m_StatisticCollectionAStar.push_back(m_AStar.GetStatistics());
 
@@ -55,7 +57,7 @@ void CExperimentsHandler::DoTestSuiteExperiments()
 		int iTestCount = 0, iStartNode = 0, iGoalNode = 0;
 		testFileSuite >> strTemp; //"testCount:"
 		testFileSuite >> iTestCount;
-		iTestCount = 10; //TODO
+		iTestCount = 50; //TODO
 
 		m_HPAStar.Preprocessing();
 
@@ -68,10 +70,20 @@ void CExperimentsHandler::DoTestSuiteExperiments()
 			//m_StatsDijkstra.AddStats(m_Dijkstra.GetStatistics());
 
 			m_AStar.FindShortestPath(iStartNode, iGoalNode);
-			m_StatsAStar.AddStats(m_AStar.GetStatistics());
+            auto stats = m_AStar.GetStatistics();
+            m_StatsAStar.AddStats(stats);
 
 			m_HPAStar.FindShortestPath(iStartNode, iGoalNode);
-			m_StatsHPAStar.AddStats(m_HPAStar.GetStatistics());
+            stats = m_HPAStar.GetStatistics();
+            m_StatsHPAStar.AddStats(stats);
+            stats = m_HPAStar.GetAddStart();
+            m_StatsAddStart.AddStats(stats);
+			stats = m_HPAStar.GetSearchAbstr();
+			m_SearchAtFirstAbstractLvl.AddStats(stats);
+			stats = m_HPAStar.GetTimeAlloc();
+			m_StatsTimeAlloc.AddStats(stats);
+			stats = m_HPAStar.GetStatRefineSearch();
+			m_StatsRefineSearchTime.AddStats(stats);
 
 			if (i % 100 == 0)
 				std::cout << i << " : DONE" << std::endl;
@@ -91,7 +103,20 @@ void CExperimentsHandler::PrintStats()
 	//m_StatsAStar.PrintAllStats();
 	m_StatsAStar.PrintAvgStats();
 
+	std::cout << "\n\nHPA REFINE, ONLY SEARCHES: \n";
+	m_StatsRefineSearchTime.PrintAvgStats();
+
+	std::cout << "\n\nHPA FIRST LVL ABSTR:\n";
+	m_SearchAtFirstAbstractLvl.PrintAvgStats();
+
+	std::cout << "\n\nHPA TIME ALLOC IN REFINING PATH:\n";
+	m_StatsTimeAlloc.PrintAvgStats();
+
 	std::cout << "\n\nHPASTAR:\n";
-	//m_StatsAStar.PrintAllStats();
+	//m_StatsHPAStar.PrintAllStats();
 	m_StatsHPAStar.PrintAvgStats();
+
+	std::cout << "\n\nHPASTAR ADD START:\n";
+	//m_StatsAddStart.PrintAllStats();
+	m_StatsAddStart.PrintAvgStats();
 }

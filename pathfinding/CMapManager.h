@@ -31,7 +31,7 @@ public:
 	void CreateTestSuiteForMap(std::string strMapName); //without reference, dont want to rename it inside
 	void DrawMap();
 	void DrawShortestPath(std::vector<int> &vec);
-	void ColorGridTile(int iTileId, CColor &color);
+	void ColorGridTile(int iTileId, CColor &color, bool bMarkEntrance = false);
 	void DrawClusterBorder(CCluster &cluster, CColor &color);
 	void DrawLine(int iFirstNode, int iSecNode, CColor &color);
 

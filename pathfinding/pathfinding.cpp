@@ -20,18 +20,18 @@ int main(int argc, char** argv)
 	CExperimentsHandler expHandler;
 	expHandlerGlobalPtr = &expHandler;
 
-	glutInit(&argc, argv);
+    glutInit(&argc, argv);
 
-	glutInitDisplayMode(GLUT_SINGLE);
-	glutInitDisplayMode(GLUT_RGB);
+    glutInitDisplayMode(GLUT_SINGLE);
+    glutInitDisplayMode(GLUT_RGB);
 
-	glutInitWindowSize(650, 650);
-	glutInitWindowPosition(300, 100);
-	glutCreateWindow("HelloTeapot");
+    glutInitWindowSize(650, 650);
+    glutInitWindowPosition(300, 100);
+    glutCreateWindow("HelloTeapot");
 
-	glutDisplayFunc(DrawMap);
+    glutDisplayFunc(DrawMap);
 
-	glutMainLoop();
+    glutMainLoop();
 
 	return 0;
 }

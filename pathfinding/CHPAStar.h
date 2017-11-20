@@ -2,6 +2,7 @@
 #include <vector>
 #include "CHPAAbstrLevel.h"
 #include "CMapManager.h"
+#include "CStatisticsSummary.h"
 
 class CHPAStar
 {
@@ -30,7 +31,10 @@ public:
 	{
 		m_GraphLowLevelPtr->DrawMap();
 
+		m_AllAbstrLevels[0].DrawClusterBorders();
 		m_AllAbstrLevels[0].DrawEntrances();
+		m_AllAbstrLevels[0].DrawGraphConnections();
+		
 		//m_AllAbstrLevels[3].DrawGraphConnections();	
 		//m_AllAbstrLevels[3].DrawStartGoalNodes(m_iStart, m_iGoal);
 
@@ -39,8 +43,11 @@ public:
 
 	void Preprocessing();
 	void FindShortestPath(int iStartId, int iGoalId);
-	CStatistics GetStatistics() { return m_Statistics; }
-
+	CStatistics& GetStatistics() { return m_Statistics; }
+	CStatistics& GetAddStart() { return m_StatAddStart; }
+	CStatistics& GetSearchAbstr() { return m_SearchAtFirstAbstractLvl; }
+	CStatistics& GetTimeAlloc() { return m_StatTimeAlloc; }
+	CStatistics& GetStatRefineSearch() { return m_StatSimpleRefineSearch; }
 protected:
 	void BuildFirstLevel();
 	void AddNextLevels();
@@ -60,10 +67,22 @@ private:
 	int m_iMaxLvlStartGoalNodes;
 
 	std::vector<int> m_shortestPath;
+	std::vector<int> m_pathEntr;
 	CStatistics	m_Statistics;
+	CStatistics m_StatAddStart;
+	CStatistics m_SearchAtFirstAbstractLvl;
+	CStatistics m_StatTimeAlloc;
+	CStatistics m_StatSimpleRefineSearch;
+	CStatisticsSummary m_StatSummarySimpleSearch;
+	double m_timeAlloc;
+	double m_timeSimpleRefineSearch;
+	double m_refineNodesExpanded;
+
+
 	CAstar m_AStar;
 
 	//TEMP
 	int m_iStart, m_iGoal;
+
 };
 

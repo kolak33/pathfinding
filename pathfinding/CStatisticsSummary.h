@@ -42,6 +42,13 @@ public:
 			std::cout << m_stats[i] << std::endl;
 		}
 	}
+
+	void ClearStats()
+	{
+		m_lStatsCount = 0;
+		m_stats.clear();
+		m_avgStats.clear();
+	}
 private:
 	std::vector<CStatistics> m_stats;
 	std::map<std::string, double> m_avgStats;

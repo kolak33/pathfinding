@@ -41,6 +41,11 @@ private:
 	CStatisticsSummary m_StatsAStar;
 	CStatisticsSummary m_StatsHPAStar;
 
+	CStatisticsSummary m_StatsAddStart;
+	CStatisticsSummary m_SearchAtFirstAbstractLvl;
+	CStatisticsSummary m_StatsTimeAlloc;
+	CStatisticsSummary m_StatsRefineSearchTime;
+
 	void DoDijkstraExperiments(int iNumExperiments);
 	void DoTestSuiteExperiments();
 	void PrintStats();

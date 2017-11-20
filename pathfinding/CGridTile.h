@@ -39,7 +39,7 @@ private:
 	CCoords		 m_fCoords;
 
 
-	//TODO tymczasowe
+	
 public:
 	int m_iXPos;
 	int m_iYPos;
