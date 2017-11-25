@@ -21,11 +21,11 @@ typedef enum MapCellType {
  const std::string strMapLocationPrefix = "..\\mapki\\dao\\";
  const std::string strTestsLocationPrefix = "..\\TESTS\\";
 
- const std::string strMapName = "den312d.map";
+ const std::string strMapName = "orz103d.map"; //"den400d.map";
  const int iGenerateTestCount = 1000;
 
- const float DIAG_HEUR_VAL	 = 0.4142f;
- const float DIAGONAL_WEIGHT = 1.4142f;
+ const float DIAG_HEUR_VAL = 0.4f;//0.4142f;
+ const float DIAGONAL_WEIGHT = 1.4f;//1.4142f;
  const float STRAIGHT_WEIGHT = 1.0f;
  const float INTER_EDGE_WEIGHT = 1.0f;
  const int GRID_BRANCHING_FACTOR = 8;

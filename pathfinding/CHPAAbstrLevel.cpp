@@ -136,7 +136,6 @@ void CHPAAbstrLevel::BuildClustersNextLevel(CHPAAbstrLevel *lowerAbstrLevelPtr)
 	}
 }
 
-//has to take into account that some clusters might be larger than others
 int CHPAAbstrLevel::CalcNewClusterId(CGridTile &tile)
 {
 	int width = tile.m_iXPos / (std::pow(m_iClustersLen, m_iCurrLevel - 1) * m_iFirstLvlClusterWidth);

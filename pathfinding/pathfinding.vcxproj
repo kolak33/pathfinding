@@ -157,6 +157,7 @@
     <ClInclude Include="CHierarchicalNode.h" />
     <ClInclude Include="CHPAAbstrLevel.h" />
     <ClInclude Include="CHPAStar.h" />
+    <ClInclude Include="CJPSearch.h" />
     <ClInclude Include="CMapManager.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="CPriorityQueueEdges.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="CHierarchicalNode.cpp" />
     <ClCompile Include="CHPAAbstrLevel.cpp" />
     <ClCompile Include="CHPAStar.cpp" />
+    <ClCompile Include="CJPSearch.cpp" />
     <ClCompile Include="CMapManager.cpp" />
     <ClCompile Include="CPriorityQueueEdges.cpp" />
     <ClCompile Include="CPriorityQueueNode.cpp" />

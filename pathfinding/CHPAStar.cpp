@@ -62,7 +62,7 @@ void CHPAStar::FindShortestPath(int iStartId, int iGoalId)
 	m_StatAddStart.SetSearchTimeChrono(timeElapsedMS1);
 
 
-	if (m_iMaxLvlStartGoalNodes == 0)
+	if (m_iMaxLvlStartGoalNodes == 0) //situation when two nodes would end up being added in same cluster //TODO sprawdzic to
 	{
 		m_AStar.FindShortestPath(iStartId, iGoalId);
 		m_shortestPath = m_AStar.GetShortestPath();
@@ -114,12 +114,14 @@ void CHPAStar::RefinePath(CAstar &AStar, std::vector<int> &path, int iLvl, std::
 
 	for (int iIter = 0; iIter < path.size() - 1; ++iIter)
 	{
-		if (m_AllAbstrLevels[iLvl].CalcClusterId(path[iIter]) == m_AllAbstrLevels[iLvl].CalcClusterId(path[iIter + 1])) // if same cluster on current level
+		if (m_AllAbstrLevels[iLvl].CalcClusterId(path[iIter]) == m_AllAbstrLevels[iLvl].CalcClusterId(path[iIter + 1])) // if same cluster on current level, otherwise entrance crossing
 		{
 			if (iLvl == 0) // final refinement to low lvl
 			{
 				std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-				AStar.FindShortestPath(path[iIter], path[iIter + 1], true);
+				int iStartClusterId = m_AllAbstrLevels[iLvl].CalcClusterId(path[iIter]);
+				CCluster *clusterPtr = &m_AllAbstrLevels[iLvl].GetClusters()[iStartClusterId];
+				AStar.FindShortestPath(path[iIter], path[iIter + 1], true, clusterPtr);
 				m_timeAlloc += AStar.m_timeAllocation;
 				
 				std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();

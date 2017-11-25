@@ -42,8 +42,33 @@ public:
 	auto& GetGraph() { return m_Graph; }
 	auto& GetGraphNodeByPosition(int iXPos, int iYPos)
 	{
+		ATLASSERT(iXPos >= 0 && iXPos < m_iMapWidth);
+		ATLASSERT(iYPos >= 0 && iYPos < m_iMapHeight);
 		return m_Graph[m_iMapWidth * iYPos + iXPos];
 	}
+	CGridTile* GetNodeIfExists(int iXPos, int iYPos)
+	{
+		if (iXPos < 0 || iXPos >= m_iMapWidth
+			|| iYPos < 0 || iYPos >= m_iMapHeight)
+		{
+			std::cout << "\nNODE DOES NOT EXIST\n" << std::endl; //TODO usunac to
+			return nullptr;
+		}
+
+		return &(m_Graph[m_iMapWidth * iYPos + iXPos].GetGridTileInfo());
+	}
+
+	bool IsPassable(int iXPos, int iYPos)
+	{
+		auto *tile = GetNodeIfExists(iXPos, iYPos);
+		return ( tile == nullptr ? false : (tile->GetGridTypeEnum() == GridTypePassable) );
+	}
+
+	auto& GetTileById(int iTileId)
+	{
+		return m_Graph[iTileId].GetGridTileInfo();
+	}
+
 	int GenerateRandomAccessibleNodeId();
 
 protected:

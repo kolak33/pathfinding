@@ -8,9 +8,9 @@ class CHPAStar
 {
 public:
 	CHPAStar() //TODO popatrzec rozne parametry, bedzie trzeba potestowac mocno
-		: m_iFirstLvlClusterHeight(10)
-		, m_iFirstLvlClusterWidth(10)
-		, m_iMaxSingleEntranceLen(6)
+		: m_iFirstLvlClusterHeight(15)
+		, m_iFirstLvlClusterWidth(15)
+		, m_iMaxSingleEntranceLen(10)
 		, m_iMaxLevel(1)
 		, m_iClustersInGroup(2)
 		, m_iMaxLvlStartGoalNodes(0)

@@ -9,10 +9,11 @@ CExperimentsHandler *expHandlerGlobalPtr;
 
 void DrawMap()
 {
-	// musi byc ustawione wszystko odpowiednio w dijkstrze wczesniej
-	//expHandlerGlobalPtr->GetDijkstra().DrawMap();
+	// musi byc ustawione wszystko odpowiednio wczesniej
+
+	//expHandlerGlobalPtr->GetHPAStar().DrawMap();
+	expHandlerGlobalPtr->GetJPSearch().DrawMap();
 	//expHandlerGlobalPtr->GetAStar().DrawMap();
-	expHandlerGlobalPtr->GetHPAStar().DrawMap();
 }
 
 int main(int argc, char** argv)

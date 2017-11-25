@@ -226,7 +226,6 @@ void CMapManager::InitMapFromFile()
 
 void CMapManager::InitGraph()
 {
-	//TODO moze zrobic zliczanie i rezerwowanie potrzebnej ilosci miejsca wczesniej, aby nie bylo zadnych realokacji
 	for (int iHeight = 0, iNodeId = 0; iHeight < m_iMapHeight; ++iHeight)
 	{
 		for (int iWidth = 0; iWidth < m_iMapWidth; ++iWidth, ++iNodeId)
