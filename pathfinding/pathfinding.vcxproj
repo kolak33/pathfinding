@@ -162,6 +162,7 @@
     <ClInclude Include="Config.h" />
     <ClInclude Include="CPriorityQueueEdges.h" />
     <ClInclude Include="CPriorityQueueNode.h" />
+    <ClInclude Include="CFringeSearch.h" />
     <ClInclude Include="CStatistics.h" />
     <ClInclude Include="CStatisticsSummary.h" />
     <ClInclude Include="stdafx.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="CMapManager.cpp" />
     <ClCompile Include="CPriorityQueueEdges.cpp" />
     <ClCompile Include="CPriorityQueueNode.cpp" />
+    <ClCompile Include="CFringeSearch.cpp" />
     <ClCompile Include="CStatistics.cpp" />
     <ClCompile Include="CStatisticsSummary.cpp" />
     <ClCompile Include="pathfinding.cpp" />

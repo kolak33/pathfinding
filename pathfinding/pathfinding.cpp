@@ -12,8 +12,11 @@ void DrawMap()
 	// musi byc ustawione wszystko odpowiednio wczesniej
 
 	//expHandlerGlobalPtr->GetHPAStar().DrawMap();
-	expHandlerGlobalPtr->GetJPSearch().DrawMap();
+	//expHandlerGlobalPtr->GetJPSearch().DrawMap();
+
+	//expHandlerGlobalPtr->GetMapManager().DrawMap();
 	//expHandlerGlobalPtr->GetAStar().DrawMap();
+	expHandlerGlobalPtr->GetFringe().DrawMap();
 }
 
 int main(int argc, char** argv)

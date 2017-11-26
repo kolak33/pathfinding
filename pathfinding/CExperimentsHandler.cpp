@@ -57,7 +57,7 @@ void CExperimentsHandler::DoTestSuiteExperiments()
 		int iTestCount = 0, iStartNode = 0, iGoalNode = 0;
 		testFileSuite >> strTemp; //"testCount:"
 		testFileSuite >> iTestCount;
-		iTestCount = 200; //TODO
+		iTestCount = 500; //TODO
 
 		//m_HPAStar.Preprocessing();
 
@@ -65,6 +65,7 @@ void CExperimentsHandler::DoTestSuiteExperiments()
 		{
 			testFileSuite >> iStartNode;
 			testFileSuite >> iGoalNode;
+			
 
 			//m_Dijkstra.FindShortestPath(iStartNode, iGoalNode);
 			//m_StatsDijkstra.AddStats(m_Dijkstra.GetStatistics());
@@ -73,9 +74,13 @@ void CExperimentsHandler::DoTestSuiteExperiments()
 			auto stats = m_AStar.GetStatistics();
 			m_StatsAStar.AddStats(stats);
 
-			m_JPSearch.FindShortestPath(iStartNode, iGoalNode);
+			m_Fringe.FindShortestPath(iStartNode, iGoalNode);
+			stats = m_Fringe.GetStatistics();
+			m_StatsFringe.AddStats(stats);
+			
+			/*m_JPSearch.FindShortestPath(iStartNode, iGoalNode);
 			stats = m_JPSearch.GetStatistics();
-			m_StatsJPSearch.AddStats(stats);
+			m_StatsJPSearch.AddStats(stats);*/
 
 
 			/*m_HPAStar.FindShortestPath(iStartNode, iGoalNode);
@@ -105,11 +110,13 @@ void CExperimentsHandler::PrintStats()
 	//m_StatsDijkstra.PrintAllStats();
 	//m_StatsDijkstra.PrintAvgStats();
 	std::cout << "\n\nASTAR:\n";
-	//m_StatsAStar.PrintAllStats();
 	m_StatsAStar.PrintAvgStats();
 
-	std::cout << "\n\nJPSEARCH:\n";
-	m_StatsJPSearch.PrintAvgStats();
+	std::cout << "\n\nFRINGE:\n";
+	m_StatsFringe.PrintAvgStats();
+
+	//std::cout << "\n\nJPSEARCH:\n";
+	//m_StatsJPSearch.PrintAvgStats();
 
 	//std::cout << "\n\nHPA REFINE, ONLY SEARCHES: \n";
 	//m_StatsRefineSearchTime.PrintAvgStats();
