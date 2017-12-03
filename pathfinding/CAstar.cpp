@@ -38,7 +38,7 @@ int CAstar::CalcClusterIdByTile(CGridTile &tile, int iFirstLvlClusterWidth, int 
 	return height * iClustersRowCount + width;
 }
 
-void CAstar::FindShortestPath(int iStartNode, int iGoalNode, bool bSimpleSearch, CCluster *clusterPtr, int iFirstLvlClusterWidth, int iFirstLvlClusterHeight, int iClustersRowCount)
+void CAstar::FindShortestPath(int iStartNode, int iGoalNode, bool bSimpleSearch, CCluster *clusterPtr)
 {
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 	//clock_t startClockTime = clock();
@@ -180,7 +180,7 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode, bool bSimpleSearch,
 		//bDirectNextNodeAccess = false;
 		bFoundBetterNeighbour = false;
 		auto nextNeighbour = graph[current].GetNeighbours().begin();
-		while (nextNeighbour != graph[current].GetIterEnd()) // do not put parent node we came from
+		while (nextNeighbour != graph[current].GetIterEnd())
 		{
 			double new_cost = m_distSoFar[current] + nextNeighbour->GetWeight();
 
@@ -429,6 +429,12 @@ void CAstar::FindShortestPathInCluster(int iStartNode, int iGoalNode, CCluster &
 		}
 	}	
 
+	//m_Statistics.SetPathLength(m_shortestPathLength);
+	//m_Statistics.SetSearchTimeChrono(timeElapsedMS);
+	//m_Statistics.SetSearchTimeClock(timeElapsedClock);
+	m_Statistics.SetNodesExpanded(lExpandedNodes);
+	m_Statistics.SetNodesVisited(lVisitedNodes);
+	m_Statistics.SetOpenSetMaxSize(lOpenSetMaxSize);
 	//std::vector<int>().swap(m_shortestPath); //deallocate memory for shortestpath
 }
 
@@ -563,6 +569,12 @@ void CAstar::FindShortestPathInClusterAbstract(int iStartNode, int iGoalNode, CC
 		}*/
 	}
 
+	//m_Statistics.SetPathLength(m_shortestPathLength);
+	//m_Statistics.SetSearchTimeChrono(timeElapsedMS);
+	//m_Statistics.SetSearchTimeClock(timeElapsedClock);
+	m_Statistics.SetNodesExpanded(lExpandedNodes);
+	m_Statistics.SetNodesVisited(lVisitedNodes);
+	m_Statistics.SetOpenSetMaxSize(lOpenSetMaxSize);
 	//std::vector<int>().swap(m_shortestPath); //deallocate memory for shortestpath
 }
 
@@ -684,4 +696,10 @@ void CAstar::FindShortestPathAbstract(int iStartNode, int iGoalNode, std::vector
 	}
 
 	//std::vector<int>().swap(m_shortestPath); //deallocate memory for shortestpath
+	//m_Statistics.SetPathLength(m_shortestPathLength);
+	//m_Statistics.SetSearchTimeChrono(timeElapsedMS);
+	//m_Statistics.SetSearchTimeClock(timeElapsedClock);
+	m_Statistics.SetNodesExpanded(lExpandedNodes);
+	m_Statistics.SetNodesVisited(lVisitedNodes);
+	m_Statistics.SetOpenSetMaxSize(lOpenSetMaxSize);
 }

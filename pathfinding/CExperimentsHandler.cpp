@@ -60,7 +60,7 @@ void CExperimentsHandler::DoTestSuiteExperiments(std::string &strTestSuiteLocati
 		int iTestCount = 0, iStartNode = 0, iGoalNode = 0;
 		testFileSuite >> strTemp; //"testCount:"
 		testFileSuite >> iTestCount;
-		iTestCount = 10; //TODO
+		iTestCount = 200; //TODO
 
 		m_HPAStar.Preprocessing();
 
@@ -114,8 +114,8 @@ void CExperimentsHandler::PrintStats()
 	//std::cout << "DIJKSTRA:\n";
 	//m_StatsDijkstra.PrintAllStats();
 	//m_StatsDijkstra.PrintAvgStats();
-	std::cout << "\n\nASTAR:\n";
-	m_StatsAStar.PrintAvgStats();
+	//std::cout << "\n\nASTAR:\n";
+	//m_StatsAStar.PrintAvgStats();
 	//m_StatsAStar.PrintAllStats();
 
 	//std::cout << "\n\nFRINGE:\n";

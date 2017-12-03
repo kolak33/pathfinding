@@ -20,6 +20,7 @@ typedef enum MapCellType {
 
  const std::string strMapLocationPrefix = "..\\mapki\\dao\\";
  const std::string strTestsLocationPrefix = "..\\\\TESTS\\\\";
+ const std::string strResultsPath = "..\\wyniki\\Results.txt";
 
  const std::string strMapName = "orz103d.map"; //"den400d.map"; //
  const int iGenerateTestCount = 250;

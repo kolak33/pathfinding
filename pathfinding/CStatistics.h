@@ -30,7 +30,16 @@ public:
 
 	auto& GetStats() { return m_stats; }
 	//auto& GetExpNodes() { return m_stats.find("nodesExpanded")->second; }
-	friend std::ostream& operator<<(std::ostream& os, CStatistics& stats);
+	//friend std::ostream& operator<<(std::ostream& os, CStatistics& stats);
+
+	void SetHPAStats(std::map<std::string, double> stats)
+	{
+		m_stats = stats;
+	}
+	void SetAlgName(std::string strAlgName)
+	{
+		m_algName = strAlgName;
+	}
 
 private:
 	std::map<std::string, double> m_stats;

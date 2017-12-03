@@ -18,7 +18,7 @@ void DrawMap()
 	//expHandlerGlobalPtr->GetMapManager().DrawMap();
 	//expHandlerGlobalPtr->GetAStar().DrawMap();
 	//expHandlerGlobalPtr->GetFringe().DrawMap();
-	
+
 }
 
 int main(int argc, char** argv)

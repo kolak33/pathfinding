@@ -49,8 +49,6 @@ void CHPAStar::FindShortestPath(int iStartId, int iGoalId)
 	m_timeAlloc = 0;
 	m_timeSimpleRefineSearch = 0;
 	m_refineNodesExpanded = 0;
-	if (iStartId == 2656 && iGoalId == 3632)
-		int a = 5;
 
 	if (iStartId == iGoalId) //TODO gdzies indziej to moze
 		return;
@@ -66,6 +64,9 @@ void CHPAStar::FindShortestPath(int iStartId, int iGoalId)
 	{
 		m_AStar.FindShortestPath(iStartId, iGoalId);
 		m_shortestPath = m_AStar.GetShortestPath();
+
+		auto& stats = m_AStar.GetStatistics();
+		m_StatSummarySimpleSearch.AddStats(stats);
 	}
 	else
 	{
@@ -78,6 +79,8 @@ void CHPAStar::FindShortestPath(int iStartId, int iGoalId)
 		double timeElapsedMS2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2).count();
 		m_SearchAtFirstAbstractLvl.SetSearchTimeChrono(timeElapsedMS2);
 
+		auto& stats = m_AStar.GetStatistics();
+		m_StatSummarySimpleSearch.AddStats(stats);
 
 		ATLASSERT(m_AStar.GetPathFound());
 		m_shortestPath = m_AStar.GetShortestPath();
@@ -87,8 +90,8 @@ void CHPAStar::FindShortestPath(int iStartId, int iGoalId)
 		for (int iLvl = m_iMaxLvlStartGoalNodes - 1; iLvl >= 0; --iLvl)
 		{
 			RefinePath(m_AStar, m_shortestPath, iLvl, resultPath);
-			m_StatSimpleRefineSearch.SetSearchTimeChrono(m_timeSimpleRefineSearch);
-			m_StatSimpleRefineSearch.SetNodesExpanded(m_refineNodesExpanded);
+			//m_StatSimpleRefineSearch.SetSearchTimeChrono(m_timeSimpleRefineSearch);
+			//m_StatSimpleRefineSearch.SetNodesExpanded(m_refineNodesExpanded);
 
 			m_shortestPath = resultPath;
 			//if (iLvl == 2)
@@ -101,7 +104,9 @@ void CHPAStar::FindShortestPath(int iStartId, int iGoalId)
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 	double timeElapsedMS = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
-	m_Statistics.SetSearchTimeChrono(timeElapsedMS);
+	
+	m_Statistics.SetHPAStats(m_StatSummarySimpleSearch.GetNotAveragedStats());
+	m_Statistics.SetSearchTimeChrono(timeElapsedMS); //overwrite timeElapsed
 
 	//std::cout << "\n\nSIMPLE SEARCH IN REFINE AVG STATS:\n";
 	//m_StatSummarySimpleSearch.PrintAvgStats();
@@ -126,15 +131,19 @@ void CHPAStar::RefinePath(CAstar &AStar, std::vector<int> &path, int iLvl, std::
 				
 				std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 				m_timeSimpleRefineSearch += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
-				auto& stats = AStar.GetStatistics();
-				//m_refineNodesExpanded += stats.GetExpNodes();
-				m_StatSummarySimpleSearch.AddStats(stats);
+				//auto& stats = AStar.GetStatistics();
+				////m_refineNodesExpanded += stats.GetExpNodes();
+				//m_StatSummarySimpleSearch.AddStats(stats);
 			}
 			else
 			{
 				auto &edgePos = m_AllAbstrLevels[iLvl - 1].GetEdgePositions();
 				AStar.FindShortestPathAbstract(path[iIter], path[iIter + 1], m_AllAbstrLevels[iLvl - 1].GetGraph(), edgePos[path[iIter]], edgePos[path[iIter+1]]); // find path on lower lvl
 			}
+
+			auto& stats = AStar.GetStatistics();
+			m_StatSummarySimpleSearch.AddStats(stats);
+
 			ATLASSERT(AStar.GetPathFound());
 			auto &tmpResult = AStar.GetShortestPath();
 			for (int iLowerIter = tmpResult.size() - 1; iLowerIter >= 0 ; --iLowerIter) // shortestPath is reversed
@@ -143,6 +152,7 @@ void CHPAStar::RefinePath(CAstar &AStar, std::vector<int> &path, int iLvl, std::
 					resultPath.push_back(tmpResult[iLowerIter]);
 			}
 		}
+		m_StatSummarySimpleSearch.AddHPAEntranceLength();
 	}
 
 	resultPath.push_back(path[path.size() - 1]);

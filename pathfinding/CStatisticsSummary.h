@@ -23,7 +23,10 @@ public:
 		auto stats =  st.GetStats();
 		for (auto &iter : stats)
 		{
-			m_avgStats[iter.first] += iter.second;
+			if (iter.first == "HPAStar openSetMaxSize")
+				m_avgStats[iter.first] = (std::max)(m_avgStats[iter.first], iter.second);
+			else
+				m_avgStats[iter.first] += iter.second;
 		}
 		m_stats.push_back(st);
 		++m_lStatsCount;
@@ -40,13 +43,13 @@ public:
 		}
 	}
 
-	void PrintAllStats()
+	/*void PrintAllStats()
 	{
 		for (int i=0; i<m_stats.size(); ++i)
 		{
 			std::cout << m_stats[i] << std::endl;
 		}
-	}
+	}*/
 
 	void ClearStats()
 	{
@@ -71,20 +74,51 @@ public:
 	//used in automated experiments, stores search time in ms
 	auto& GetAvgStats()
 	{
-		if (m_bSearchTimeInMS == false)
+		for (auto &iter : m_avgStats)
 		{
-			for (auto &iter : m_avgStats)
+			if (m_bSearchTimeInMS == false && iter.first.find(std::string("searchTime")) != std::string::npos)
 			{
-				if (iter.first.find(std::string("searchTime")) != std::string::npos)
-					iter.second = iter.second / m_lStatsCount / NANO_TO_MILI_FACTOR;
-				else
-					iter.second = iter.second / m_lStatsCount;
+				iter.second = iter.second / m_lStatsCount / NANO_TO_MILI_FACTOR;
+				m_bSearchTimeInMS = true;
 			}
-			m_bSearchTimeInMS = true;
-		}
+			else
+				iter.second = iter.second / m_lStatsCount;
+		}	
 
 		return m_avgStats;
 	}
+
+	auto& GetNotAveragedStats()
+	{
+		return m_avgStats;
+	}
+
+	void AddHPAEntranceLength()
+	{
+		for (auto &iter : m_avgStats)
+		{
+			if (iter.first.find(std::string("pathLength")) != std::string::npos)
+				iter.second = iter.second + INTER_EDGE_WEIGHT;
+		}
+	}
+
+	//void WriteStatsToFile(std::ofstream &file)
+	//{
+	//	for (auto iter : m_avgStats)
+	//	{
+	//		if (m_bSearchTimeInMS == false && iter.first.find(std::string("searchTime")) != std::string::npos)
+	//			file << std::string(iter.first) << " " << iter.second / (double)m_lStatsCount / NANO_TO_MILI_FACTOR << "\n";
+	//		else
+	//			file << std::string(iter.first) << " " << iter.second / (double)m_lStatsCount << "\n";
+	//		//file << "wow";
+	//	}
+	//}
+
+	auto GetStatsCount()
+	{
+		return m_lStatsCount;
+	}
+
 private:
 	std::vector<CStatistics> m_stats;
 	std::map<std::string, double> m_avgStats;

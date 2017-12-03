@@ -3,9 +3,9 @@
 #include <boost\filesystem.hpp>
 #include <boost\regex.hpp>
 #include <regex>
-#include <fstream>
 #include "CExperimentsHandler.h"
 #include "CStatistics.h"
+#include <iostream>
 
 CAutomatedExperiments::CAutomatedExperiments()
 	: m_ExperimentResults(true)
@@ -45,7 +45,7 @@ void CAutomatedExperiments::DoExperiments()
 		std::cout << e.what() << '\n';
 	}
 
-	int i = 4;
+	int i = 3;
 	for (auto strMapPath : strFileNames)
 	{
 		if (strMapPath.find(".map") != std::string::npos) //it's a map test file
@@ -57,6 +57,7 @@ void CAutomatedExperiments::DoExperiments()
 
 			CExperimentsHandler singleMapExperiment(strMapPath, strTestPath);
 
+			singleMapExperiment.GetAStar().DrawMap();
 			
 			m_ExperimentResults.AddAvgStats(singleMapExperiment.GetStatsAStar().GetAvgStats());
 			m_ExperimentResults.AddAvgStats(singleMapExperiment.GetStatsFringe().GetAvgStats());
@@ -65,10 +66,37 @@ void CAutomatedExperiments::DoExperiments()
 			m_ExperimentResults.IncreaseAvgStatsCount();
 
 			i++;
-			if (i == 10)
+			std::cout << "done: " << i << std::endl;
+			if (i == 4)
 				break;
 		}
 	}
-
+	std::cout << "\n\n" << std::endl;
 	m_ExperimentResults.PrintAvgStats();
+
+	std::ofstream resultFile(strResultsPath.c_str(), std::ofstream::app);
+	
+	if (resultFile.is_open())
+	{
+		//m_ExperimentResults.WriteStatsToFile(resultFile);
+		auto avgStats = m_ExperimentResults.GetAvgStats();
+
+		for (auto iter : avgStats)
+		{
+			resultFile << iter.first << " " << iter.second << "\n";
+		}
+		resultFile << "\n\n";
+		resultFile.close();
+	}
+	else
+	{
+		std::cout << "nie mozna zapisac wynikow" << std::endl;
+	}
+}
+
+
+void CAutomatedExperiments::FindPathForMapDraw()
+{
+
+
 }

@@ -15,8 +15,9 @@ public:
 		, m_iClustersInGroup(2)
 		, m_iMaxLvlStartGoalNodes(0)
 		, m_Statistics(std::string("HPAStar"))
+		, m_AStar(std::string("HPAStar"))
 	{
-
+		//m_AStar.GetStatistics().SetAlgName(std::string("HPAStar"));
 	}
 	~CHPAStar()
 	{

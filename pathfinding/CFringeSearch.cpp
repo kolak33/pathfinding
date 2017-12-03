@@ -81,6 +81,7 @@ void CFringeSearch::FindShortestPath(int iStartNode, int iGoalNode)
 			if (newFValue > fLimit)
 			{
 				fMin = (std::min)(newFValue, fMin);
+				++lVisitedNodes;
 				continue;
 			}
 
@@ -131,10 +132,10 @@ void CFringeSearch::FindShortestPath(int iStartNode, int iGoalNode)
 			if (frontierIter == frontierList.end())
 				break;
 		}
-		if (/*bFirstIter && fMin != maxDistance*/ minFValueInIter > fLimit)
+		//if (/*bFirstIter && fMin != maxDistance*/ minFValueInIter >= fLimit)
 		{
 			//fLimit = fMin;
-			fLimit = fMin;
+			fLimit = (std::min)(fMin, minFValueInIter);
 			//bFirstIter = false;
 		}
 	}
@@ -169,5 +170,6 @@ void CFringeSearch::FindShortestPath(int iStartNode, int iGoalNode)
 	m_Statistics.SetSearchTimeChrono(timeElapsedMS);
 	m_Statistics.SetNodesExpanded(lExpandedNodes);
 	m_Statistics.SetOpenSetMaxSize(lOpenSetMaxSize);
+	m_Statistics.SetNodesVisited(lVisitedNodes);
 }
 

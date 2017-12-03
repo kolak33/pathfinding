@@ -12,8 +12,11 @@ public:
 
 
 	void DoExperiments();
+	void FindPathForMapDraw();
 
 private:
 	CStatisticsSummary m_ExperimentResults;
+
+	//CExperimentsHandler m_mapHandler;
 };
 

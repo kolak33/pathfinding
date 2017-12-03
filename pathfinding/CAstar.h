@@ -10,8 +10,7 @@ public:
 	CAstar(std::string algName = "AStar");
 	~CAstar();
 
-	void FindShortestPath(int iStartNode, int iGoalNode, bool bSimpleSearch = false, CCluster *clusterPtr = nullptr,
-		int iFirstLvlClusterWidth = -1, int iFirstLvlClusterHeight = -1, int iClustersRowCount = -1);
+	void FindShortestPath(int iStartNode, int iGoalNode, bool bSimpleSearch = false, CCluster *clusterPtr = nullptr);
 	void FindShortestPathInCluster(int iStartNode, int iGoalNode, CCluster &cluster);
 	void FindShortestPathInClusterAbstract(int iStartNode, int iGoalNode, CCluster &cluster, std::vector<CHierarchicalEdge> &abstrGraph, int iStartOwnPos, int iGoalOwnPos);
 	void FindShortestPathAbstract(int iStartNode, int iGoalNode, std::vector<CHierarchicalEdge> &abstrGraph, int iStartOwnPos, int iGoalOwnPos);
