@@ -7,7 +7,7 @@
 class CAstar : public CDijkstra
 {
 public:
-	CAstar();
+	CAstar(std::string algName = "AStar");
 	~CAstar();
 
 	void FindShortestPath(int iStartNode, int iGoalNode, bool bSimpleSearch = false, CCluster *clusterPtr = nullptr,

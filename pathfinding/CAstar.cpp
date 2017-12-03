@@ -2,7 +2,8 @@
 #include "CAstar.h"
 
 
-CAstar::CAstar()
+CAstar::CAstar(std::string algName)
+ : CDijkstra(algName)
 {
 }
 
@@ -56,6 +57,8 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode, bool bSimpleSearch,
 		//m_distSoFar.resize(iCnt);
 		m_distSoFar.assign(iCnt, maxDistance);
 		m_closedList.assign(iCnt, false);
+		//m_distSoFarHash.clear();
+		//m_closedListHash.clear();
 		m_bPreallocatedResources = true;
 	}
 	else if(bSimpleSearch) //TODO zmienic nazwe, low lvl search in cluster area
@@ -68,11 +71,14 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode, bool bSimpleSearch,
 	{
 		//m_distSoFar.assign(iNodesCount, maxDistance);
 		//m_closedList.assign(iNodesCount, false);
+
 		std::fill_n(m_distSoFar.begin(), iNodesCount, maxDistance);
 		std::fill_n(m_closedList.begin(), iNodesCount, false);
+		//m_distSoFarHash.clear();
+		//m_closedListHash.clear();
 	}
 	std::chrono::steady_clock::time_point endAllocationTime = std::chrono::steady_clock::now();
-	m_timeAllocation = std::chrono::duration_cast<std::chrono::milliseconds>(endAllocationTime - begin).count();
+	m_timeAllocation = std::chrono::duration_cast<std::chrono::nanoseconds>(endAllocationTime - begin).count();
 	//std::cout << "\ntime alloc: " << m_timeAllocation << "\n";
 
 	//TODO check high resolution clock vs standard one
@@ -82,7 +88,8 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode, bool bSimpleSearch,
 
 	m_previous[iStartNode] = -1;
 	m_distSoFar[iStartNode] = 0.0f;
-
+	//m_distSoFarHash[iStartNode] = 0.0f;
+	
 	//std::priority_queue<CPriorityQueueNode, std::vector<CPriorityQueueNode>, ComparePriorityQueueNode> dijQueueNode;
 	CMyPriorityQueue<CPriorityQueueNode, std::vector<CPriorityQueueNode>, ComparePriorityQueueNode> dijQueueNode;
 
@@ -160,6 +167,7 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode, bool bSimpleSearch,
 		}
 
 		m_closedList[current] = true;
+		//m_closedListHash[current] = true;
 		++lExpandedNodes; // todo pomyslec czy to w tym miejscu
 
 
@@ -172,14 +180,16 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode, bool bSimpleSearch,
 		//bDirectNextNodeAccess = false;
 		bFoundBetterNeighbour = false;
 		auto nextNeighbour = graph[current].GetNeighbours().begin();
-		while (nextNeighbour != graph[current].GetIterEnd() /*&& nextNeighbour->GetNodeId() != current*/) // do not put parent node we came from
+		while (nextNeighbour != graph[current].GetIterEnd()) // do not put parent node we came from
 		{
 			double new_cost = m_distSoFar[current] + nextNeighbour->GetWeight();
-			if (m_closedList[nextNeighbour->GetNodeId()] != true
+
+			if (m_closedList[nextNeighbour->GetNodeId()] != true 
 				&& m_distSoFar[nextNeighbour->GetNodeId()] > new_cost)
 			{
 				++lVisitedNodes;
 				m_distSoFar[nextNeighbour->GetNodeId()] = new_cost;
+				//m_distSoFarHash[nextNeighbour->GetNodeId()] = new_cost;
 				m_previous[nextNeighbour->GetNodeId()] = current;
 
 				auto &currGridTile = graph[nextNeighbour->GetNodeId()].GetGridTileInfo();
@@ -219,6 +229,7 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode, bool bSimpleSearch,
 	if (m_bPathFound)
 	{
 		m_shortestPathLength = m_distSoFar[iGoalNode];
+		//m_shortestPathLength = m_distSoFarHash[iGoalNode];
 		//std::cout << "AStar shortestPath: " << m_shortestPathLength << "\n";
 		int iNodeId = iGoalNode;
 		while (m_previous[iNodeId] != -1)
@@ -235,7 +246,7 @@ void CAstar::FindShortestPath(int iStartNode, int iGoalNode, bool bSimpleSearch,
 	//std::chrono::high_resolution_clock::time_point endHighRes = std::chrono::high_resolution_clock::now();
 
 	//double timeElapsedClock = (endClockTime - startClockTime) * 1000 / CLOCKS_PER_SEC;
-	double timeElapsedMS = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+	double timeElapsedMS = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 	//double timeElapsedNS = std::chrono::duration_cast<std::chrono::nanoseconds> (end - begin).count();
 	//double timeElapsedHighResMS = std::chrono::duration_cast<std::chrono::microseconds>(endHighRes - beginHighRes).count();
 

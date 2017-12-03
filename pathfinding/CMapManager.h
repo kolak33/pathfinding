@@ -20,15 +20,18 @@ public:
 class CMapManager
 {
 public:
-	CMapManager();
+	CMapManager()
+	{
+	}
+	CMapManager(std::string &strMapLocationPath, std::string strTestSuiteLocationPath);
 
 
 	~CMapManager();
 
 
-	void InitMapFromFile();
+	void InitMapFromFile(std::string &strMapLocationPath, std::string strTestSuiteLocationPath);
 	void InitGraph();
-	void CreateTestSuiteForMap(std::string strMapName); //without reference, dont want to rename it inside
+	void CreateTestSuiteForMap(std::string strTestSuiteLocationPath); //without reference, dont want to rename it inside
 	void DrawMap();
 	void DrawShortestPath(std::vector<int> &vec);
 	void ColorGridTile(int iTileId, CColor &color, bool bMarkEntrance = false);
@@ -51,7 +54,7 @@ public:
 		if (iXPos < 0 || iXPos >= m_iMapWidth
 			|| iYPos < 0 || iYPos >= m_iMapHeight)
 		{
-			std::cout << "\nNODE DOES NOT EXIST\n" << std::endl; //TODO usunac to
+			//std::cout << "\nNODE DOES NOT EXIST\n" << std::endl; //TODO usunac to
 			return nullptr;
 		}
 
@@ -81,7 +84,7 @@ protected:
 	int m_iMapNodesCount;
 	float m_fQuadSize;
 
-
+	std::vector<int> m_PassableNodeIds;
 
 	std::vector< CPriorityQueueEdges > m_Graph;
 

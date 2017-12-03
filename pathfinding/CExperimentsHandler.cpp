@@ -2,6 +2,8 @@
 #include "CExperimentsHandler.h"
 #include <regex>
 #include <fstream>
+#include <boost\filesystem.hpp>
+
 
 
 //CExperimentsHandler::CExperimentsHandler()
@@ -43,10 +45,11 @@ void CExperimentsHandler::DoDijkstraExperiments(int iNumExperiments)
 	PrintStats();
 }
 
-void CExperimentsHandler::DoTestSuiteExperiments()
+void CExperimentsHandler::DoTestSuiteExperiments(std::string &strTestSuiteLocationPath)
 {
-	std::string strTestMapSuite = strTestsLocationPrefix + strMapName;
-	strTestMapSuite = std::regex_replace(strTestMapSuite, std::regex(".map"), ".txt");
+	//std::string strTestMapSuite = strTestsLocationPrefix + strMapName;
+	std::string strTestMapSuite = std::regex_replace(strTestSuiteLocationPath, std::regex(".map"), ".txt");
+
 	
 	std::ifstream testFileSuite(strTestMapSuite.c_str());
 	ATLASSERT(testFileSuite.is_open() == true);
@@ -57,9 +60,9 @@ void CExperimentsHandler::DoTestSuiteExperiments()
 		int iTestCount = 0, iStartNode = 0, iGoalNode = 0;
 		testFileSuite >> strTemp; //"testCount:"
 		testFileSuite >> iTestCount;
-		iTestCount = 500; //TODO
+		iTestCount = 10; //TODO
 
-		//m_HPAStar.Preprocessing();
+		m_HPAStar.Preprocessing();
 
 		for (int i = 0; i < iTestCount; ++i)
 		{
@@ -74,19 +77,21 @@ void CExperimentsHandler::DoTestSuiteExperiments()
 			auto stats = m_AStar.GetStatistics();
 			m_StatsAStar.AddStats(stats);
 
+			m_HPAStar.FindShortestPath(iStartNode, iGoalNode);
+			stats = m_HPAStar.GetStatistics();
+			m_StatsHPAStar.AddStats(stats);
+
+			m_JPSearch.FindShortestPath(iStartNode, iGoalNode);
+			stats = m_JPSearch.GetStatistics();
+			m_StatsJPSearch.AddStats(stats);
+
 			m_Fringe.FindShortestPath(iStartNode, iGoalNode);
 			stats = m_Fringe.GetStatistics();
 			m_StatsFringe.AddStats(stats);
 			
-			/*m_JPSearch.FindShortestPath(iStartNode, iGoalNode);
-			stats = m_JPSearch.GetStatistics();
-			m_StatsJPSearch.AddStats(stats);*/
+					
 
-
-			/*m_HPAStar.FindShortestPath(iStartNode, iGoalNode);
-            stats = m_HPAStar.GetStatistics();
-            m_StatsHPAStar.AddStats(stats);
-            stats = m_HPAStar.GetAddStart();
+            /*stats = m_HPAStar.GetAddStart();
             m_StatsAddStart.AddStats(stats);
 			stats = m_HPAStar.GetSearchAbstr();
 			m_SearchAtFirstAbstractLvl.AddStats(stats);
@@ -111,9 +116,11 @@ void CExperimentsHandler::PrintStats()
 	//m_StatsDijkstra.PrintAvgStats();
 	std::cout << "\n\nASTAR:\n";
 	m_StatsAStar.PrintAvgStats();
+	//m_StatsAStar.PrintAllStats();
 
-	std::cout << "\n\nFRINGE:\n";
-	m_StatsFringe.PrintAvgStats();
+	//std::cout << "\n\nFRINGE:\n";
+	//m_StatsFringe.PrintAvgStats();
+	//m_StatsFringe.PrintAllStats();
 
 	//std::cout << "\n\nJPSEARCH:\n";
 	//m_StatsJPSearch.PrintAvgStats();

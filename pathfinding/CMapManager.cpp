@@ -6,9 +6,10 @@
 #include <gl\freeglut.h>
 #include "CPriorityQueueNode.h"
 #include <regex>
+#include "CAstar.h"
 
 
-CMapManager::CMapManager(): m_iMapHeight(-1), m_iMapWidth(-1)
+CMapManager::CMapManager(std::string &strMapLocationPath, std::string strTestSuiteLocationPath): m_iMapHeight(-1), m_iMapWidth(-1)
 {
 	m_TerrainMapInfo['.'] = std::make_pair(CellTypePassableTerrain, GridTypePassable);
 	m_TerrainMapInfo['G'] = std::make_pair(CellTypePassableTerrain, GridTypePassable);
@@ -19,8 +20,7 @@ CMapManager::CMapManager(): m_iMapHeight(-1), m_iMapWidth(-1)
 	m_TerrainMapInfo['T'] = std::make_pair(CellTypeTrees, GridTypeImpassable);
 	m_TerrainMapInfo['W'] = std::make_pair(CellTypeWater, GridTypeImpassable);
 
-	InitMapFromFile();
-	InitGraph();
+	InitMapFromFile(strMapLocationPath, strTestSuiteLocationPath);
 }
 
 CMapManager::~CMapManager()
@@ -171,9 +171,9 @@ void CMapManager::DrawShortestPath(std::vector<int> &vec)
 	glFlush();
 }
 
-void CMapManager::InitMapFromFile()
+void CMapManager::InitMapFromFile(std::string &strMapLocationPath, std::string strTestSuiteLocationPath)
 {
-	std::string strMapLocationPath = strMapLocationPrefix + strMapName;
+	//std::string strMapLocationPath = strMapLocationPrefix + strMapName;
 	std::ifstream mapFile;
 	mapFile.open(strMapLocationPath.c_str());
 
@@ -220,7 +220,8 @@ void CMapManager::InitMapFromFile()
 		}
 		mapFile.close();
 
-		CreateTestSuiteForMap(strMapName);
+		InitGraph();
+		CreateTestSuiteForMap(strTestSuiteLocationPath);
 	}
 }
 
@@ -310,26 +311,51 @@ void CMapManager::InitGraph()
 	}
 }
 
-void CMapManager::CreateTestSuiteForMap(std::string strMapName)
+void CMapManager::CreateTestSuiteForMap(std::string strTestSuiteLocationPath)
 {
 	//test if file already exists
-	strMapName = std::regex_replace(strMapName, std::regex(".map"), ".txt");
-	std::string strTestSuiteLocationPath = strTestsLocationPrefix + strMapName;
+	//strMapName = std::regex_replace(strMapName, std::regex(".map"), ".txt");
+	//std::string strTestSuiteLocationPath = strTestsLocationPrefix + strMapName;
+	strTestSuiteLocationPath = std::regex_replace(strTestSuiteLocationPath, std::regex(".map"), ".txt");
 	std::ifstream testFile(strTestSuiteLocationPath.c_str());
 	if (!testFile.good())
 	{
-		std::cout << "CREATING TEST SUITE FOR MAP: " << strMapName << std::endl;
+		CAstar AStar;
+		AStar.SetMapManagerPtr(this);
+		
+		std::cout << "CREATING TEST SUITE FOR MAP: " << strTestSuiteLocationPath << std::endl;
 		std::ofstream testFileSuite(strTestSuiteLocationPath.c_str());
 		ATLASSERT(testFileSuite.is_open());
 		if (testFileSuite.is_open())
 		{
 			srand(time(NULL));
 			testFileSuite << "testsCount: " << iGenerateTestCount << "\n";
-			for (int i = 0; i < iGenerateTestCount; ++i)
+
+			for (auto tile : m_Graph)
 			{
-				testFileSuite << GenerateRandomAccessibleNodeId() << " " << GenerateRandomAccessibleNodeId() << "\n";
+				if (tile.GetGridTileInfo().GetGridTypeEnum() == GridTypePassable)
+					m_PassableNodeIds.push_back(tile.GetGridTileInfo().GetGridId());
 			}
-			testFileSuite << fflush;
+
+			int i = 0;
+			while(i < iGenerateTestCount)
+			{
+				//testFileSuite << GenerateRandomAccessibleNodeId() << " " << GenerateRandomAccessibleNodeId() << "\n";
+				int iStartNode = GenerateRandomAccessibleNodeId();
+				int iGoalNode = GenerateRandomAccessibleNodeId();
+				if (iStartNode != iGoalNode)
+				{
+					AStar.FindShortestPath(iStartNode, iGoalNode);
+					if (AStar.GetPathFound())
+					{
+						testFileSuite << iStartNode << " " << iGoalNode << "\n";
+						++i;
+						if (i % 50 == 0)
+							std::cout << "TESTS GENERATED: " << i << "\n";
+					}
+				}
+			}
+			//testFileSuite << fflush;
 
 			testFileSuite.close();
 		}
@@ -338,9 +364,12 @@ void CMapManager::CreateTestSuiteForMap(std::string strMapName)
 
 int CMapManager::GenerateRandomAccessibleNodeId()
 {
-	int iRand = rand() % m_iMapNodesCount;
+	/*int iRand = rand() % m_iMapNodesCount;
 	while (m_Graph[iRand].GetGridTileInfo().GetGridTypeEnum() != GridTypePassable)
 		iRand = rand() % m_iMapNodesCount;
 
-	return iRand;
+	return iRand;*/
+
+	int iRand = rand() % m_PassableNodeIds.size();
+	return m_PassableNodeIds[iRand];
 }

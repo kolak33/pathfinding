@@ -14,6 +14,7 @@ public:
 		, m_iMaxLevel(1)
 		, m_iClustersInGroup(2)
 		, m_iMaxLvlStartGoalNodes(0)
+		, m_Statistics(std::string("HPAStar"))
 	{
 
 	}

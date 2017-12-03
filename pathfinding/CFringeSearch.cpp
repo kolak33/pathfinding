@@ -3,6 +3,7 @@
 
 
 CFringeSearch::CFringeSearch()
+	: CAstar(std::string("FringeSearch"))
 {
 }
 
@@ -25,23 +26,25 @@ void CFringeSearch::FindShortestPath(int iStartNode, int iGoalNode)
 	if (!m_bPreallocatedResources)
 	{
 		int iCnt = m_MapManagerPtr->GetGraph().size();
-		m_previous.clear();
-		m_distSoFar2.clear();
+		m_previous.assign(iCnt, maxDistance);
+		//m_distSoFar2.clear();
+		m_distSoFar.assign(iCnt, maxDistance);
 		m_closedList.clear();
 		m_frontierIterPos.clear();
 		m_bPreallocatedResources = true;
 	}
 	else
 	{
-		m_previous.clear();
-		m_distSoFar2.clear();
+		//m_previous.clear();
+		//m_distSoFar2.clear();
+		m_distSoFar.assign(iNodesCount, maxDistance);
 		m_closedList.clear();
 		m_frontierIterPos.clear();
 	}
 
 	m_previous[iStartNode] = -1;
-	m_distSoFar2[iStartNode] = 0.0f;
-
+	//m_distSoFar2[iStartNode] = 0.0f;
+	m_distSoFar[iStartNode] = 0.0f;
 
 	std::list<CPriorityQueueNode> frontierList;
 	CPriorityQueueNode firstNode(iStartNode, 0.0);
@@ -66,10 +69,13 @@ void CFringeSearch::FindShortestPath(int iStartNode, int iGoalNode)
 		double fMin = (std::numeric_limits<double>::max)();
 		if (frontierList.size() > lOpenSetMaxSize)
 			lOpenSetMaxSize = frontierList.size();
-		bool bFirstIter = true;
+		//bool bFirstIter = true;
+		double minFValueInIter = fMin;
+
 		for (auto& frontierIter = frontierList.begin(); frontierIter != frontierList.end(); ++frontierIter)
 		{
-			double gValFrontier = m_distSoFar2.find(frontierIter->GetNodeId())->second;
+			//double gValFrontier = m_distSoFar2.find(frontierIter->GetNodeId())->second;
+			double gValFrontier = m_distSoFar[frontierIter->GetNodeId()];
 			double newFValue = gValFrontier + GetOctileHeuristic(frontierIter->GetNodeId(), iGoalNode);
 
 			if (newFValue > fLimit)
@@ -83,18 +89,23 @@ void CFringeSearch::FindShortestPath(int iStartNode, int iGoalNode)
 				m_bPathFound = true;
 				break;
 			}
-			bFirstIter = false;
+			//bFirstIter = false;
 			auto &neighbours = graph[frontierIter->GetNodeId()].GetNeighbours();
 
 			for (auto& neigh : neighbours)
 			{
 				double gValNeigh = gValFrontier + neigh.GetWeight();
-				auto succIter = m_distSoFar2.find(neigh.GetNodeId());
+				/*auto succIter = m_distSoFar2.find(neigh.GetNodeId());
 				if (succIter != m_distSoFar2.end())
 				{
 					if (gValNeigh >= succIter->second)
 						continue;
-				}
+				}*/
+				if (gValNeigh >= m_distSoFar[neigh.GetNodeId()])
+					continue;
+
+				auto compFVal = gValNeigh + GetOctileHeuristic(neigh.GetNodeId(), iGoalNode);
+				minFValueInIter = (std::min)(compFVal, minFValueInIter);
 
 				auto succPosInFrontier = m_frontierIterPos.find(neigh.GetNodeId());
 				if (succPosInFrontier != m_frontierIterPos.end())
@@ -107,7 +118,8 @@ void CFringeSearch::FindShortestPath(int iStartNode, int iGoalNode)
 				auto insertedIter = frontierList.insert(nextIter, neigh); //insert after frontierIter
 				m_frontierIterPos[neigh.GetNodeId()] = insertedIter;
 
-				m_distSoFar2[neigh.GetNodeId()] = gValNeigh;
+				//m_distSoFar2[neigh.GetNodeId()] = gValNeigh;
+				m_distSoFar[neigh.GetNodeId()] = gValNeigh;
 				m_previous[neigh.GetNodeId()] = frontierIter->GetNodeId();
 			}
 
@@ -119,26 +131,28 @@ void CFringeSearch::FindShortestPath(int iStartNode, int iGoalNode)
 			if (frontierIter == frontierList.end())
 				break;
 		}
-		if (bFirstIter && fMin != maxDistance)
+		if (/*bFirstIter && fMin != maxDistance*/ minFValueInIter > fLimit)
 		{
+			//fLimit = fMin;
 			fLimit = fMin;
-			bFirstIter = false;
+			//bFirstIter = false;
 		}
 	}
 
 	if (m_bPathFound)
 	{
-		m_shortestPathLength = m_distSoFar2.find(iGoalNode)->second;
+		//m_shortestPathLength = m_distSoFar2.find(iGoalNode)->second;
+		m_shortestPathLength = m_distSoFar[iGoalNode];
 		//std::cout << "SMA* shortestPath: " << m_shortestPathLength << "\n";
-		ATLASSERT(m_distSoFar2.find(iGoalNode) != m_distSoFar2.end());
+		//ATLASSERT(m_distSoFar2.find(iGoalNode) != m_distSoFar2.end());
 		int iNodeId = iGoalNode;
-		ATLASSERT(m_previous.find(iNodeId) != m_previous.end());
-		while (m_previous.find(iNodeId)->second != -1)
+		//ATLASSERT(m_previous.find(iNodeId) != m_previous.end());
+		while (m_previous[iNodeId] != -1)
 		{
 			//std::cout << "SMA* distSoFar: " << m_distSoFar2.find(iNodeId)->second << "\n";
 			m_shortestPath.push_back(iNodeId);
-			ATLASSERT(m_previous.find(iNodeId) != m_previous.end());
-			iNodeId = m_previous.find(iNodeId)->second;
+			//ATLASSERT(m_previous.find(iNodeId) != m_previous.end());
+			iNodeId = m_previous[iNodeId];
 		}
 		m_shortestPath.push_back(iNodeId);
 	}
@@ -150,7 +164,7 @@ void CFringeSearch::FindShortestPath(int iStartNode, int iGoalNode)
 	//std::cout << "\n";
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-	double timeElapsedMS = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+	double timeElapsedMS = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 	m_Statistics.SetPathLength(m_shortestPathLength);
 	m_Statistics.SetSearchTimeChrono(timeElapsedMS);
 	m_Statistics.SetNodesExpanded(lExpandedNodes);

@@ -58,7 +58,7 @@ void CHPAStar::FindShortestPath(int iStartId, int iGoalId)
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 	AddStartAndGoalNodesToGraph(iStartId, iGoalId);
 	std::chrono::steady_clock::time_point end1 = std::chrono::steady_clock::now();
-	double timeElapsedMS1 = std::chrono::duration_cast<std::chrono::milliseconds>(end1 - begin).count();
+	double timeElapsedMS1 = std::chrono::duration_cast<std::chrono::nanoseconds>(end1 - begin).count();
 	m_StatAddStart.SetSearchTimeChrono(timeElapsedMS1);
 
 
@@ -75,7 +75,7 @@ void CHPAStar::FindShortestPath(int iStartId, int iGoalId)
 		std::chrono::steady_clock::time_point begin2 = std::chrono::steady_clock::now();
 		m_AStar.FindShortestPathAbstract(iStartId, iGoalId, m_AllAbstrLevels[m_iMaxLvlStartGoalNodes - 1].GetGraph(), edgePos[iStartId], edgePos[iGoalId]);
 		std::chrono::steady_clock::time_point end2 = std::chrono::steady_clock::now();
-		double timeElapsedMS2 = std::chrono::duration_cast<std::chrono::milliseconds>(end2 - begin2).count();
+		double timeElapsedMS2 = std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2).count();
 		m_SearchAtFirstAbstractLvl.SetSearchTimeChrono(timeElapsedMS2);
 
 
@@ -100,7 +100,7 @@ void CHPAStar::FindShortestPath(int iStartId, int iGoalId)
 	RemoveStartAndGoalNodesFromGraph(iStartId, iGoalId);
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-	double timeElapsedMS = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+	double timeElapsedMS = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 	m_Statistics.SetSearchTimeChrono(timeElapsedMS);
 
 	//std::cout << "\n\nSIMPLE SEARCH IN REFINE AVG STATS:\n";
@@ -125,9 +125,9 @@ void CHPAStar::RefinePath(CAstar &AStar, std::vector<int> &path, int iLvl, std::
 				m_timeAlloc += AStar.m_timeAllocation;
 				
 				std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-				m_timeSimpleRefineSearch += std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+				m_timeSimpleRefineSearch += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 				auto& stats = AStar.GetStatistics();
-				m_refineNodesExpanded += stats.GetExpNodes();
+				//m_refineNodesExpanded += stats.GetExpNodes();
 				m_StatSummarySimpleSearch.AddStats(stats);
 			}
 			else

@@ -11,7 +11,8 @@
 class CExperimentsHandler
 {
 public:
-	CExperimentsHandler()
+	CExperimentsHandler(std::string &strMapLocationPath, std::string strTestSuiteLocationPath) 
+		: m_MapManager(strMapLocationPath, strTestSuiteLocationPath)
 	{
 		m_Dijkstra.SetMapManagerPtr(&m_MapManager);
 		m_AStar.SetMapManagerPtr(&m_MapManager);
@@ -21,10 +22,7 @@ public:
 		//m_Dijkstra.SearchPathTest();
 		//int iNumExperiments = 100;
 		//DoDijkstraExperiments(iNumExperiments);
-		DoTestSuiteExperiments();
-	}
-	~CExperimentsHandler()
-	{
+		DoTestSuiteExperiments(strTestSuiteLocationPath);
 	}
 
 	auto& GetMapManager() { return m_MapManager; }
@@ -34,6 +32,11 @@ public:
 	auto& GetJPSearch() { return m_JPSearch; }
 	auto& GetFringe() { return m_Fringe; }
 
+	auto& GetStatsDijkstra() { return m_StatsDijkstra; }
+	auto& GetStatsAStar() { return m_StatsAStar; }
+	auto& GetStatsHPAStar() { return m_StatsHPAStar; }
+	auto& GetStatsJPSearch() { return m_StatsJPSearch; }
+	auto& GetStatsFringe() { return m_StatsFringe; }
 private:
 	//TODO kiedys dziedziczenie po abstr klasie z funkcja searchPath
 	CMapManager m_MapManager;
@@ -57,7 +60,7 @@ private:
 	CStatisticsSummary m_StatsRefineSearchTime;
 
 	void DoDijkstraExperiments(int iNumExperiments);
-	void DoTestSuiteExperiments();
+	void DoTestSuiteExperiments(std::string &strTestSuiteLocationPath);
 	void PrintStats();
 };
 

@@ -4,6 +4,7 @@
 
 
 CJPSearch::CJPSearch()
+	: CAstar(std::string("JPSearch"))
 {
 }
 
@@ -113,7 +114,7 @@ void CJPSearch::FindShortestPath(int iStartNode, int iGoalNode)
 	//std::cout << "\n";
 
 	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-	double timeElapsedMS = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+	double timeElapsedMS = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 	m_Statistics.SetPathLength(m_shortestPathLength);
 	m_Statistics.SetSearchTimeChrono(timeElapsedMS);
 	m_Statistics.SetNodesExpanded(lExpandedNodes);

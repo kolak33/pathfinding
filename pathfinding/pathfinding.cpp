@@ -1,11 +1,12 @@
 #include "stdafx.h"
 #include <gl\freeglut.h>
 #include <vector>
-#include "CExperimentsHandler.h"
+#include "CAutomatedExperiments.h"
 
 
 
-CExperimentsHandler *expHandlerGlobalPtr;
+//CExperimentsHandler *expHandlerGlobalPtr;
+CAutomatedExperiments *expAutomatedGlobalPtr;
 
 void DrawMap()
 {
@@ -16,21 +17,24 @@ void DrawMap()
 
 	//expHandlerGlobalPtr->GetMapManager().DrawMap();
 	//expHandlerGlobalPtr->GetAStar().DrawMap();
-	expHandlerGlobalPtr->GetFringe().DrawMap();
+	//expHandlerGlobalPtr->GetFringe().DrawMap();
+	
 }
 
 int main(int argc, char** argv)
 {
-	CExperimentsHandler expHandler;
-	expHandlerGlobalPtr = &expHandler;
+	//CExperimentsHandler expHandler;
+	//expHandlerGlobalPtr = &expHandler;
+	CAutomatedExperiments expAutomated;
+	expAutomatedGlobalPtr = &expAutomated;
 
     glutInit(&argc, argv);
 
     glutInitDisplayMode(GLUT_SINGLE);
     glutInitDisplayMode(GLUT_RGB);
 
-    glutInitWindowSize(650, 650);
-    glutInitWindowPosition(300, 100);
+    glutInitWindowSize(850, 850);
+    glutInitWindowPosition(300, 10);
     glutCreateWindow("HelloTeapot");
 
     glutDisplayFunc(DrawMap);

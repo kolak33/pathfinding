@@ -16,8 +16,9 @@
 class CDijkstra
 {
 public:
-	CDijkstra()
+	CDijkstra(std::string algName = "Dijkstra")
 		: m_bPreallocatedResources(false)
+		, m_Statistics(algName)
 	{
 		//m_MapManager.InitMapFromFile();
 		//InitGraph();
