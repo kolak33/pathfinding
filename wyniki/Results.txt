@@ -1,328 +1,1300 @@
-AStar nodesExpanded 73
-AStar nodesVisited 184.3
-AStar openSetMaxSize 112.1
-AStar pathLength 29.5692
-AStar searchTime 3.34993e-08
-FringeSearch nodesExpanded 92.8
-FringeSearch nodesVisited 276.3
-FringeSearch openSetMaxSize 52.9
-FringeSearch pathLength 29.5692
-FringeSearch searchTime 6.09635e-08
-HPAStar nodesExpanded 53.9
-HPAStar nodesVisited 156.2
-HPAStar openSetMaxSize 5.9
-HPAStar pathLength 42.439
-HPAStar searchTime 1.05999e-07
-JPSearch nodesExpanded 5.7
-JPSearch nodesVisited 797.4
-JPSearch openSetMaxSize 6.6
-JPSearch pathLength 29.5692
-JPSearch searchTime 3.93696e-08
-AStar nodesExpanded 3964.31
-AStar nodesVisited 6110.81
-AStar openSetMaxSize 665.66
-AStar pathLength 191.677
-AStar searchTime 1.57245e-06
-FringeSearch nodesExpanded 3963.11
-FringeSearch nodesVisited 308023
-FringeSearch openSetMaxSize 233.62
-FringeSearch pathLength 191.677
-FringeSearch searchTime 4.801e-06
-HPAStar nodesExpanded 477.33
-HPAStar nodesVisited 1118.75
-HPAStar openSetMaxSize 10.47
-HPAStar pathLength 221.968
-HPAStar searchTime 4.6852e-07
-JPSearch nodesExpanded 123.79
-JPSearch nodesVisited 9857.79
-JPSearch openSetMaxSize 22.06
-JPSearch pathLength 191.671
-JPSearch searchTime 6.04689e-07
+
+//BG512 normal
+
+AStar nodesExpanded 5631.55
+AStar nodesVisited 8801.68
+AStar openSetMaxSize 1092.13
+AStar pathLength 201.157
+AStar searchTime 2.43185
+FringeSearch nodesExpanded 5567.31
+FringeSearch nodesVisited 699059
+FringeSearch openSetMaxSize 269.504
+FringeSearch pathLength 201.157
+FringeSearch searchTime 9.59466
+HPAStar nodesExpanded 451.317
+HPAStar nodesVisited 1095.6
+HPAStar openSetMaxSize 0.5518
+HPAStar pathLength 231.236
+HPAStar searchTime 0.364381
+JPSearch nodesExpanded 43.2053
+JPSearch nodesVisited 20692.4
+JPSearch openSetMaxSize 9.0028
+JPSearch pathLength 201.157
+JPSearch searchTime 1.15856
+
+// Manhattan distance
+
+AStar nodesExpanded 4378.41
+AStar nodesVisited 7630.91
+AStar openSetMaxSize 471.529
+AStar pathLength 201.473
+AStar searchTime 2.03618
+FringeSearch nodesExpanded 8919.2
+FringeSearch nodesVisited 351974
+FringeSearch openSetMaxSize 287.281
+FringeSearch pathLength 210.771 // lekko gorzej
+FringeSearch searchTime 7.5153 // LEPIEJ
+HPAStar nodesExpanded 548.889
+HPAStar nodesVisited 1179.46
+HPAStar openSetMaxSize 353.32
+HPAStar pathLength 233.215
+HPAStar searchTime 0.307922
+JPSearch nodesExpanded 46.5904
+JPSearch nodesVisited 21479.1
+JPSearch openSetMaxSize 8.82797
+JPSearch pathLength 244.78 //GORZEJ
+JPSearch searchTime 1.18787 // praktycznie tak samo
+
+// h*1.02
+
+AStar nodesExpanded 4978.9
+AStar nodesVisited 9224.84
+AStar openSetMaxSize 690.96
+AStar pathLength 201.233
+AStar searchTime 2.3366
+FringeSearch nodesExpanded 5255.89
+FringeSearch nodesVisited 1.00158e+06
+FringeSearch openSetMaxSize 207.152
+FringeSearch pathLength 201.598
+FringeSearch searchTime 14.0579
+HPAStar nodesExpanded 409.702
+HPAStar nodesVisited 1022.53
+HPAStar openSetMaxSize 0.5518
+HPAStar pathLength 231.236
+HPAStar searchTime 0.339708
+JPSearch nodesExpanded 43.1925
+JPSearch nodesVisited 20686.3
+JPSearch openSetMaxSize 9.0046
+JPSearch pathLength 205.18
+JPSearch searchTime 1.20653
 
 
-AStar nodesExpanded 3964.31
-AStar nodesVisited 6110.81
-AStar openSetMaxSize 665.66
-AStar pathLength 191.677
-AStar searchTime 1.57404e-06
-FringeSearch nodesExpanded 3963.11
-FringeSearch nodesVisited 308023
-FringeSearch openSetMaxSize 233.62
-FringeSearch pathLength 191.677
-FringeSearch searchTime 4.82854e-06
-HPAStar nodesExpanded 477.33
-HPAStar nodesVisited 1118.75
-HPAStar openSetMaxSize 10.47
-HPAStar pathLength 221.968
-HPAStar searchTime 4.66928e-07
-JPSearch nodesExpanded 123.79
-JPSearch nodesVisited 9857.79
-JPSearch openSetMaxSize 22.06
-JPSearch pathLength 191.671
-JPSearch searchTime 6.04504e-07
+// h*1.2
 
 
-AStar nodesExpanded 3964.31
-AStar nodesVisited 6110.81
-AStar openSetMaxSize 665.66
-AStar pathLength 191.677
-AStar searchTime 1.58722e-06
-FringeSearch nodesExpanded 3963.11
-FringeSearch nodesVisited 308023
-FringeSearch openSetMaxSize 233.62
-FringeSearch pathLength 191.677
-FringeSearch searchTime 4.86313e-06
-HPAStar nodesExpanded 477.33
-HPAStar nodesVisited 1118.75
-HPAStar openSetMaxSize 10.47
-HPAStar pathLength 221.968
-HPAStar searchTime 4.82934e-07
-JPSearch nodesExpanded 123.79
-JPSearch nodesVisited 9857.79
-JPSearch openSetMaxSize 22.06
-JPSearch pathLength 191.671
-JPSearch searchTime 5.95957e-07
+AStar nodesExpanded 4113.54
+AStar nodesVisited 7755.98
+AStar openSetMaxSize 596.977
+AStar pathLength 202.616
+AStar searchTime 2.19128
+FringeSearch nodesExpanded 7931.66
+FringeSearch nodesVisited 1.50552e+06
+FringeSearch openSetMaxSize 263.39
+FringeSearch pathLength 208.173
+FringeSearch searchTime 20.0655
+HPAStar nodesExpanded 573.42
+HPAStar nodesVisited 1248.1
+HPAStar openSetMaxSize 353.32
+HPAStar pathLength 233.215
+HPAStar searchTime 0.313925
+JPSearch nodesExpanded 43.192
+JPSearch nodesVisited 20685.2
+JPSearch openSetMaxSize 9.00337
+JPSearch pathLength 241.388
+JPSearch searchTime 1.14776
+
+// h*2.0
+
+AStar nodesExpanded 2851.3
+AStar nodesVisited 5603.1
+AStar openSetMaxSize 552.463
+AStar pathLength 222.553
+AStar searchTime 1.90919
+HPAStar nodesExpanded 540.811
+HPAStar nodesVisited 1221.63
+HPAStar openSetMaxSize 353.32
+HPAStar pathLength 257.185
+HPAStar searchTime 0.321086
+JPSearch nodesExpanded 43.2053
+JPSearch nodesVisited 20692.4
+JPSearch openSetMaxSize 9.0028
+JPSearch pathLength 402.313
+JPSearch searchTime 1.18651
 
 
-AStar nodesExpanded 39643.1
-AStar nodesVisited 61108.1
-AStar openSetMaxSize 6656.6
-AStar pathLength 1916.77
-AStar searchTime 15.9758
-FringeSearch nodesExpanded 39631.1
-FringeSearch nodesVisited 3.08023e+06
-FringeSearch openSetMaxSize 2336.2
-FringeSearch pathLength 1916.77
-FringeSearch searchTime 48.9318
-HPAStar nodesExpanded 4773.3
-HPAStar nodesVisited 11187.5
-HPAStar openSetMaxSize 104.7
-HPAStar pathLength 2219.68
-HPAStar searchTime 4.80721
-JPSearch nodesExpanded 1237.9
-JPSearch nodesVisited 98577.9
-JPSearch openSetMaxSize 220.6
-JPSearch pathLength 1916.71
-JPSearch searchTime 6.11011
+// HEUR VALUES A* 1.0
+AStar nodesExpanded 5631.55
+AStar nodesVisited 8801.68
+AStar openSetMaxSize 1092.13
+AStar pathLength 201.157
+AStar searchTime 2.38685
+FringeSearch nodesExpanded 5567.31
+FringeSearch nodesVisited 699059
+FringeSearch openSetMaxSize 269.504
+FringeSearch pathLength 201.157
+FringeSearch searchTime 10.2955
+HPAStar nodesExpanded 583.453
+HPAStar nodesVisited 1259.46
+HPAStar openSetMaxSize 353.32
+HPAStar pathLength 233.215
+HPAStar searchTime 0.410053
+JPSearch nodesExpanded 43.2053
+JPSearch nodesVisited 20692.4
+JPSearch openSetMaxSize 9.0028
+JPSearch pathLength 201.157
+JPSearch searchTime 1.23196
 
+// octile * 1.75AStar nodesExpanded 3067.57
+AStar nodesVisited 5914.74
+AStar openSetMaxSize 547.416
+AStar pathLength 204.862
+AStar searchTime 1.93815
+FringeSearch nodesExpanded 17848
+FringeSearch nodesVisited 3.41793e+06
+FringeSearch openSetMaxSize 345.105
+FringeSearch pathLength 221.671
+FringeSearch searchTime 51.944
+HPAStar nodesExpanded 575.486
+HPAStar nodesVisited 1257.31
+HPAStar openSetMaxSize 353.32
+HPAStar pathLength 233.224
+HPAStar searchTime 0.433407
+JPSearch nodesExpanded 43.2053
+JPSearch nodesVisited 20692.4
+JPSearch openSetMaxSize 9.0028
+JPSearch pathLength 352.024
+JPSearch searchTime 1.29938
 
-AStar nodesExpanded 3964.31
-AStar nodesVisited 6110.81
-AStar openSetMaxSize 665.66
-AStar pathLength 191.677
-AStar searchTime 1.59218
-FringeSearch nodesExpanded 3963.11
-FringeSearch nodesVisited 308023
-FringeSearch openSetMaxSize 233.62
-FringeSearch pathLength 191.677
-FringeSearch searchTime 4.79217
-HPAStar nodesExpanded 477.33
-HPAStar nodesVisited 1118.75
-HPAStar openSetMaxSize 10.47
-HPAStar pathLength 221.968
-HPAStar searchTime 0.463873
-JPSearch nodesExpanded 123.79
-JPSearch nodesVisited 9857.79
-JPSearch openSetMaxSize 22.06
-JPSearch pathLength 191.671
-JPSearch searchTime 0.615391
+//manhattan distance
+AStar nodesExpanded 4378.41
+AStar nodesVisited 7630.91
+AStar openSetMaxSize 471.529
+AStar pathLength 201.473
+AStar searchTime 1.95694
+FringeSearch nodesExpanded 8919.2
+FringeSearch nodesVisited 351974
+FringeSearch openSetMaxSize 287.281
+FringeSearch pathLength 210.771
+FringeSearch searchTime 7.76984
+HPAStar nodesExpanded 548.889
+HPAStar nodesVisited 1179.46
+HPAStar openSetMaxSize 353.32
+HPAStar pathLength 233.215
+HPAStar searchTime 0.389639
+JPSearch nodesExpanded 46.5904
+JPSearch nodesVisited 21479.1
+JPSearch openSetMaxSize 8.82797
+JPSearch pathLength 244.78
+JPSearch searchTime 1.22984
 
+//euclidean
 
-AStar nodesExpanded 4124.91
-AStar nodesVisited 6384.7
-AStar openSetMaxSize 663.817
-AStar pathLength 189.128
-AStar searchTime 1.52762
-FringeSearch nodesExpanded 4712.22
-FringeSearch nodesVisited 334355
-FringeSearch openSetMaxSize 230.484
-FringeSearch pathLength 189.403
-FringeSearch searchTime 5.3107
-HPAStar nodesExpanded 471.948
-HPAStar nodesVisited 1068.58
-HPAStar openSetMaxSize 0.7465
-HPAStar pathLength 219.908
-HPAStar searchTime 0.345105
-JPSearch nodesExpanded 128.375
-JPSearch nodesVisited 10225.3
-JPSearch openSetMaxSize 21.9595
-JPSearch pathLength 189.118
-JPSearch searchTime 0.569861
+AStar nodesExpanded 7134.63
+AStar nodesVisited 10022.7
+AStar openSetMaxSize 551.441
+AStar pathLength 201.157
+AStar searchTime 2.86589
+FringeSearch nodesExpanded 7151.05
+FringeSearch nodesVisited 1.76928e+06
+FringeSearch openSetMaxSize 306.579
+FringeSearch pathLength 201.157
+FringeSearch searchTime 25.7378
+HPAStar nodesExpanded 581.35
+HPAStar nodesVisited 1222.44
+HPAStar openSetMaxSize 353.32
+HPAStar pathLength 233.215
+HPAStar searchTime 0.408487
+JPSearch nodesExpanded 47.3657
+JPSearch nodesVisited 22625.4
+JPSearch openSetMaxSize 9.53027
+JPSearch pathLength 201.158
+JPSearch searchTime 1.31205
 
+//JPS fix euclid
+JPSearch nodesExpanded 79.0386
+JPSearch nodesVisited 37805.2
+JPSearch openSetMaxSize 12.6075
+JPSearch pathLength 352.024
+JPSearch searchTime 2.1234
 
-AStar nodesExpanded 4124.91
-AStar nodesVisited 6384.7
-AStar openSetMaxSize 663.817
-AStar pathLength 189.128
-AStar searchTime 1.54402
-FringeSearch nodesExpanded 5042.9
-FringeSearch nodesVisited 325860
-FringeSearch openSetMaxSize 237.486
-FringeSearch pathLength 189.568
-FringeSearch searchTime 5.4944
-HPAStar nodesExpanded 471.948
-HPAStar nodesVisited 1068.58
-HPAStar openSetMaxSize 0.7465
-HPAStar pathLength 219.908
-HPAStar searchTime 0.357651
-JPSearch nodesExpanded 128.375
-JPSearch nodesVisited 10225.3
-JPSearch openSetMaxSize 21.9595
-JPSearch pathLength 189.118
-JPSearch searchTime 0.577527
+//JPS fix manhattan
 
+JPSearch nodesExpanded 66.8812
+JPSearch nodesVisited 32206.7
+JPSearch openSetMaxSize 11.6398
+JPSearch pathLength 352.024
+JPSearch searchTime 1.8152
 
-AStar nodesExpanded 4124.91
-AStar nodesVisited 6384.7
-AStar openSetMaxSize 663.817
-AStar pathLength 189.128
-AStar searchTime 1.56827
-FringeSearch nodesExpanded 4485.69
-FringeSearch nodesVisited 336772
-FringeSearch openSetMaxSize 228.569
-FringeSearch pathLength 189.263
-FringeSearch searchTime 5.41895
-HPAStar nodesExpanded 471.948
-HPAStar nodesVisited 1068.58
-HPAStar openSetMaxSize 0.7465
-HPAStar pathLength 219.908
-HPAStar searchTime 0.356486
-JPSearch nodesExpanded 128.375
-JPSearch nodesVisited 10225.3
-JPSearch openSetMaxSize 21.9595
-JPSearch pathLength 189.118
-JPSearch searchTime 0.595632
+/JPS 1.75
 
+JPSearch nodesExpanded 43.2053
+JPSearch nodesVisited 20692.4
+JPSearch openSetMaxSize 9.0028
+JPSearch pathLength 352.024
+JPSearch searchTime 1.11666
+HPAStar nodesExpanded 583.453
+HPAStar nodesVisited 1259.46
+HPAStar openSetMaxSize 44257.1
+HPAStar pathLength 233.215
+HPAStar searchTime 0.334902
+HPAStar nodesExpanded 583.453
+HPAStar nodesVisited 1259.46
+HPAStar openSetMaxSize 1.47524
+HPAStar pathLength 233.215
+HPAStar searchTime 0.333812
+HPAStar nodesExpanded 575.486
+HPAStar nodesVisited 1257.31
+HPAStar openSetMaxSize 1.47444
+HPAStar pathLength 233.224
+HPAStar searchTime 0.340371
+HPAStar nodesExpanded 548.889
+HPAStar nodesVisited 1179.46
+HPAStar openSetMaxSize 1.47148
+HPAStar pathLength 233.215
+HPAStar searchTime 0.329365
+HPAStar nodesExpanded 581.35
+HPAStar nodesVisited 1222.44
+HPAStar openSetMaxSize 1.47531
+HPAStar pathLength 233.215
+HPAStar searchTime 0.342333
+JPSearch nodesExpanded 47.3393
+JPSearch nodesVisited 22612.1
+JPSearch openSetMaxSize 9.53547
+JPSearch pathLength 201.157
+JPSearch searchTime 1.17616
+JPSearch nodesExpanded 34.7532
+JPSearch nodesVisited 18545.1
+JPSearch openSetMaxSize 8.57173
+JPSearch pathLength 203.025
+JPSearch searchTime 0.940444
+JPSearch nodesExpanded 39.3423
+JPSearch nodesVisited 19355.7
+JPSearch openSetMaxSize 8.7037
+JPSearch pathLength 201.469
+JPSearch searchTime 0.98375
+AStar nodesExpanded 3067.57
+AStar nodesVisited 5914.74
+AStar openSetMaxSize 547.416
+AStar pathLength 204.862
+AStar searchTime 1.91146
+AStar nodesExpanded 374.314
+AStar nodesVisited 704.506
+AStar openSetMaxSize 139.422
+AStar pathLength 55.5978
+AStar searchTime 0.190326
+FringeSearch nodesExpanded 1243.49
+FringeSearch nodesVisited 137083
+FringeSearch openSetMaxSize 95.6114
+FringeSearch pathLength 58.5407
+FringeSearch searchTime 2.58982
+AStar nodesExpanded 533.382
+AStar nodesVisited 913.282
+AStar openSetMaxSize 125.414
+AStar pathLength 54.6504
+AStar searchTime 0.195963
+FringeSearch nodesExpanded 891.587
+FringeSearch nodesVisited 26227
+FringeSearch openSetMaxSize 76.2101
+FringeSearch pathLength 56.2088
+FringeSearch searchTime 0.771589
+AStar nodesExpanded 374.314
+AStar nodesVisited 704.506
+AStar openSetMaxSize 139.422
+AStar pathLength 55.5978
+AStar searchTime 0.162661
+FringeSearch nodesExpanded 1243.49
+FringeSearch nodesVisited 137083
+FringeSearch openSetMaxSize 95.6114
+FringeSearch pathLength 58.5407
+FringeSearch searchTime 2.1761
+AStar nodesExpanded 677.01
+AStar nodesVisited 1056.96
+AStar openSetMaxSize 173.473
+AStar pathLength 54.4881
+AStar searchTime 0.215001
+FringeSearch nodesExpanded 676.462
+FringeSearch nodesVisited 47946.8
+FringeSearch openSetMaxSize 74.1684
+FringeSearch pathLength 54.4924
+FringeSearch searchTime 0.792389
+AStar nodesExpanded 55684.7
+AStar nodesVisited 69583.3
+AStar openSetMaxSize 656.254
+AStar pathLength 1484.34
+AStar searchTime 13.717
+FringeSearch nodesExpanded 55682.5
+FringeSearch nodesVisited 6.01212e+06
+FringeSearch openSetMaxSize 249.532
+FringeSearch pathLength 1484.34
+FringeSearch searchTime 84.4221
+HPAStar nodesExpanded 7018.73
+HPAStar nodesVisited 9640.78
+HPAStar openSetMaxSize 1.4811
+HPAStar pathLength 1700.83
+HPAStar searchTime 2.91631
+JPSearch nodesExpanded 4150.2
+JPSearch nodesVisited 53382.8
+JPSearch openSetMaxSize 19.295
+JPSearch pathLength 1484.34
+JPSearch searchTime 7.88058
+AStar nodesExpanded 48436.5
+AStar nodesVisited 69732.5
+AStar openSetMaxSize 541.035
+AStar pathLength 1497.48
+AStar searchTime 13.7436
+HPAStar nodesExpanded 6853.54
+HPAStar nodesVisited 9543.33
+HPAStar openSetMaxSize 1.48235
+HPAStar pathLength 1701.2
+HPAStar searchTime 3.02234
+JPSearch nodesExpanded 3723.97
+JPSearch nodesVisited 47478.9
+JPSearch openSetMaxSize 18.4867
+JPSearch pathLength 1484.34
+JPSearch searchTime 7.29258
+1
+AStar nodesExpanded 54670.8
+AStar nodesVisited 68298.6
+AStar openSetMaxSize 654.988
+AStar pathLength 1462.85
+AStar searchTime 14.697
 
-AStar nodesExpanded 4124.91
-AStar nodesVisited 6384.7
-AStar openSetMaxSize 663.817
-AStar pathLength 189.128
-AStar searchTime 1.55225
-FringeSearch nodesExpanded 4120.89
-FringeSearch nodesVisited 344104
-FringeSearch openSetMaxSize 226.018
-FringeSearch pathLength 189.128
-FringeSearch searchTime 5.21364
-HPAStar nodesExpanded 471.948
-HPAStar nodesVisited 1068.58
-HPAStar openSetMaxSize 0.7465
-HPAStar pathLength 219.908
-HPAStar searchTime 0.348441
-JPSearch nodesExpanded 128.375
-JPSearch nodesVisited 10225.3
-JPSearch openSetMaxSize 21.9595
-JPSearch pathLength 189.118
-JPSearch searchTime 0.587303
+1.1
+AStar nodesExpanded 53492.1
+AStar nodesVisited 76288.7
+AStar openSetMaxSize 612.866
+AStar pathLength 1465.47
+AStar searchTime 14.4662
 
+1.2
+AStar nodesExpanded 52463.2
+AStar nodesVisited 75021.6
+AStar openSetMaxSize 582.652
+AStar pathLength 1468.57
+AStar searchTime 14.0312
 
-AStar nodesExpanded 4124.91
-AStar nodesVisited 6384.7
-AStar openSetMaxSize 663.817
-AStar pathLength 189.128
-AStar searchTime 1.57844
-FringeSearch nodesExpanded 96229.1
-FringeSearch nodesVisited 46791.4
-FringeSearch openSetMaxSize 1780.99
-FringeSearch pathLength 242.465
-FringeSearch searchTime 56.1463
-HPAStar nodesExpanded 471.948
-HPAStar nodesVisited 1068.58
-HPAStar openSetMaxSize 0.7465
-HPAStar pathLength 219.908
-HPAStar searchTime 0.362064
-JPSearch nodesExpanded 128.375
-JPSearch nodesVisited 10225.3
-JPSearch openSetMaxSize 21.9595
-JPSearch pathLength 189.118
-JPSearch searchTime 0.606165
+1.3
+AStar nodesExpanded 51445.8
+AStar nodesVisited 73750.4
+AStar openSetMaxSize 569.558
+AStar pathLength 1471.44
+AStar searchTime 13.8529
 
+1.4
+AStar nodesExpanded 50461.6
+AStar nodesVisited 72388.6
+AStar openSetMaxSize 554.294
+AStar pathLength 1472.78
+AStar searchTime 13.8426
 
-AStar nodesExpanded 4124.91
-AStar nodesVisited 6384.7
-AStar openSetMaxSize 663.817
-AStar pathLength 189.128
-AStar searchTime 1.57092
-FringeSearch nodesExpanded 4120.89
-FringeSearch nodesVisited 344104
-FringeSearch openSetMaxSize 226.018
-FringeSearch pathLength 189.128
-FringeSearch searchTime 5.26446
-HPAStar nodesExpanded 471.948
-HPAStar nodesVisited 1068.58
-HPAStar openSetMaxSize 0.7465
-HPAStar pathLength 219.908
-HPAStar searchTime 0.36482
-JPSearch nodesExpanded 128.375
-JPSearch nodesVisited 10225.3
-JPSearch openSetMaxSize 21.9595
-JPSearch pathLength 189.118
-JPSearch searchTime 0.593166
+1.5
+AStar nodesExpanded 49570.1
+AStar nodesVisited 71254.8
+AStar openSetMaxSize 553.505
+AStar pathLength 1474.43
+AStar searchTime 13.8498
 
+1.6
+AStar nodesExpanded 48712.8
+AStar nodesVisited 70079.6
+AStar openSetMaxSize 544.42
+AStar pathLength 1475.4
+AStar searchTime 13.4602
 
-AStar nodesExpanded 63.365
-AStar nodesVisited 163.605
-AStar openSetMaxSize 100.37
-AStar pathLength 25.8024
-AStar searchTime 0.0648698
-FringeSearch nodesExpanded 66.18
-FringeSearch nodesVisited 359.745
-FringeSearch openSetMaxSize 44.435
-FringeSearch pathLength 25.8024
-FringeSearch searchTime 0.141144
-HPAStar nodesExpanded 46.78
-HPAStar nodesVisited 138.11
-HPAStar openSetMaxSize 0.535
-HPAStar pathLength 38.9417
-HPAStar searchTime 0.163861
-JPSearch nodesExpanded 6.115
-JPSearch nodesVisited 921.72
-JPSearch openSetMaxSize 7.055
-JPSearch pathLength 25.8024
-JPSearch searchTime 0.0967473
+1.7
+AStar nodesExpanded 47896.6
+AStar nodesVisited 68996.2
+AStar openSetMaxSize 538.854
+AStar pathLength 1475.79
+AStar searchTime 13.1092
 
+1.8
+AStar nodesExpanded 47109.7
+AStar nodesVisited 67952.1
+AStar openSetMaxSize 536.081
+AStar pathLength 1476.86
+AStar searchTime 13.4982
 
-AStar nodesExpanded 63.365
-AStar nodesVisited 163.605
-AStar openSetMaxSize 100.37
-AStar pathLength 25.8024
-AStar searchTime 0.0352932
-FringeSearch nodesExpanded 66.18
-FringeSearch nodesVisited 359.745
-FringeSearch openSetMaxSize 44.435
-FringeSearch pathLength 25.8024
-FringeSearch searchTime 0.064256
-HPAStar nodesExpanded 46.78
-HPAStar nodesVisited 138.11
-HPAStar openSetMaxSize 0.535
-HPAStar pathLength 38.9417
-HPAStar searchTime 0.139233
-JPSearch nodesExpanded 6.115
-JPSearch nodesVisited 921.72
-JPSearch openSetMaxSize 7.055
-JPSearch pathLength 25.8024
-JPSearch searchTime 0.0604915
+1.9
+AStar nodesExpanded 47085.5
+AStar nodesVisited 67981.5
+AStar openSetMaxSize 562.566
+AStar pathLength 1527.99
+AStar searchTime 13.3968
 
+2
+AStar nodesExpanded 46331.1
+AStar nodesVisited 66867.9
+AStar openSetMaxSize 558.586
+AStar pathLength 1528.24
+AStar searchTime 13.1981
 
-AStar nodesExpanded 63.365
-AStar nodesVisited 163.605
-AStar openSetMaxSize 100.37
-AStar pathLength 25.8024
-AStar searchTime 0.0299297
-FringeSearch nodesExpanded 66.18
-FringeSearch nodesVisited 359.745
-FringeSearch openSetMaxSize 44.435
-FringeSearch pathLength 25.8024
-FringeSearch searchTime 0.0474941
-HPAStar nodesExpanded 46.78
-HPAStar nodesVisited 138.11
-HPAStar openSetMaxSize 0.535
-HPAStar pathLength 38.9417
-HPAStar searchTime 0.0965564
-JPSearch nodesExpanded 6.115
-JPSearch nodesVisited 921.72
-JPSearch openSetMaxSize 7.055
-JPSearch pathLength 25.8024
-JPSearch searchTime 0.0426417
+1.7
+AStar nodesExpanded 47896.6
+AStar nodesVisited 68996.2
+AStar openSetMaxSize 538.854
+AStar pathLength 1475.79
+AStar searchTime 13.5141
+HPAStar nodesExpanded 6758.08
+HPAStar nodesVisited 9401.13
+HPAStar openSetMaxSize 1.47516
+HPAStar pathLength 1675.82
+HPAStar searchTime 3.05759
+JPSearch nodesExpanded 3694.09
+JPSearch nodesVisited 46849.4
+JPSearch openSetMaxSize 18.3812
+JPSearch pathLength 1462.85
+JPSearch searchTime 7.48632
 
+AStar nodesExpanded 47896.6
+AStar nodesVisited 68996.2
+AStar openSetMaxSize 538.854
+AStar pathLength 1475.79
+AStar searchTime 13.5587
+HPAStar nodesExpanded 6758.08
+HPAStar nodesVisited 9401.13
+HPAStar openSetMaxSize 1.47516
+HPAStar pathLength 1675.82
+HPAStar searchTime 3.01724
+JPSearch nodesExpanded 3694.09
+JPSearch nodesVisited 46849.4
+JPSearch openSetMaxSize 18.3812
+JPSearch pathLength 1462.85
+JPSearch searchTime 7.29063
+
+JPSearch nodesExpanded 3694.69
+JPSearch nodesVisited 46849.4
+JPSearch openSetMaxSize 18.9562
+JPSearch pathLength 1462.85
+JPSearch searchTime 6.11659
+
+JPSearch nodesExpanded 34.1304
+JPSearch nodesVisited 18496.7
+JPSearch openSetMaxSize 9.5608
+JPSearch pathLength 201.778
+JPSearch searchTime 0.811991
+
+JPSearch nodesExpanded 43.2209
+JPSearch nodesVisited 20691.8
+JPSearch openSetMaxSize 10.0151
+JPSearch pathLength 201.157
+JPSearch searchTime 1.09355
+
+JPSearch nodesExpanded 43.2209
+JPSearch nodesVisited 20691.8
+JPSearch openSetMaxSize 10.0151
+JPSearch pathLength 201.157
+JPSearch searchTime 0.996334
+
+JPSearch nodesExpanded 34.7655
+JPSearch nodesVisited 18545.1
+JPSearch openSetMaxSize 9.5569
+JPSearch pathLength 203.025
+JPSearch searchTime 0.801874
+
+JPSearch nodesExpanded 39.3553
+JPSearch nodesVisited 19356.1
+JPSearch openSetMaxSize 9.70143
+JPSearch pathLength 201.469
+JPSearch searchTime 0.814886
+
+JPSearch nodesExpanded 47.3582
+JPSearch nodesVisited 22612.3
+JPSearch openSetMaxSize 10.571
+JPSearch pathLength 201.157
+JPSearch searchTime 0.985829
+
+AStar nodesExpanded 48847.6
+AStar nodesVisited 70327.7
+AStar openSetMaxSize 540.931
+AStar pathLength 1497.48
+AStar searchTime 13.2415
+HPAStar nodesExpanded 6869.24
+HPAStar nodesVisited 9553.94
+HPAStar openSetMaxSize 1.48118
+HPAStar pathLength 1701.2
+HPAStar searchTime 2.87617
+JPSearch nodesExpanded 3751.38
+JPSearch nodesVisited 47809.1
+JPSearch openSetMaxSize 19.121
+JPSearch pathLength 1484.34
+JPSearch searchTime 6.47927
+
+1
+AStar nodesExpanded 58061.8
+AStar nodesVisited 72592.2
+AStar openSetMaxSize 682.285
+AStar pathLength 1489.94
+AStar searchTime 14.1855
+
+1
+AStar nodesExpanded 5284.83
+AStar nodesVisited 8288.89
+AStar openSetMaxSize 1062.67
+AStar pathLength 192.593
+AStar searchTime 2.39888
+
+1.1
+AStar nodesExpanded 4227.64
+AStar nodesVisited 7894.72
+AStar openSetMaxSize 597.92
+AStar pathLength 193.23
+AStar searchTime 2.29223
+
+1.2
+AStar nodesExpanded 3858.77
+AStar nodesVisited 7258.9
+AStar openSetMaxSize 576.064
+AStar pathLength 193.881
+AStar searchTime 2.27955
+
+1.3
+AStar nodesExpanded 3588.98
+AStar nodesVisited 6810.12
+AStar openSetMaxSize 564.497
+AStar pathLength 194.522
+AStar searchTime 2.08009
+
+1
+AStar nodesExpanded 5551.17
+AStar nodesVisited 8708.58
+AStar openSetMaxSize 1106.41
+AStar pathLength 200.315
+AStar searchTime 2.52106
+
+1.1
+AStar nodesExpanded 4390.93
+AStar nodesVisited 8227.94
+AStar openSetMaxSize 632.064
+AStar pathLength 201.081
+AStar searchTime 2.35471
+
+1.2
+AStar nodesExpanded 3962.38
+AStar nodesVisited 7464.54
+AStar openSetMaxSize 604.38
+AStar pathLength 201.793
+AStar searchTime 2.18377
+
+1
+AStar nodesExpanded 55477.1
+AStar nodesVisited 69442.7
+AStar openSetMaxSize 677.028
+AStar pathLength 1480.41
+AStar searchTime 13.6293
+
+1.1
+AStar nodesExpanded 54250.3
+AStar nodesVisited 77527.6
+AStar openSetMaxSize 637.89
+AStar pathLength 1483.12
+AStar searchTime 14.2774
+
+1.2
+AStar nodesExpanded 53198
+AStar nodesVisited 76241.7
+AStar openSetMaxSize 607.19
+AStar pathLength 1486.36
+AStar searchTime 14.2445
+
+1.3
+AStar nodesExpanded 52099.5
+AStar nodesVisited 74829.7
+AStar openSetMaxSize 590.455
+AStar pathLength 1489.26
+AStar searchTime 14.0697
+
+1.75
+AStar nodesExpanded 3071.24
+AStar nodesVisited 5950.16
+AStar openSetMaxSize 549.548
+AStar pathLength 205.601
+AStar searchTime 1.96672
+
+1
+AStar nodesExpanded 54837.5
+AStar nodesVisited 68642.5
+AStar openSetMaxSize 652.509
+AStar pathLength 1462.53
+AStar searchTime 13.8928
+
+1
+AStar nodesExpanded 54649.7
+AStar nodesVisited 68358.8
+AStar openSetMaxSize 644.828
+AStar pathLength 1453.32
+AStar searchTime 13.1203
+
+1.1
+AStar nodesExpanded 53434.8
+AStar nodesVisited 76239.8
+AStar openSetMaxSize 610.773
+AStar pathLength 1455.95
+AStar searchTime 13.689
+
+1.2
+AStar nodesExpanded 52389.6
+AStar nodesVisited 74934.9
+AStar openSetMaxSize 581.027
+AStar pathLength 1459.03
+AStar searchTime 13.5542
+
+1.3
+AStar nodesExpanded 51383.2
+AStar nodesVisited 73691.9
+AStar openSetMaxSize 568.099
+AStar pathLength 1461.85
+AStar searchTime 13.5404
+
+1.4
+AStar nodesExpanded 50394.2
+AStar nodesVisited 72316.9
+AStar openSetMaxSize 551.192
+AStar pathLength 1463.21
+AStar searchTime 13.3259
+
+1.5
+AStar nodesExpanded 49512.3
+AStar nodesVisited 71205.8
+AStar openSetMaxSize 550.595
+AStar pathLength 1464.86
+AStar searchTime 13.106
+
+1.6
+AStar nodesExpanded 48653.5
+AStar nodesVisited 70030.5
+AStar openSetMaxSize 542.434
+AStar pathLength 1465.82
+AStar searchTime 12.8494
+
+1.7
+AStar nodesExpanded 47815.6
+AStar nodesVisited 68905.5
+AStar openSetMaxSize 536.181
+AStar pathLength 1466.22
+AStar searchTime 12.6574
+
+1.8
+AStar nodesExpanded 47045.6
+AStar nodesVisited 67891
+AStar openSetMaxSize 533.532
+AStar pathLength 1467.31
+AStar searchTime 12.5407
+
+1.9
+AStar nodesExpanded 47021.6
+AStar nodesVisited 67898
+AStar openSetMaxSize 559.954
+AStar pathLength 1518.14
+AStar searchTime 12.6161
+
+2
+AStar nodesExpanded 46263.8
+AStar nodesVisited 66777.9
+AStar openSetMaxSize 555.308
+AStar pathLength 1518.37
+AStar searchTime 12.3898
+
+1.7
+AStar nodesExpanded 48080.2
+AStar nodesVisited 69405.7
+AStar openSetMaxSize 538.696
+AStar pathLength 1475.67
+AStar searchTime 13.3374
+
+1.75
+AStar nodesExpanded 47680.4
+AStar nodesVisited 68829.1
+AStar openSetMaxSize 538.719
+AStar pathLength 1475.67
+AStar searchTime 12.8505
+
+1.8
+AStar nodesExpanded 47307.1
+AStar nodesVisited 68384.8
+AStar openSetMaxSize 535.514
+AStar pathLength 1476.77
+AStar searchTime 12.9275
+
+1.75
+FringeSearch nodesExpanded 64481.9
+FringeSearch nodesVisited 2.74041e+06
+FringeSearch openSetMaxSize 376.849
+FringeSearch pathLength 1464.17
+FringeSearch searchTime 56.6168
+HPAStar nodesExpanded 6650.57
+HPAStar nodesVisited 9166.1
+HPAStar openSetMaxSize 1.47469
+HPAStar pathLength 1676.58
+HPAStar searchTime 3.02732
+JPSearch nodesExpanded 3904.81
+JPSearch nodesVisited 50640.8
+JPSearch openSetMaxSize 19.3547
+JPSearch pathLength 1462.53
+JPSearch searchTime 7.18513
+
+1.75
+HPAStar nodesExpanded 6854.08
+HPAStar nodesVisited 9667.48
+HPAStar openSetMaxSize 1.64
+HPAStar pathLength 1574.88
+HPAStar searchTime 8.2332
+HPA avg mem usage1771149
+Map basic graph mem usage11075560
+
+1.75
+HPAStar nodesExpanded 357.507
+HPAStar nodesVisited 885.56
+HPAStar openSetMaxSize 1.09636
+HPAStar pathLength 165.072
+HPAStar searchTime 2.41876
+HPA avg mem usage559961
+Map basic graph mem usage18636916
+
+1.75
+AStar nodesExpanded 47680.4
+AStar nodesVisited 68829.1
+AStar openSetMaxSize 538.719
+AStar pathLength 1475.67
+AStar searchTime 12.8022
+HPA avg mem usage1771149
+Map basic graph mem usage11075560
+
+1
+AStar nodesExpanded 3692.51
+AStar nodesVisited 5466.02
+AStar openSetMaxSize 920.995
+AStar pathLength 186.192
+AStar searchTime 1.81506
+HPA avg mem usage7296711
+Map basic graph mem usage24115924
+
+1.05
+AStar nodesExpanded 1034.41
+AStar nodesVisited 2000.84
+AStar openSetMaxSize 760.091
+AStar pathLength 187.926
+AStar searchTime 1.25562
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.1
+AStar nodesExpanded 457.607
+AStar nodesVisited 1009.94
+AStar openSetMaxSize 518.197
+AStar pathLength 190.574
+AStar searchTime 1.12968
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.15
+AStar nodesExpanded 362.201
+AStar nodesVisited 846.931
+AStar openSetMaxSize 468.227
+AStar pathLength 192.265
+AStar searchTime 1.11508
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.2
+AStar nodesExpanded 330.343
+AStar nodesVisited 793.563
+AStar openSetMaxSize 452.367
+AStar pathLength 193.386
+AStar searchTime 1.10401
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.25
+AStar nodesExpanded 317.688
+AStar nodesVisited 775.61
+AStar openSetMaxSize 448.654
+AStar pathLength 194.498
+AStar searchTime 1.10369
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.3
+AStar nodesExpanded 311.503
+AStar nodesVisited 769.31
+AStar openSetMaxSize 449.795
+AStar pathLength 195.599
+AStar searchTime 1.10362
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.35
+AStar nodesExpanded 307.976
+AStar nodesVisited 766.059
+AStar openSetMaxSize 450.621
+AStar pathLength 196.004
+AStar searchTime 1.10751
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.4
+AStar nodesExpanded 305.982
+AStar nodesVisited 764.497
+AStar openSetMaxSize 451.925
+AStar pathLength 196.242
+AStar searchTime 1.16415
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.45
+AStar nodesExpanded 309.345
+AStar nodesVisited 773.43
+AStar openSetMaxSize 457.844
+AStar pathLength 197.224
+AStar searchTime 1.13422
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.5
+AStar nodesExpanded 308.769
+AStar nodesVisited 772.768
+AStar openSetMaxSize 457.955
+AStar pathLength 197.456
+AStar searchTime 1.11425
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.55
+AStar nodesExpanded 309.001
+AStar nodesVisited 776.088
+AStar openSetMaxSize 461.121
+AStar pathLength 197.603
+AStar searchTime 1.10057
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.6
+AStar nodesExpanded 307.538
+AStar nodesVisited 774.299
+AStar openSetMaxSize 460.992
+AStar pathLength 197.748
+AStar searchTime 1.09287
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.65
+AStar nodesExpanded 306.626
+AStar nodesVisited 772.862
+AStar openSetMaxSize 460.628
+AStar pathLength 197.868
+AStar searchTime 1.08249
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.7
+AStar nodesExpanded 306.133
+AStar nodesVisited 772.045
+AStar openSetMaxSize 460.427
+AStar pathLength 197.941
+AStar searchTime 1.08234
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.75
+AStar nodesExpanded 304.685
+AStar nodesVisited 773.035
+AStar openSetMaxSize 462.94
+AStar pathLength 199.321
+AStar searchTime 1.0765
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.8
+AStar nodesExpanded 303.967
+AStar nodesVisited 771.736
+AStar openSetMaxSize 462.445
+AStar pathLength 199.395
+AStar searchTime 1.08206
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.85
+AStar nodesExpanded 274.733
+AStar nodesVisited 736.863
+AStar openSetMaxSize 461.911
+AStar pathLength 222.614
+AStar searchTime 1.12378
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.9
+AStar nodesExpanded 273.59
+AStar nodesVisited 735.195
+AStar openSetMaxSize 461.427
+AStar pathLength 222.683
+AStar searchTime 1.10683
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.95
+AStar nodesExpanded 272.876
+AStar nodesVisited 734.478
+AStar openSetMaxSize 461.462
+AStar pathLength 222.96
+AStar searchTime 1.08334
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+2
+AStar nodesExpanded 272.412
+AStar nodesVisited 733.665
+AStar openSetMaxSize 461.193
+AStar pathLength 223.221
+AStar searchTime 1.07513
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1
+AStar nodesExpanded 3692.51
+AStar nodesVisited 5466.02
+AStar openSetMaxSize 920.995
+AStar pathLength 186.192
+AStar searchTime 1.851
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1
+AStar nodesExpanded 3692.51
+AStar nodesVisited 5466.02
+AStar openSetMaxSize 920.995
+AStar pathLength 186.192
+AStar searchTime 1.90495
+HPA avg mem usage0
+Map basic graph mem usage24115924
+
+1.7
+AStar nodesExpanded 306.133
+AStar nodesVisited 772.045
+AStar openSetMaxSize 460.427
+AStar pathLength 197.941
+AStar searchTime 1.09738
+
+1.7
+JPSearch nodesExpanded 95.542
+JPSearch nodesVisited 539.446
+JPSearch openSetMaxSize 120.011
+JPSearch pathLength 194.486
+JPSearch searchTime 3.8774
+
+1.7
+JPSearch nodesExpanded 52.0826
+JPSearch nodesVisited 10154.2
+JPSearch openSetMaxSize 23.7124
+JPSearch pathLength 242.249
+JPSearch searchTime 0.413915
+
+1
+AStar nodesExpanded 11386.8
+AStar nodesVisited 18031.3
+AStar openSetMaxSize 1056.22
+AStar pathLength 234.542
+AStar searchTime 4.36471
+
+1
+AStar nodesExpanded 10914.8
+AStar nodesVisited 17359.6
+AStar openSetMaxSize 1042.41
+AStar pathLength 229.167
+AStar searchTime 3.96038
+
+1.05
+AStar nodesExpanded 9424.35
+AStar nodesVisited 18360
+AStar openSetMaxSize 1095.79
+AStar pathLength 229.669
+AStar searchTime 3.94499
+
+1.1
+AStar nodesExpanded 8195.41
+AStar nodesVisited 16287.5
+AStar openSetMaxSize 1080.68
+AStar pathLength 230.914
+AStar searchTime 3.63568
+
+1.15
+AStar nodesExpanded 7119.02
+AStar nodesVisited 14408.9
+AStar openSetMaxSize 1037.04
+AStar pathLength 232.237
+AStar searchTime 3.47531
+
+1.2
+AStar nodesExpanded 6275.44
+AStar nodesVisited 12889
+AStar openSetMaxSize 994.851
+AStar pathLength 233.842
+AStar searchTime 3.22903
+
+1.25
+AStar nodesExpanded 5660.34
+AStar nodesVisited 11769.5
+AStar openSetMaxSize 954.057
+AStar pathLength 235.549
+AStar searchTime 2.9405
+
+1.3
+AStar nodesExpanded 5221.66
+AStar nodesVisited 11006.1
+AStar openSetMaxSize 937.563
+AStar pathLength 237.439
+AStar searchTime 3.57952
+
+1.35
+AStar nodesExpanded 4856.64
+AStar nodesVisited 10314.1
+AStar openSetMaxSize 897.281
+AStar pathLength 238.568
+AStar searchTime 2.72992
+
+1.4
+AStar nodesExpanded 4574.49
+AStar nodesVisited 9775.86
+AStar openSetMaxSize 875.546
+AStar pathLength 239.749
+AStar searchTime 2.56621
+
+1.45
+AStar nodesExpanded 4394.45
+AStar nodesVisited 9507.63
+AStar openSetMaxSize 890.154
+AStar pathLength 242.065
+AStar searchTime 2.63002
+
+1.5
+AStar nodesExpanded 4184.73
+AStar nodesVisited 9071.04
+AStar openSetMaxSize 866.746
+AStar pathLength 242.613
+AStar searchTime 2.69342
+
+1.55
+AStar nodesExpanded 3977.65
+AStar nodesVisited 8645.61
+AStar openSetMaxSize 833.148
+AStar pathLength 243.237
+AStar searchTime 2.43631
+
+1.6
+AStar nodesExpanded 3809.2
+AStar nodesVisited 8330.98
+AStar openSetMaxSize 823.476
+AStar pathLength 244.75
+AStar searchTime 2.47457
+
+1.65
+AStar nodesExpanded 3694.02
+AStar nodesVisited 8130.08
+AStar openSetMaxSize 822.21
+AStar pathLength 246.196
+AStar searchTime 2.36149
+
+1.7
+AStar nodesExpanded 3557.28
+AStar nodesVisited 7831.24
+AStar openSetMaxSize 800.511
+AStar pathLength 246.82
+AStar searchTime 2.39426
+
+1.75
+AStar nodesExpanded 3454.26
+AStar nodesVisited 7619.35
+AStar openSetMaxSize 793.966
+AStar pathLength 247.124
+AStar searchTime 2.42034
+
+1.8
+AStar nodesExpanded 3355.92
+AStar nodesVisited 7445.23
+AStar openSetMaxSize 780.716
+AStar pathLength 248.189
+AStar searchTime 2.41439
+
+1.85
+AStar nodesExpanded 3389.98
+AStar nodesVisited 7646.05
+AStar openSetMaxSize 846.382
+AStar pathLength 263.973
+AStar searchTime 2.30821
+
+1.9
+AStar nodesExpanded 3307.54
+AStar nodesVisited 7473.46
+AStar openSetMaxSize 834.246
+AStar pathLength 264.126
+AStar searchTime 2.36175
+
+1.95
+AStar nodesExpanded 3224.57
+AStar nodesVisited 7294.54
+AStar openSetMaxSize 826.709
+AStar pathLength 264.415
+AStar searchTime 2.20837
+
+1.7
+AStar nodesExpanded 3781.34
+AStar nodesVisited 8243.86
+AStar openSetMaxSize 818.396
+AStar pathLength 252.453
+AStar searchTime 2.3046
+HPAStar nodesExpanded 1214.44
+HPAStar nodesVisited 2287.01
+HPAStar openSetMaxSize 5.12092
+HPAStar pathLength 276.775
+HPAStar searchTime 0.749912
+JPSearch nodesExpanded 52.0826
+JPSearch nodesVisited 10154.2
+JPSearch openSetMaxSize 23.7124
+JPSearch pathLength 242.249
+JPSearch searchTime 0.444987
+
+1.7
+AStar nodesExpanded 3781.34
+AStar nodesVisited 8243.86
+AStar openSetMaxSize 818.396
+AStar pathLength 252.453
+AStar searchTime 2.35935
+
+1.7
+AStar nodesExpanded 3781.34
+AStar nodesVisited 8243.86
+AStar openSetMaxSize 818.396
+AStar pathLength 252.453
+AStar searchTime 2.31356
+HPAStar nodesExpanded 1214.44
+HPAStar nodesVisited 2287.01
+HPAStar openSetMaxSize 5.12092
+HPAStar pathLength 276.775
+HPAStar searchTime 0.758381
+JPSearch nodesExpanded 52.0826
+JPSearch nodesVisited 10154.2
+JPSearch openSetMaxSize 23.7124
+JPSearch pathLength 242.249
+JPSearch searchTime 0.454132
+
+1.7
+FringeSearch nodesExpanded 12908.3
+FringeSearch nodesVisited 725569
+FringeSearch openSetMaxSize 452.268
+FringeSearch pathLength 236.126
+FringeSearch searchTime 12.3921
+HPAStar nodesExpanded 1202.27
+HPAStar nodesVisited 2227.65
+HPAStar openSetMaxSize 5.11909
+HPAStar pathLength 276.267
+HPAStar searchTime 0.751691
+
+1.75
+JPSearch nodesExpanded 3018.87
+JPSearch nodesVisited 48018.7
+JPSearch openSetMaxSize 17.313
+JPSearch pathLength 1368.37
+JPSearch searchTime 4.99278
+
+1.75
+HPAStar nodesExpanded 1117.88
+HPAStar nodesVisited 2198.35
+HPAStar openSetMaxSize 5.10062
+HPAStar pathLength 258.808
+HPAStar searchTime 4.8754
+HPA avg mem usage 2448066
+Map basic graph mem usage 27429484
+
+1
+FringeSearch nodesExpanded 5555.28
+FringeSearch nodesVisited 683810
+FringeSearch openSetMaxSize 269.881
+FringeSearch pathLength 201.01
+FringeSearch searchTime 10.1748
+HPA avg mem usage0
+Map basic graph mem usage18636916
+
+1
+FringeSearch nodesExpanded 5609.68
+FringeSearch nodesVisited 661278
+FringeSearch openSetMaxSize 256.157
+FringeSearch pathLength 201.024
+FringeSearch searchTime 9.72264
+HPA avg mem usage0
+Map basic graph mem usage18636916
+
+1
+FringeSearch nodesExpanded 5949.69
+FringeSearch nodesVisited 660282
+FringeSearch openSetMaxSize 259.168
+FringeSearch pathLength 201.1
+FringeSearch searchTime 10.2671
+HPA avg mem usage0
+Map basic graph mem usage18636916
+
+1
+AStar nodesExpanded 5617.06
+AStar nodesVisited 8807.01
+AStar openSetMaxSize 1098.96
+AStar pathLength 201.01
+AStar searchTime 2.61347
+HPA avg mem usage0
+Map basic graph mem usage18636916
+
+1
+AStar nodesExpanded 5617.06
+AStar nodesVisited 8807.01
+AStar openSetMaxSize 1098.96
+AStar pathLength 201.01
+AStar searchTime 2.47021
+HPA avg mem usage0
+Map basic graph mem usage18636916
+
+1
+HPA avg mem usage0
+Map basic graph mem usage18636916
+
+1
+HPAStar nodesExpanded 632.573
+HPAStar nodesVisited 1461.64
+HPAStar openSetMaxSize 1.56036
+HPAStar pathLength 243.238
+HPAStar searchTime 2.78009
+HPA avg mem usage559961
+Map basic graph mem usage18636916
+
+1
+AStar nodesExpanded 6000.27
+AStar nodesVisited 9741.39
+AStar openSetMaxSize 1168.33
+AStar pathLength 215.299
+AStar searchTime 3.42773
+HPA avg mem usage0
+Map basic graph mem usage18636916
+
+1
+AStar nodesExpanded 6000.27
+AStar nodesVisited 9741.39
+AStar openSetMaxSize 1168.33
+AStar pathLength 215.299
+AStar searchTime 3.37285
+HPA avg mem usage0
+Map basic graph mem usage18636916
+
+1
+AStar nodesExpanded 6000.27
+AStar nodesVisited 9741.39
+AStar openSetMaxSize 1168.33
+AStar pathLength 215.299
+AStar searchTime 4.00952
+HPA avg mem usage0
+Map basic graph mem usage18636916
+
+1.7
+AStar nodesExpanded 3092.58
+AStar nodesVisited 6020.22
+AStar openSetMaxSize 548.958
+AStar pathLength 204.946
+AStar searchTime 1.8328
+HPAStar nodesExpanded 573.056
+HPAStar nodesVisited 1261.04
+HPAStar openSetMaxSize 1.47089
+HPAStar pathLength 233.3
+HPAStar searchTime 0.397617
+JPSearch nodesExpanded 33.1997
+JPSearch nodesVisited 18381.7
+JPSearch openSetMaxSize 9.5792
+JPSearch pathLength 202.856
+JPSearch searchTime 0.815282
+HPA avg mem usage559961
+Map basic graph mem usage18636916
 

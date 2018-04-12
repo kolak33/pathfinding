@@ -1,0 +1,577 @@
+// basic map, heur = 1.0
+AStarsearchTime ST ODCH. 1.11893
+FringeSearchsearchTime ST ODCH. 9.79071
+HPAStarsearchTime ST ODCH. 0.16019
+JPSearchsearchTime ST ODCH. 0.633678
+AStarnodesExpanded 5631.55
+AStarnodesVisited 8801.68
+AStaropenSetMaxSize 1092.13
+AStarpathLength 201.157
+AStarsearchTime 2.26518
+FringeSearchnodesExpanded 5567.31
+FringeSearchnodesVisited 699059
+FringeSearchopenSetMaxSize 269.504
+FringeSearchpathLength 201.157
+FringeSearchsearchTime 9.76668
+HPAStarnodesExpanded 583.453
+HPAStarnodesVisited 1259.46
+HPAStaropenSetMaxSize 353.32
+HPAStarpathLength 233.215
+HPAStarsearchTime 0.386115
+JPSearchnodesExpanded 43.2053
+JPSearchnodesVisited 20692.4
+JPSearchopenSetMaxSize 9.0028
+JPSearchpathLength 201.157
+JPSearchsearchTime 1.15732
+
+// basic map, heur = 1.0 znowu
+AStarsearchTime ST ODCH. 1.20786
+FringeSearchsearchTime ST ODCH. 10.4929
+HPAStarsearchTime ST ODCH. 0.173164
+JPSearchsearchTime ST ODCH. 0.660836
+AStarnodesExpanded 5631.55
+AStarnodesVisited 8801.68
+AStaropenSetMaxSize 1092.13
+AStarpathLength 201.157
+AStarsearchTime 2.38685
+FringeSearchnodesExpanded 5567.31
+FringeSearchnodesVisited 699059
+FringeSearchopenSetMaxSize 269.504
+FringeSearchpathLength 201.157
+FringeSearchsearchTime 10.4181
+HPAStarnodesExpanded 583.453
+HPAStarnodesVisited 1259.46
+HPAStaropenSetMaxSize 353.32
+HPAStarpathLength 233.215
+HPAStarsearchTime 0.410053
+JPSearchnodesExpanded 43.2053
+JPSearchnodesVisited 20692.4
+JPSearchopenSetMaxSize 9.0028
+JPSearchpathLength 201.157
+JPSearchsearchTime 1.23196
+
+//basic map, heur = octile 1.75
+AStarsearchTime ST ODCH. 1.08861
+FringeSearchsearchTime ST ODCH. 98.3064
+HPAStarsearchTime ST ODCH. 0.168225
+JPSearchsearchTime ST ODCH. 0.723966
+AStarnodesExpanded 3067.57
+AStarnodesVisited 5914.74
+AStaropenSetMaxSize 547.416
+AStarpathLength 204.862
+AStarsearchTime 1.93815
+FringeSearchnodesExpanded 17848
+FringeSearchnodesVisited 3.41793e+06
+FringeSearchopenSetMaxSize 345.105
+FringeSearchpathLength 221.671
+FringeSearchsearchTime 52.2209
+HPAStarnodesExpanded 575.486
+HPAStarnodesVisited 1257.31
+HPAStaropenSetMaxSize 353.32
+HPAStarpathLength 233.224
+HPAStarsearchTime 0.433407
+JPSearchnodesExpanded 43.2053
+JPSearchnodesVisited 20692.4
+JPSearchopenSetMaxSize 9.0028
+JPSearchpathLength 352.024
+JPSearchsearchTime 1.29938
+
+//manhattan distance
+AStarsearchTime ST ODCH. 1.05267
+FringeSearchsearchTime ST ODCH. 7.42448
+HPAStarsearchTime ST ODCH. 0.161782
+JPSearchsearchTime ST ODCH. 0.667139
+AStarnodesExpanded 4378.41
+AStarnodesVisited 7630.91
+AStaropenSetMaxSize 471.529
+AStarpathLength 201.473
+AStarsearchTime 1.95694
+FringeSearchnodesExpanded 8919.2
+FringeSearchnodesVisited 351974
+FringeSearchopenSetMaxSize 287.281
+FringeSearchpathLength 210.771
+FringeSearchsearchTime 7.91062
+HPAStarnodesExpanded 548.889
+HPAStarnodesVisited 1179.46
+HPAStaropenSetMaxSize 353.32
+HPAStarpathLength 233.215
+HPAStarsearchTime 0.389639
+JPSearchnodesExpanded 46.5904
+JPSearchnodesVisited 21479.1
+JPSearchopenSetMaxSize 8.82797
+JPSearchpathLength 244.78
+JPSearchsearchTime 1.22984
+
+//euclidean
+
+AStarsearchTime ST ODCH. 1.30073
+FringeSearchsearchTime ST ODCH. 17.2537
+HPAStarsearchTime ST ODCH. 0.177023
+JPSearchsearchTime ST ODCH. 0.70626
+AStarnodesExpanded 7134.63
+AStarnodesVisited 10022.7
+AStaropenSetMaxSize 551.441
+AStarpathLength 201.157
+AStarsearchTime 2.86589
+FringeSearchnodesExpanded 7151.05
+FringeSearchnodesVisited 1.76928e+06
+FringeSearchopenSetMaxSize 306.58
+FringeSearchpathLength 201.157
+FringeSearchsearchTime 26.0277
+HPAStarnodesExpanded 581.35
+HPAStarnodesVisited 1222.44
+HPAStaropenSetMaxSize 353.32
+HPAStarpathLength 233.215
+HPAStarsearchTime 0.408487
+JPSearchnodesExpanded 47.3657
+JPSearchnodesVisited 22625.4
+JPSearchopenSetMaxSize 9.53027
+JPSearchpathLength 201.158
+JPSearchsearchTime 1.31205
+
+//JPS fix euclid
+JPSearchsearchTime ST ODCH. 1.44537
+JPSearchnodesExpanded 79.0386
+JPSearchnodesVisited 37805.2
+JPSearchopenSetMaxSize 12.6075
+JPSearchpathLength 352.024
+JPSearchsearchTime 2.13512
+
+//JPS manhattan
+
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 1.04686
+JPSearchnodesExpanded 66.8812
+JPSearchnodesVisited 32206.7
+JPSearchopenSetMaxSize 11.6398
+JPSearchpathLength 352.024
+JPSearchsearchTime 1.82688
+
+//JPS 1.75
+
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 1.04686
+JPSearchnodesExpanded 66.8812
+JPSearchnodesVisited 32206.7
+JPSearchopenSetMaxSize 11.6398
+JPSearchpathLength 352.024
+JPSearchsearchTime 1.82688
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.637227
+JPSearchnodesExpanded 43.2053
+JPSearchnodesVisited 20692.4
+JPSearchopenSetMaxSize 9.0028
+JPSearchpathLength 352.024
+JPSearchsearchTime 1.12487
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.660083
+JPSearchnodesExpanded 47.3393
+JPSearchnodesVisited 22612.1
+JPSearchopenSetMaxSize 9.53547
+JPSearchpathLength 201.157
+JPSearchsearchTime 1.185
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.603277
+JPSearchnodesExpanded 34.7532
+JPSearchnodesVisited 18545.1
+JPSearchopenSetMaxSize 8.57173
+JPSearchpathLength 203.025
+JPSearchsearchTime 0.946451
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.599744
+JPSearchnodesExpanded 39.3423
+JPSearchnodesVisited 19355.7
+JPSearchopenSetMaxSize 8.7037
+JPSearchpathLength 201.469
+JPSearchsearchTime 0.990152
+AStarsearchTime ST ODCH. 0.345281
+FringeSearchsearchTime ST ODCH. 1.61414
+AStarnodesExpanded 533.382
+AStarnodesVisited 913.282
+AStaropenSetMaxSize 125.414
+AStarpathLength 54.6505
+AStarsearchTime 0.195963
+FringeSearchnodesExpanded 891.587
+FringeSearchnodesVisited 26227
+FringeSearchopenSetMaxSize 76.2101
+FringeSearchpathLength 56.2088
+FringeSearchsearchTime 0.772288
+AStarsearchTime ST ODCH. 0.345281
+FringeSearchsearchTime ST ODCH. 1.61414
+AStarnodesExpanded 533.382
+AStarnodesVisited 913.282
+AStaropenSetMaxSize 125.414
+AStarpathLength 54.6505
+AStarsearchTime 0.195963
+FringeSearchnodesExpanded 891.587
+FringeSearchnodesVisited 26227
+FringeSearchopenSetMaxSize 76.2101
+FringeSearchpathLength 56.2088
+FringeSearchsearchTime 0.772288
+AStarsearchTime ST ODCH. 0.286932
+FringeSearchsearchTime ST ODCH. 5.90874
+AStarnodesExpanded 374.314
+AStarnodesVisited 704.506
+AStaropenSetMaxSize 139.422
+AStarpathLength 55.5978
+AStarsearchTime 0.162661
+FringeSearchnodesExpanded 1243.5
+FringeSearchnodesVisited 137083
+FringeSearchopenSetMaxSize 95.6114
+FringeSearchpathLength 58.5407
+FringeSearchsearchTime 2.17681
+AStarsearchTime ST ODCH. 0.377774
+FringeSearchsearchTime ST ODCH. 1.70962
+AStarnodesExpanded 677.01
+AStarnodesVisited 1056.96
+AStaropenSetMaxSize 173.473
+AStarpathLength 54.4881
+AStarsearchTime 0.215001
+FringeSearchnodesExpanded 676.462
+FringeSearchnodesVisited 47946.8
+FringeSearchopenSetMaxSize 74.1684
+FringeSearchpathLength 54.4924
+FringeSearchsearchTime 0.793011
+
+AStarsearchTime ST ODCH. 5.97651
+FringeSearchsearchTime ST ODCH. 57.4134
+HPAStarsearchTime ST ODCH. 1.4677
+JPSearchsearchTime ST ODCH. 6.86747
+AStarnodesExpanded 27842.4
+AStarnodesVisited 34791.6
+AStaropenSetMaxSize 328.127
+AStarpathLength 742.17
+AStarsearchTime 6.85848
+FringeSearchnodesExpanded 27841.3
+FringeSearchnodesVisited 3.00606e+06
+FringeSearchopenSetMaxSize 124.766
+FringeSearchpathLength 742.17
+FringeSearchsearchTime 43.0339
+HPAStarnodesExpanded 3509.36
+HPAStarnodesVisited 4820.39
+HPAStaropenSetMaxSize 44.4329
+HPAStarpathLength 850.415
+HPAStarsearchTime 1.45815
+JPSearchnodesExpanded 2075.1
+JPSearchnodesVisited 26691.4
+JPSearchopenSetMaxSize 9.6475
+JPSearchpathLength 742.17
+JPSearchsearchTime 3.94029
+
+AStarsearchTime ST ODCH. 6.65756
+FringeSearchsearchTime ST ODCH. 0
+HPAStarsearchTime ST ODCH. 1.50733
+JPSearchsearchTime ST ODCH. 6.58397
+AStarnodesExpanded 24218.3
+AStarnodesVisited 34866.3
+AStaropenSetMaxSize 270.517
+AStarpathLength 748.739
+AStarsearchTime 6.87182
+HPAStarnodesExpanded 3426.77
+HPAStarnodesVisited 4771.67
+HPAStaropenSetMaxSize 44.4706
+HPAStarpathLength 850.601
+HPAStarsearchTime 1.51117
+JPSearchnodesExpanded 1861.98
+JPSearchnodesVisited 23739.4
+JPSearchopenSetMaxSize 9.24335
+JPSearchpathLength 742.17
+JPSearchsearchTime 3.67539
+AStarsearchTime ST ODCH. 6.48915
+FringeSearchsearchTime ST ODCH. 0
+HPAStarsearchTime ST ODCH. 1.62726
+JPSearchsearchTime ST ODCH. 7.2326
+AStarnodesExpanded 23948.3
+AStarnodesVisited 34498.1
+AStaropenSetMaxSize 269.427
+AStarpathLength 737.896
+AStarsearchTime 6.75705
+HPAStarnodesExpanded 3379.04
+HPAStarnodesVisited 4700.57
+HPAStaropenSetMaxSize 44.2549
+HPAStarpathLength 837.908
+HPAStarsearchTime 1.52879
+JPSearchnodesExpanded 1847.05
+JPSearchnodesVisited 23424.7
+JPSearchopenSetMaxSize 9.19058
+JPSearchpathLength 731.423
+JPSearchsearchTime 3.76432
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.559323
+JPSearchnodesExpanded 21.3315
+JPSearchnodesVisited 11560.4
+JPSearchopenSetMaxSize 5.9755
+JPSearchpathLength 126.111
+JPSearchsearchTime 0.510509
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.623735
+JPSearchnodesExpanded 27.013
+JPSearchnodesVisited 12932.4
+JPSearchopenSetMaxSize 6.25946
+JPSearchpathLength 125.723
+JPSearchsearchTime 0.688486
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.623735
+JPSearchnodesExpanded 43.2209
+JPSearchnodesVisited 20691.8
+JPSearchopenSetMaxSize 10.0151
+JPSearchpathLength 201.157
+JPSearchsearchTime 1.10158
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.623735
+JPSearchnodesExpanded 43.2209
+JPSearchnodesVisited 20691.8
+JPSearchopenSetMaxSize 10.0151
+JPSearchpathLength 201.157
+JPSearchsearchTime 1.10158
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.583684
+JPSearchnodesExpanded 43.2209
+JPSearchnodesVisited 20691.8
+JPSearchopenSetMaxSize 10.0151
+JPSearchpathLength 201.157
+JPSearchsearchTime 1.00351
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.583684
+JPSearchnodesExpanded 43.2209
+JPSearchnodesVisited 20691.8
+JPSearchopenSetMaxSize 10.0151
+JPSearchpathLength 201.157
+JPSearchsearchTime 1.00351
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.585225
+JPSearchnodesExpanded 43.2209
+JPSearchnodesVisited 20691.8
+JPSearchopenSetMaxSize 10.0151
+JPSearchpathLength 201.157
+JPSearchsearchTime 1.00351
+FringeSearchsearchTime ST ODCH. 0
+JPSearchnodesExpanded ST ODCH. 0
+JPSearchnodesVisited ST ODCH. 0
+JPSearchopenSetMaxSize ST ODCH. 0
+JPSearchpathLength ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.585225
+JPSearchnodesExpanded 43.2209
+JPSearchnodesVisited 20691.8
+JPSearchopenSetMaxSize 10.0151
+JPSearchpathLength 201.157
+JPSearchsearchTime 0.996335
+FringeSearchsearchTime ST ODCH. 0
+JPSearchnodesExpanded ST ODCH. 0
+JPSearchnodesVisited ST ODCH. 0
+JPSearchopenSetMaxSize ST ODCH. 0
+JPSearchpathLength ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.508974
+JPSearchnodesExpanded 34.7655
+JPSearchnodesVisited 18545.1
+JPSearchopenSetMaxSize 9.5569
+JPSearchpathLength 203.025
+JPSearchsearchTime 0.801874
+FringeSearchsearchTime ST ODCH. 0
+JPSearchnodesExpanded ST ODCH. 0
+JPSearchnodesVisited ST ODCH. 0
+JPSearchopenSetMaxSize ST ODCH. 0
+JPSearchpathLength ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.50868
+JPSearchnodesExpanded 39.3553
+JPSearchnodesVisited 19356.1
+JPSearchopenSetMaxSize 9.70143
+JPSearchpathLength 201.469
+JPSearchsearchTime 0.814886
+FringeSearchsearchTime ST ODCH. 0
+JPSearchnodesExpanded ST ODCH. 0
+JPSearchnodesVisited ST ODCH. 0
+JPSearchopenSetMaxSize ST ODCH. 0
+JPSearchpathLength ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.564874
+JPSearchnodesExpanded 47.3582
+JPSearchnodesVisited 22612.3
+JPSearchopenSetMaxSize 10.571
+JPSearchpathLength 201.157
+JPSearchsearchTime 0.985829
+
+AStarnodesExpanded ST ODCH. 0
+AStarnodesVisited ST ODCH. 0
+AStaropenSetMaxSize ST ODCH. 0
+AStarpathLength ST ODCH. 0
+AStarsearchTime ST ODCH. 6.40639
+FringeSearchsearchTime ST ODCH. 0
+HPAStarnodesExpanded ST ODCH. 0
+HPAStarnodesVisited ST ODCH. 0
+HPAStaropenSetMaxSize ST ODCH. 0
+HPAStarpathLength ST ODCH. 0
+HPAStarsearchTime ST ODCH. 1.46995
+JPSearchnodesExpanded ST ODCH. 0
+JPSearchnodesVisited ST ODCH. 0
+JPSearchopenSetMaxSize ST ODCH. 0
+JPSearchpathLength ST ODCH. 0
+JPSearchsearchTime ST ODCH. 6.37343
+AStarnodesExpanded 48847.6
+AStarnodesVisited 70327.7
+AStaropenSetMaxSize 540.931
+AStarpathLength 1497.48
+AStarsearchTime 13.2415
+HPAStarnodesExpanded 6869.24
+HPAStarnodesVisited 9553.93
+HPAStaropenSetMaxSize 88.8708
+HPAStarpathLength 1701.2
+HPAStarsearchTime 2.87617
+JPSearchnodesExpanded 3751.38
+JPSearchnodesVisited 47809.1
+JPSearchopenSetMaxSize 19.121
+JPSearchpathLength 1484.34
+JPSearchsearchTime 6.47928
+
+
+FringeSearchsearchTime ST ODCH. 0
+ 1.20591e-24
+FringeSearchsearchTime ST ODCH. 0
+ -2.50004e-276
+FringeSearchsearchTime ST ODCH. 0
+ 3.65453e-143
+FringeSearchsearchTime ST ODCH. 44.9948
+HPAStarsearchTime ST ODCH. 1.4101
+JPSearchsearchTime ST ODCH. 6.43069
+FringeSearchnodesExpanded 64481.9
+FringeSearchnodesVisited 2.74041e+06
+FringeSearchopenSetMaxSize 376.849
+FringeSearchpathLength 1464.17
+FringeSearchsearchTime 57.593
+HPAStarnodesExpanded 6650.57
+HPAStarnodesVisited 9166.1
+HPAStaropenSetMaxSize 88.4813
+HPAStarpathLength 1676.58
+HPAStarsearchTime 3.02732
+JPSearchnodesExpanded 3904.81
+JPSearchnodesVisited 50640.8
+JPSearchopenSetMaxSize 19.3547
+JPSearchpathLength 1462.53
+JPSearchsearchTime 7.18513
+FringeSearchsearchTime ST ODCH. 0
+HPAStarsearchTime ST ODCH. 4.19089
+HPAStarnodesExpanded 6854.08
+HPAStarnodesVisited 9667.48
+HPAStaropenSetMaxSize 98.4
+HPAStarpathLength 1574.88
+HPAStarsearchTime 8.38442
+FringeSearchsearchTime ST ODCH. 0
+HPAStarsearchTime ST ODCH. 0.554463
+HPAStarnodesExpanded 446.883
+HPAStarnodesVisited 1106.95
+HPAStaropenSetMaxSize 102.783
+HPAStarpathLength 206.34
+HPAStarsearchTime 3.05709
+AStarsearchTime ST ODCH. 6.30837
+FringeSearchsearchTime ST ODCH. 0
+AStarnodesExpanded 47680.4
+AStarnodesVisited 68829.2
+AStaropenSetMaxSize 538.719
+AStarpathLength 1475.67
+AStarsearchTime 13.0413
+AStarsearchTime ST ODCH. 0.05159
+FringeSearchsearchTime ST ODCH. 0
+AStarnodesExpanded 1162.9
+AStarnodesVisited 2808.87
+AStaropenSetMaxSize 1588.37
+AStarpathLength 670.421
+AStarsearchTime 3.72421
+AStarsearchTime ST ODCH. 0.0993852
+FringeSearchsearchTime ST ODCH. 0
+AStarnodesExpanded 615.419
+AStarnodesVisited 911.004
+AStaropenSetMaxSize 153.499
+AStarpathLength 31.032
+AStarsearchTime 0.340259
+AStarsearchTime ST ODCH. 0.155872
+FringeSearchsearchTime ST ODCH. 0
+AStarnodesExpanded 3692.51
+AStarnodesVisited 5466.02
+AStaropenSetMaxSize 920.995
+AStarpathLength 186.192
+AStarsearchTime 2.09129
+AStarsearchTime ST ODCH. 0.155872
+FringeSearchsearchTime ST ODCH. 0
+AStarnodesExpanded 3692.51
+AStarnodesVisited 5466.02
+AStaropenSetMaxSize 920.995
+AStarpathLength 186.192
+AStarsearchTime 1.90495
+AStarsearchTime ST ODCH. 0.0267064
+FringeSearchsearchTime ST ODCH. 0
+AStarnodesExpanded 306.133
+AStarnodesVisited 772.045
+AStaropenSetMaxSize 460.427
+AStarpathLength 197.941
+AStarsearchTime 1.20825
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.401044
+JPSearchnodesExpanded 95.5421
+JPSearchnodesVisited 539.446
+JPSearchopenSetMaxSize 120.011
+JPSearchpathLength 194.486
+JPSearchsearchTime 4.24831
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 0.283193
+JPSearchnodesExpanded 110.778
+JPSearchnodesVisited 38669.3
+JPSearchopenSetMaxSize 47.6815
+JPSearchpathLength 739.693
+JPSearchsearchTime 1.4472
+AStarsearchTime ST ODCH. 1.31744
+FringeSearchsearchTime ST ODCH. 0
+AStarnodesExpanded 11386.8
+AStarnodesVisited 18031.3
+AStaropenSetMaxSize 1056.22
+AStarpathLength 234.542
+AStarsearchTime 4.44474
+FringeSearchsearchTime ST ODCH. 0
+ 5.11015e+176
+FringeSearchsearchTime ST ODCH. 0
+ 2.85382e+163
+FringeSearchsearchTime ST ODCH. 0
+ 3.29014e+138
+AStarsearchTime ST ODCH. 1.29877
+FringeSearchsearchTime ST ODCH. 0
+HPAStarsearchTime ST ODCH. 0.140855
+JPSearchsearchTime ST ODCH. 0.339266
+AStarnodesExpanded 3781.33
+AStarnodesVisited 8243.86
+AStaropenSetMaxSize 818.396
+AStarpathLength 252.453
+AStarsearchTime 2.31356
+HPAStarnodesExpanded 1214.44
+HPAStarnodesVisited 2287.01
+HPAStaropenSetMaxSize 204.837
+HPAStarpathLength 276.775
+HPAStarsearchTime 0.758381
+JPSearchnodesExpanded 52.0825
+JPSearchnodesVisited 10154.2
+JPSearchopenSetMaxSize 23.7124
+JPSearchpathLength 242.249
+JPSearchsearchTime 0.458842
+FringeSearchsearchTime ST ODCH. 7.91916
+HPAStarsearchTime ST ODCH. 0.130777
+FringeSearchnodesExpanded 12908.3
+FringeSearchnodesVisited 725569
+FringeSearchopenSetMaxSize 452.268
+FringeSearchpathLength 236.126
+FringeSearchsearchTime 12.573
+HPAStarnodesExpanded 1202.27
+HPAStarnodesVisited 2227.65
+HPAStaropenSetMaxSize 204.764
+HPAStarpathLength 276.267
+HPAStarsearchTime 0.751691
+FringeSearchsearchTime ST ODCH. 0
+JPSearchsearchTime ST ODCH. 5.08913
+JPSearchnodesExpanded 4226.41
+JPSearchnodesVisited 67226.2
+JPSearchopenSetMaxSize 24.2382
+JPSearchpathLength 1915.71
+JPSearchsearchTime 7.04658
+FringeSearchsearchTime ST ODCH. 0
+HPAStarsearchTime ST ODCH. 1.24922
+HPAStarnodesExpanded 1117.88
+HPAStarnodesVisited 2198.35
+HPAStaropenSetMaxSize 204.025
+HPAStarpathLength 258.808
+HPAStarsearchTime 5.04475
